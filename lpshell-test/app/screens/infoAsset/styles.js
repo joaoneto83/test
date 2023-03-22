@@ -4,6 +4,7 @@ const styles = StyleSheet.create({
     flex: 1,
     paddingRight:30,
   },
+
   containerDetail: {
     flex: 1,
     flexDirection: "column",
@@ -19,6 +20,11 @@ const styles = StyleSheet.create({
     height: 90,
  
   },
+  
+  buttonImage:{
+    width: 150, 
+    height: 120,
+  },
   check:{
     width: 80, 
     height: 52,
@@ -30,6 +36,14 @@ const styles = StyleSheet.create({
     height: 72,
   },
 
+  modalContent: {
+    flexDirection:"row-reverse",
+    backgroundColor: 'white',
+    padding: 22,
+    justifyContent:"space-between",
+    borderRadius: 4,
+    borderColor: 'rgba(0, 0, 0, 0.1)',
+  },
   buttonBorder:{
     borderColor: '#E4A83B'
   },
@@ -57,41 +71,107 @@ const styles = StyleSheet.create({
     flex: 0,
     flexDirection: "row",
   },
+
   boxInfo: {
     flex: 0,
     flexDirection: "row",
    
     alignItems: 'center',
   },
-  box: {
-    flex: 1,
+  
+  boxInfoControllo: {
+    flex: 0,
     flexDirection: "row",
-    justifyContent:'space-between',
-    alignItems: 'center',
-    marginTop: "-40%"
+    alignItems: "stretch",
+
   },
+  boxImage: {
+    flex: 0,
+    alignItems: 'center',
+    paddingTop:"10%"
+  },
+
   boxHome: {
     flex: 1,
     flexDirection: "row",
     justifyContent:'flex-end',
     alignItems: 'center',
-    marginTop: "-40%"
+   
   },
   boxDetail: {
     flex: 1,
     flexDirection: "row",
     justifyContent:'flex-start',
-    marginTop: "-30%"
+    paddingTop: "5%"
+  },
+  containerControllo: {
+    flex: 0,
+    flexDirection: "row",
+    justifyContent: "flex-start",
+    padding:30,
+    // borderWidth:2,
+  },
+  boxControlloLeft: {
+    flex: 0,
+    padding:10,
+    borderEndWidth:1,
+    borderColor:"#9f9f9f29",
+    justifyContent: "space-between"
+  },
+  boxControlloRight: {
+    flex: 0,
+    flexDirection: "column",
+    padding:10,
+    alignItems: "flex-end"
+  
+  },
+  ListControllo: {
+    flex: 0,
+    flexDirection: "row",
+  
+    alignItems: "stretch",
+    paddingBottom:10,
+    paddingTop:10,
+    borderBottomWidth:1,
+    borderColor: "#9f9f9f29"
   },
   boxButton: {
-   paddingLeft:"20%",
+   paddingLeft:"10%",
    paddingTop:10
   },
+  listbutton:{
+    paddingLeft:10
+  },
   title: {
-    fontSize: 35,
-    marginBottom: 10,
-    marginTop: 20,
-    color: '#787777'
+    fontSize: 20,
+    color: '#9F9F9F',
+  },
+  ImagemButton: {
+    width: 25, 
+    height: 25, 
+  },
+  boxFlex:{
+    flex:0,
+    justifyContent: "space-between",
+    flexDirection: "row",
+    alignItems: "center"
+  },
+  imagemClose:{
+    width: 25, 
+    height: 25, 
+  },
+  imagemChevron:{
+    width: 14, 
+    height: 25, 
+  },
+  imagemCheronI:{
+    width: 14, 
+    height: 25, 
+    transform: "scaleX(-1)"
+  },
+  BoxImagemButton:{
+    paddingLeft:10,
+    marginBottom:-5
   },
   image: {
     width: 100, 
@@ -115,10 +195,27 @@ const styles = StyleSheet.create({
     color: '#9F9F9F',
 
   },
+  infoDetail: {
+    fontSize: 15, 
+    marginTop: 10,
+    marginLeft:10,
+    color: '#9F9F9F',
+
+  },
   label: {
     fontSize: 20, 
     marginTop: 10,
     marginLeft:100,
+    color: '#000'
+  },
+  labelControllo: {
+    fontSize: 20, 
+    marginTop: 10,
+    color: '#000'
+  },
+  labelControlloDetail: {
+    fontSize: 15, 
+    marginTop: 10,
     color: '#000'
   },
   text: {
@@ -136,10 +233,21 @@ const styles = StyleSheet.create({
   boxButtonSave:{
     flex: 0,
     flexDirection: 'row',
-    alignItems: 'flex-end',
-    padding:10,
-    marginBottom:50
-  } 
+    justifyContent: "space-between",
+    alignItems:"center"
+    
+  },
+  scrollView: {
+    backgroundColor: 'pink',
+    marginHorizontal: 20,
+  },
+  boxButtonControllo:{
+    borderColor: "red",
+    borderEndWidth:2,
+    paddingLeft:40,
+    paddingRight:20
+  },
+  
 
 });
 export default styles;

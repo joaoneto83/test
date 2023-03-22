@@ -4,25 +4,18 @@ import { Text,TouchableOpacity,View } from "react-native";
 import styles from "./button-styles";
 
 
-function ButtonSave() {
+function ButtonSave(props) {
 
 
 
   const getSave = () =>{
-    //to do
     console.log("ok" )
    }
  
- 
       return (
-      
-
-          <TouchableOpacity onPress={() => getSave()}  >
-            <Text style={styles.save}> OK</Text> 
+          <TouchableOpacity onPress={() => props.callbackSave()}  >
+            <Text style={styles.save}>OK</Text> 
           </TouchableOpacity>
-   
-
-
       );
   };
 

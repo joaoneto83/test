@@ -19,7 +19,6 @@ const styles = StyleSheet.create({
       borderWidth: 2,
       borderColor:"#E4A83B",
       borderRadius:6,
-      width: 82,
       height:32
 
     },
@@ -60,33 +59,32 @@ const styles = StyleSheet.create({
         fontSize: 16,
         color: '#E4A83B',
         padding:3,
-        paddingHorizontal:6
+        paddingHorizontal:10
       },
       esc: {
         fontSize: 16,
         color: '#FFFFFF',
         backgroundColor:'#F35330',
-        borderWidth: 2,
-        borderColor:"#F35330",
         borderRadius:4,
-        paddingTop:10,
-        paddingLeft:5,
-        margin:10,
-        width:50,
-        height:50
-
+        paddingTop:12,
+        paddingLeft:12,
+        paddingBottom:12,
+        paddingRight:12,
       },
       save: {
         fontSize: 16,
         color: '#FFFFFF',
         backgroundColor:'#86F330',
-        borderWidth: 2,
-        borderColor:"#86F330",
+
         borderRadius:4,
-        padding:10,
-        margin:10,
-        width:50,
-        height:50
+        marginLeft:20,
+        marginRight:20,
+        paddingTop:12,
+        paddingLeft:10,
+        paddingBottom:12,
+        paddingRight:15,
+   
+
       }
   
   });

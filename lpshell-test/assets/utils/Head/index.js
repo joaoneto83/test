@@ -10,7 +10,7 @@ export default class Head extends Component {
   constructor(props){
     super()
     const {title, screem} = props;
-    console.log("s",props, this.state)
+    console.log("head",props, this.state)
   } 
   static getDerivedStateFromProps(props, state) {
     if (props !== state) {

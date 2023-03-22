@@ -5,10 +5,10 @@ import styles from "./button-styles";
 
 
 function ButtonControllo(props) {
-    const [controllo, getOnOff] = useState(props.routes);
+    const [controllo, getOnOff] = useState("");
 
    useEffect(() => {
-    console.log("radio",props,controllo )
+    console.log("controllo",props,controllo )
     
    }, [controllo]
    )
@@ -16,17 +16,13 @@ function ButtonControllo(props) {
  
       return (
         <View style={styles.containerControllo} >
-
-          <TouchableOpacity  onPress={() => getOnOff("Giusto")}  >
-            {controllo == "Giusto" ? <Text style={styles.textTrue}> Giusto</Text> : <Text style={styles.textFalse}> Giusto</Text>}
-          </TouchableOpacity>
-          <TouchableOpacity  onPress={() => getOnOff("Errato")}  >
-            {controllo == "Errato" ? <Text style={styles.textTrue}> Errato</Text> : <Text style={styles.textFalse}> Errato</Text>}
-          </TouchableOpacity>
-          <TouchableOpacity  onPress={() => getOnOff("Manca")}  >
-            {controllo == "Manca" ? <Text style={styles.textTrue}> Manca</Text> : <Text style={styles.textFalse}> Manca</Text>}
-          </TouchableOpacity>
-
+          
+         {  props.routes.map((item) => (
+             <TouchableOpacity  onPress={() => getOnOff(item.value)}  >
+         {item.value == controllo ? <Text style={styles.textTrue}> {item.value}</Text> : <Text style={styles.textFalse}> {item.value}</Text>}
+           </TouchableOpacity>
+            ) )
+         } 
         </View>   
       );
   };

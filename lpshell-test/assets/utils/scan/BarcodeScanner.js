@@ -29,16 +29,14 @@ import styles from "./styles";
       setScanned(true);
       // alert(`Bar code with type ${type} and data ${data} has been scanned!`);
     if (props?.route?.params?.screem ){
-      props.navigation.navigate('InfoAssetControllo', { value: data } )
-      console.log("ok controllo",type, data)
-    }else {
+      props.navigation.navigate('InfoAssetControllo', { value: data, screem: props?.route?.params?.screem } )
+    } else {
       props.navigation.navigate('InfoAssetDetail', { value: data } )
-      console.log("ok",type, data)
+
+      //alert()
     }
-  
     }else {
       setScanned(false);
-      // alert(`Bar code with type ${type} and data ${data} has been scanned!`);
       props.navigation.navigate('InfoAsset')
       console.log("it not ok",type, data)
     }

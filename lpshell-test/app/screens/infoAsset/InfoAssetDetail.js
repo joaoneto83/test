@@ -94,13 +94,11 @@ export default class InfoAssetDetail extends Component {
             <Text style={styles.info}>{this.state.data.maintenanceFrequence}</Text>
             </View> */}
                 </View>
-       
-            
-       
+  
         <View style={styles.boxButton}>
-        <ButtonBasi prop = {this.props} route = "Document"  title ="Document" ></ButtonBasi>
-        <ButtonBasi prop = {this.props} route = "Mappa" title ="Mappa" ></ButtonBasi>
-        <ButtonBasi prop = {this.props} route = "Controllo" title ="Controllo" ></ButtonBasi>
+        <ButtonBasi prop = {this.props} routes = "Document"  title ="Document" ></ButtonBasi>
+        <ButtonBasi prop = {this.props} routes = "Mappa" title ="Mappa" ></ButtonBasi>
+        <ButtonBasi prop = {this.props} routes = "Controllo" title ="Controllo" qrCodes = {this.state.data.qrCodes}></ButtonBasi>
         </View>
     
         </View>

@@ -4,14 +4,14 @@ import { Text,TouchableOpacity,View } from "react-native";
 import styles from "./button-styles";
 
 
-function ButtonEsc() {
+function ButtonEsc(props) {
   const getESC = () =>{
     //to do
     console.log("esc" )
    }
       return (
-          <TouchableOpacity   onPress={() => getESC()}  >
-            <Text style={styles.esc}> ESC</Text> 
+          <TouchableOpacity   onPress={() => props.callbackEsc()}  >
+            <Text style={styles.esc}>ESC</Text> 
           </TouchableOpacity>
       );
   };

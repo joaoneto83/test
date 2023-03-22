@@ -16,13 +16,14 @@ function ButtonRadio(props) {
  
       return (
         <View>
-        {onoff ?  <TouchableOpacity   style={styles.containerOnOff}   onPress = {()=>  getOnOff(!onoff)}  >
+        {onoff ?  
+        <TouchableOpacity   style={styles.containerOnOff}   onPress = {()=>  getOnOff(!onoff)}  >
            <Text style={styles.textTrue}> SI </Text>  
-           <Text style={styles.textFalse}>NO </Text>     
+           <Text style={styles.textFalse}>NO</Text>     
        </TouchableOpacity> :
        <TouchableOpacity   style={styles.containerOnOff}   onPress = {()=>  getOnOff(!onoff)}  >
        <Text style={styles.textFalse}> SI </Text>  
-       <Text style={styles.textTrue}> NO</Text>
+       <Text style={styles.textTrue}>NO</Text>
            </TouchableOpacity>
         }
         </View>   

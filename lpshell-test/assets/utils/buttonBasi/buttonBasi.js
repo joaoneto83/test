@@ -39,7 +39,14 @@ export default class ButtonBasi extends Component {
 
     screem = () => {
       // this.props.prop.navigation.navigate(this.props.route);
-      this.props.prop.navigation.navigate('InfoAsset',{ item: "Pannello", screem: "Controllo" });
+      console.log(this.props.qrCodes)
+      
+      if (this.props.qrCodes.length < 2){
+        this.props.prop.navigation.navigate('InfoAssetControllo',{ item: "Pannello", screem: "Controllo" }); 
+      }else{
+        this.props.prop.navigation.navigate('InfoAsset',{ item: "Pannello", screem: "Controllo" });
+      }
+     
     }
 
   render () {
