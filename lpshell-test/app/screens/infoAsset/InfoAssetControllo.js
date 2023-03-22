@@ -19,7 +19,7 @@ const baseUrlGetControllo = "http://192.168.248.20:8090/Api/Asset/AvailableProce
 const basePost = "http://192.168.248.20:8090/Api/ProcedureAsset"
 
 
-export default class InfoAssetControllo extends Component {
+export default class InfoAssetControllo extends Component { 
 
   constructor(props) {
 
