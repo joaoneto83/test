@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import {  View,Text,map } from "react-native";
-import Head from '../../../assets/utils/Head';
-import ButtonBasi from '../../../assets/utils/buttonBasi/buttonBasi'
+import Head from '../../../components/Head';
+import ButtonBasi from '../../../components/buttonBasi/buttonBasi'
 import axios from "axios";
 import AsyncStorage from '@react-native-community/async-storage'
 

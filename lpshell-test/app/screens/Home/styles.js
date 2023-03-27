@@ -3,26 +3,25 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 30
-
   },
   buttonImageIconStyle:{
     width: 200, 
-    height: 150,
   },
   button:{
     padding:20,
     curso: 'pointer'
   },
   boxHead: {
-    flex: 0,
+    flex: 1,
     flexDirection: "row",
+    alignItems:"center"
   },
   box: {
     flex: 0,
     flexDirection: "row",
     justifyContent: 'center',
-    alignItems: 'center',
-    paddingTop: "10%" 
+    alignItems: 'center', 
+    height:"80%"
   },
   title: {
     fontSize: 35,
@@ -42,9 +41,7 @@ const styles = StyleSheet.create({
     borderRadius: 50
   },
   icone: {
-    width: 100, 
-    height: 100,
-    borderRadius: 5 ,
+    height: "100%",
   },
   welcomeText: {
     fontSize: 20, 

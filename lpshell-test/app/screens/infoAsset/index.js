@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Text, View,Button,TouchableOpacity,Image } from "react-native";
-import Scanner from '../../../assets/utils/scan/BarcodeScanner';
-import Head from '../../../assets/utils/Head'
+import Scanner from '../../../components/scan/BarcodeScanner';
+import Head from '../../../components/Head'
 
 import styles from "./styles";
 
@@ -47,13 +47,15 @@ export default class InfoAsset extends Component {
         <Head prop = {this.props} routes = "InfoAsset" title ="Info Asset" screem= {this.props.route.params?.screem} ></Head>
 
         <View style={styles.boxHome}>
-        {this.props.route.params?.item ? 
+        { this.props.route.params?.item ? 
         <TouchableOpacity style={styles.buttonScanSecund}  onPress = {()=>  this.scan()}  >
                <Image
+                  resizeMode="contain"
          style={styles.buttonImageIconStyleSecund}
               source={require('../../../assets/images/qrcode.png')}
             />
             <Image
+               resizeMode="contain"
          style={styles.check}
               source={require('../../../assets/images/check.png')}
             />

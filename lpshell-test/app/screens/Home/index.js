@@ -10,6 +10,10 @@ export default class Home extends Component {
     super()
        console.log("tes", props)
    }
+ 
+   goMissioni = () => {
+    this.props.navigation.navigate("Missioni")
+   }
 
  handleCreateAccountPress = () => {
     this.props.navigation.navigate("InfoAsset");
@@ -24,6 +28,7 @@ export default class Home extends Component {
     
           <View style={styles.boxHead}>
           <Image
+            resizeMode="contain"
         style={styles.icone}
         source={require('../../../assets/images/icone.png')}
       />
@@ -33,18 +38,21 @@ export default class Home extends Component {
       <View style={styles.box}>
       <TouchableOpacity      style={styles.button}  onPress = {()=>  this.handleCreateAccountPress()}  >
           <Image
+      resizeMode="contain"
        style={styles.buttonImageIconStyle}
             source={require('../../../assets/images/InforAssetButton.png')}
           />
        </TouchableOpacity>
-       <TouchableOpacity style={styles.button}  activeOpacity={0.5}>
+       <TouchableOpacity style={styles.button}  activeOpacity={0.5} onPress = { ()=> this.goMissioni()}>
           <Image
+             resizeMode="contain"
             style={styles.buttonImageIconStyle}
             source={require('../../../assets/images/massioni.png')}
           />
        </TouchableOpacity>
         <TouchableOpacity  style={styles.button}  activeOpacity={0.5}>
           <Image
+           resizeMode="contain"
             style={styles.buttonImageIconStyle}
             source={require('../../../assets/images/Mappa.png')}
           />

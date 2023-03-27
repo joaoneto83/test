@@ -1,16 +1,19 @@
 import React, { Component } from 'react';
-import { View, Text, Image, TouchableOpacity, ScrollView } from "react-native";
-import Head from '../../../assets/utils/Head';
+import { View, Text, Image, TouchableOpacity, ScrollView,SafeAreaView, } from "react-native";
+import Head from '../../../components/Head';
 import axios from "axios";
 import AsyncStorage from '@react-native-community/async-storage';
 import Modal from 'react-native-modal';
 
+
 import styles from "./styles";
-import ButtonSave from '../../../assets/utils/buttonBasi/ButtonSave';
-import ButtonEsc from '../../../assets/utils/buttonBasi/ButtonEsc';
-import ListProcedura from '../../../assets/utils/list/listProcedura';
-import ListControllo from '../../../assets/utils/list/listControllo';
-import Gallery from '../../../assets/utils/gallery'
+import ButtonSave from '../../../components/buttonBasi/ButtonSave';
+import ButtonEsc from '../../../components/buttonBasi/ButtonEsc';
+import ListProcedura from '../../../components/list/listProcedura';
+import ListControllo from '../../../components/list/listControllo';
+import CameraRnc from '../../../components/camera';
+import Gallery from '../../../components/gallery'
+
 
 
 
@@ -23,7 +26,7 @@ export default class InfoAssetControllo extends Component {
 
   constructor(props) {
 
-    super(props);
+  super(props);
     this.state = {
       data: { attributes: [] },
       dataArray: [],
@@ -31,9 +34,19 @@ export default class InfoAssetControllo extends Component {
       Authorization: "",
       qrCode: this.props.route.params.value,
       expand: true,
-      visibleModal: null
+      visibleModal: null,
     }
     this.getData();
+ 
+  }
+  postData= {
+    procedureId: "",
+    assetId:"",
+    assetValue:[],
+  }
+  assetValueData = {
+    procedureAttributeId:"",
+    value:""
   }
  
 
@@ -41,49 +54,52 @@ export default class InfoAssetControllo extends Component {
     this.setState({
       dataControlloArray: item
     })
+    this.postData.procedureId = item.id
+
   }
+  callbackControllo = (item) => {
+
+    this.postData.assetValue = this.state.dataControlloArray.attributes.map( (data)=> 
+    { 
+      if (item.id == data.id) {
+        x = {
+          procedureAttributeId: item.id,
+          value: item.value.toString()
+          } 
+      }else {
+        x = {
+          procedureAttributeId: data.id,
+          value: data.goodValue
+          } 
+      }
+
+    return x
+   
+     })
+     console.log("callbackProcedura ",   this.postData.assetValue)
+  }
+
   callbackEsc = () => {
     console.log("callbackEsc")
-
   }
   callbackSave = async () => {
     this.setState({
       Authorization: await AsyncStorage.getItem('DATA_KEY').then((response) => { return response }),
     })
     
-    console.log("callbackSalvett",  this.state.Authorization.replace(/"/g, ''))
-    await axios.post(basePost , {
-      "procedureId": "0eda1a67-5136-4599-a4ca-8880a67bd5f8",
-      "assetId": "5f4ebb3f-7782-46fa-be87-08b25f5aed2b",
-      "assetValue": [
-     
-       {
-          "procedureAttributeId": "20973f0a-82bd-4ec1-9e88-497cc65097ef",
-          "value": "Corretto"
-        },
-     
-       {
-          "procedureAttributeId": "3036cfd8-7cb1-46da-9517-b3494cfceb39",
-          "value": "true"
-        },
-         
-       {
-          "procedureAttributeId": "e9b61be4-e041-44ce-91cc-c65483fa745a",
-          "value": "10"
-        },
-        {
-          "procedureAttributeId": "8399d6a4-a916-4d13-9b9a-f8e81da79eae",
-          "value": ""
-        }
-      ]
-    }, {
+    console.log("callbackSalvett",  this.postData)
+  await axios.post(basePost ,this.postData, {
       headers: {
         'Content-Type': 'application/json;charset=UTF-8',
         'Authorization': `Bearer ${this.state.Authorization.replace(/"/g, '')}`,
       }
-    })
+    }).then((response) => {
+   
+      console.log("ok", response)
+    });
   }
   returnProdocedura = () => {
+    
     this.setState({
       dataControlloArray: []
     })
@@ -99,8 +115,6 @@ export default class InfoAssetControllo extends Component {
       Authorization: await AsyncStorage.getItem('DATA_KEY').then((response) => { return response }),
       qrCode: this.props.route.params.value,
     }
-    console.log("callbackSalve",  this.state)
-    console.log("t", this.state, this.state.qrCode, this.props.route.params.value)
     await axios.get(baseURLGet + this.state.qrCode.replace(/%/g, ''), {
       headers: {
         'Content-Type': 'application/json;charset=UTF-8',
@@ -113,6 +127,7 @@ export default class InfoAssetControllo extends Component {
         this.setState({
           data: response.data,
         })
+        this.postData.assetId = response.data?.id,
         console.log("p chamada", this.state)
       });
   }
@@ -127,7 +142,7 @@ export default class InfoAssetControllo extends Component {
     )
       .then((response) => {
         this.setState({
-          dataArray: response.data
+          dataArray: response.data,
         })
         console.log("segunda chamada", response.data)
       });
@@ -144,14 +159,23 @@ export default class InfoAssetControllo extends Component {
   _renderModalContent = () => (
     <View style={styles.modalContent}>
         {this._renderButton('Close', () => this.setState({ visibleModal: null }))}
-        <Gallery />
+        {/* <Gallery /> */}
+         <CameraRnc /> 
     </View>
   );
+  onCameraReady = () => {
+    isCameraReady = true
+  };
 
   render() {
     return (
-
+     
       <View style={{ flex: 1 }}  >
+  
+    
+
+   
+
             <Modal     isVisible={this.state.visibleModal === 1}
               animationIn={'slideInLeft'}
               animationOut={'slideOutRight'}>
@@ -231,7 +255,7 @@ export default class InfoAssetControllo extends Component {
               }
               {this.state.dataControlloArray.length != 0 ?
                 <View>
-                  <ListControllo list={this.state.dataControlloArray} />
+                  <ListControllo list={this.state.dataControlloArray} callbackControllo = {this.callbackControllo} />
                   <View style={styles.boxButtonSave} >
                     <TouchableOpacity style={styles.BoxImagemButton} onPress={() => this.returnProdocedura()}>
                       <Image
@@ -241,7 +265,7 @@ export default class InfoAssetControllo extends Component {
                     </TouchableOpacity>
                     <View style={styles.boxButtonSave}>
                       <ButtonEsc callbackEsc={this.callbackEsc} />
-                      <ButtonSave callbackSave={this.callbackSave} />
+                      <ButtonSave callbackSave={this.callbackSave} procedura={this.state.dataControlloArray}  />
                     </View>
                   </View>
                 </View>

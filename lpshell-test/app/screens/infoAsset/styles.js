@@ -18,7 +18,6 @@ const styles = StyleSheet.create({
   buttonImageIconStyleSecund:{
     width: 120, 
     height: 90,
- 
   },
   
   buttonImage:{
@@ -235,17 +234,17 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: "space-between",
     alignItems:"center"
-    
   },
   scrollView: {
     backgroundColor: 'pink',
-    marginHorizontal: 20,
+    marginHorizontal: 20
   },
   boxButtonControllo:{
     borderColor: "red",
     borderEndWidth:2,
     paddingLeft:40,
     paddingRight:20
+  
   },
   
 
