@@ -43,6 +43,14 @@ const styles = StyleSheet.create({
     borderRadius: 4,
     borderColor: 'rgba(0, 0, 0, 0.1)',
   },
+  modalContentSave: {
+    flexDirection:"row-reverse",
+    backgroundColor: 'white',
+    padding: 22,
+    justifyContent:"space-between",
+    borderRadius: 4,
+    borderColor: 'rgba(0, 0, 0, 0.1)',
+  },
   buttonBorder:{
     borderColor: '#E4A83B'
   },
@@ -142,6 +150,11 @@ const styles = StyleSheet.create({
     paddingLeft:10
   },
   title: {
+    fontSize: 20,
+    color: '#9F9F9F',
+  },
+  titleSave: {
+    textAlign:"center",
     fontSize: 20,
     color: '#9F9F9F',
   },

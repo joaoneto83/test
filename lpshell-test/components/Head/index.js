@@ -41,10 +41,8 @@ export default class Head extends Component {
         default:
           this.images = require('../../assets/images/infoAssetIcon.png')
     }
-
     return this.images
    }
-  
     home = () => {
       this.props.prop.navigation.navigate('Home');
     };
@@ -68,11 +66,11 @@ export default class Head extends Component {
         { this.props?.title == "Missioni" ? <Image
                 resizeMode="contain"
           style={styles.iconeMissioni}
-          source={this.getTitle(this.props?.title)}
-        />: <Image
+          source={this.getTitle(this.props?.title) }
+        /> : <Image
         resizeMode="contain"
         style={styles.icone}
-        source={this.getTitle(this.props?.title)}
+        source={this.getTitle(this.props?.title) }
       /> }
          </TouchableOpacity>
          <Text style={styles.title}>{this.props?.title}</Text>
@@ -93,10 +91,6 @@ export default class Head extends Component {
         />
           </View>: undefined}
 </View>
-      
-         
-
-        
       </View>
     );
   }

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Text,View,ScrollView } from "react-native";
-import ButtonRadio from '../buttonBasi/ButtonRadio';
-import ButtonControllo from '../buttonBasi/ButtonControllo';
+import ButtonRadio from '../buttons/ButtonRadio';
+import ButtonControllo from '../buttons/ButtonControllo';
 
 
 import styles from "./list-styles";

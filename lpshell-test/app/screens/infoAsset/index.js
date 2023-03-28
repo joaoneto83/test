@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
-import { Text, View,Button,TouchableOpacity,Image } from "react-native";
-import Scanner from '../../../components/scan/BarcodeScanner';
+import { Text, View,TouchableOpacity,Image } from "react-native";
+
 import Head from '../../../components/Head'
+import QrcodeScreen from '../../../components/scan/qrcodeScreen';
 
 import styles from "./styles";
 
@@ -12,7 +13,6 @@ export default class InfoAsset extends Component {
 
   constructor(props){
       super(props);
-      console.log("t",props)
   }
   // static shouldComponentUpdate(props, state) {
   //   console.log("r",props,state)
@@ -44,40 +44,8 @@ export default class InfoAsset extends Component {
     return (
 
       <View style={styles.container}>
-        <Head prop = {this.props} routes = "InfoAsset" title ="Info Asset" screem= {this.props.route.params?.screem} ></Head>
-
-        <View style={styles.boxHome}>
-        { this.props.route.params?.item ? 
-        <TouchableOpacity style={styles.buttonScanSecund}  onPress = {()=>  this.scan()}  >
-               <Image
-                  resizeMode="contain"
-         style={styles.buttonImageIconStyleSecund}
-              source={require('../../../assets/images/qrcode.png')}
-            />
-            <Image
-               resizeMode="contain"
-         style={styles.check}
-              source={require('../../../assets/images/check.png')}
-            />
-          </TouchableOpacity>: undefined}
-        <TouchableOpacity style={styles.buttonScan}  onPress = {()=>  this.scan()}  >
-            <Image
-         style={styles.buttonImageIconStyle}
-              source={require('../../../assets/images/qrcode.png')}
-            />
-            <View style={styles.boxInfo}> 
-            <Text style={styles.text}>Scan QR code</Text>
-            <Text style={styles.textItem}>{this.props.route.params?.item}</Text>
-            </View>
-             
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.buttonCamera}  onPress = {()=>  this.scan()}  >
-            <Image
-         style={styles.buttonImageStyle}
-              source={require('../../../assets/images/camera.png')}
-            />
-          </TouchableOpacity>
-        </View>
+        <Head prop = {this.props} routes = "InfoAsset" title ="Info Asset" screem= {this.props.route.params?.screem} />
+        <QrcodeScreen data = {this.props} scan={this.scan}/>
       </View>
       
     );

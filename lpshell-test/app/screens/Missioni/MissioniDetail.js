@@ -12,17 +12,67 @@ const baseUrlMissio = "http://192.168.248.20:8090/Api/Mission/"
 
 export default class MissioniDetail extends Component {
 
+    data=[[
+        {
+          "id": "6739d643-20f5-494b-8873-0007a0010e36",
+          "description": "GoodMissione",
+          "creationTime": "2023-03-27T09:41:19.3825809",
+          "creationUserId": "fc3babc0-7ea1-42f6-872b-c634adb76b91",
+          "modificationUserId": "fc3babc0-7ea1-42f6-872b-c634adb76b91",
+          "modificationTime": "2023-03-27T09:41:19.3826843",
+          "statusId": 2,
+          "errors": 0,
+          "assignedUserId": "fc3babc0-7ea1-42f6-872b-c634adb76b91",
+          "assignedUser": "ADMIN@LOGICAPRO",
+          "lastExecutionUserId": "b8101b01-95a2-43fd-9be2-002ec0382658",
+          "lastExecutionTime": "2023-03-27T12:52:40.554922",
+          "totalTasks": 1,
+          "completedTasks": 1
+        },
+        {
+          "id": "d81401cd-9ff8-4fde-8f18-9dca8f8b5ff8",
+          "description": "PerJoao",
+          "creationTime": "2023-03-24T07:57:01.6845391",
+          "creationUserId": "fc3babc0-7ea1-42f6-872b-c634adb76b91",
+          "modificationUserId": "fc3babc0-7ea1-42f6-872b-c634adb76b91",
+          "modificationTime": "2023-03-24T07:57:01.6845691",
+          "statusId": 2,
+          "errors": 1,
+          "assignedUserId": "fc3babc0-7ea1-42f6-872b-c634adb76b91",
+          "assignedUser": "ADMIN@LOGICAPRO",
+          "lastExecutionUserId": "b8101b01-95a2-43fd-9be2-002ec0382658",
+          "lastExecutionTime": "2023-03-27T12:53:22.4917673",
+          "totalTasks": 3,
+          "completedTasks": 2
+        },
+        {
+          "id": "4aba92fb-7d84-4f29-9ae0-fed0a0ecf2f7",
+          "description": "BadMission",
+          "creationTime": "2023-03-27T08:44:06.5554182",
+          "creationUserId": "fc3babc0-7ea1-42f6-872b-c634adb76b91",
+          "modificationUserId": "fc3babc0-7ea1-42f6-872b-c634adb76b91",
+          "modificationTime": "2023-03-27T08:44:06.5555447",
+          "statusId": 1,
+          "errors": 1,
+          "assignedUserId": "fc3babc0-7ea1-42f6-872b-c634adb76b91",
+          "assignedUser": "ADMIN@LOGICAPRO",
+          "lastExecutionUserId": "b8101b01-95a2-43fd-9be2-002ec0382658",
+          "lastExecutionTime": "2023-03-27T12:53:52.9524054",
+          "totalTasks": 2,
+          "completedTasks": 0
+        }
+      ]]
 
     constructor(props) {
         super(props);
         this.state = {
             backData: {},
             Authorization: "",
-            procedureAssets: []
+            procedureAssets: [...this.data]
         }
         this.getData();
     }
-    data = [];
+   // data = [];
 
     getData = async () => {
         console.log("state", this.state)
@@ -40,7 +90,7 @@ export default class MissioniDetail extends Component {
 
             console.log("response", response.data)
 
-          this.data = response.data.procedureAssets
+        //  this.data = response.data.procedureAssets
             this.setState({
                 backData: response.data,
                 procedureAssets:[...this.data]

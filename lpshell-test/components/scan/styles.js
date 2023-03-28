@@ -23,6 +23,18 @@ const styles = StyleSheet.create({
      text: {
       color:'#fff',
      },
+     textQr: {
+      fontSize: 20, 
+      marginTop: 20,
+      marginLeft:50,
+      color: '#9F9F9F'
+    },
+    textItem: {
+      fontSize: 20, 
+      marginTop: 20,
+      marginLeft:10,
+      color: '#9F9F9F'
+    },
      boxHead: {
         flex: 0,
         flexDirection: "row",
@@ -45,6 +57,50 @@ const styles = StyleSheet.create({
         marginBottom: 10,
         marginTop: 20,
         color: '#787777'
+      },
+      boxHome: {
+        flex: 1,
+        flexDirection: "row",
+        justifyContent:'flex-end',
+        alignItems: 'center',
+       
+      },
+      buttonScanSecund:{
+        marginTop:"7%"
+      },
+      buttonImageIconStyleSecund:{
+        width: 120, 
+        height: 90,
+      },
+      check:{
+        width: 80, 
+        height: 52,
+        marginTop: -60,
+        marginLeft: 20
+      },
+      buttonScan:{
+        padding:20,
+     
+      },
+      buttonImageIconStyle:{
+        width: 265, 
+        height: 200,
+     
+      },
+      boxInfo: {
+        flex: 0,
+        flexDirection: "row",
+       
+        alignItems: 'center',
+      },
+      buttonCamera:{
+        padding:20,
+        paddingLeft:"20%",
+        curso: 'pointer'
+      },
+      buttonImageStyle:{
+        width: 90, 
+        height: 72,
       },
   });
 

@@ -81,8 +81,8 @@ export default class SignIn extends Component {
   constructor(props) {
     super(props);
      this.state = {
-      email: 'admin@logicapro',
-      password: 'L0g1caPr0!',
+      email: '',
+      password: '',
       error: '',
       hidepass:true
      };
@@ -134,7 +134,7 @@ export default class SignIn extends Component {
 
   handleSignInPress = async () => {
   
-    //  return this.props.navigation.navigate("Home");
+    return this.props.navigation.navigate("Home");
   
 
     if (this.state.email.length === 0 ) {
