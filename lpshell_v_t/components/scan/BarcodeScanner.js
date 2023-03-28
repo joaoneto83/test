@@ -8,7 +8,7 @@ import styles from "./styles";
 
 // ETES*100891*0001*sbeext*localhost
 
- function CameraS(props) {
+ function Scanner(props) {
     
   const [hasPermission, setHasPermission] = useState(null);
   const [scanned, setScanned] = useState(false);
@@ -60,16 +60,17 @@ import styles from "./styles";
 
   return (
     <View style={styles.container}>
+       <Head  prop = {props} routes ="InfoAsset" title ="Info Asset" screem= {props?.route?.params?.screem} ></Head>
          <View style={styles.containerScan}>
          <BarCodeScanner 
         onBarCodeScanned={scanned ? undefined : handleBarCodeScanned}
         style={StyleSheet.absoluteFillObject}
       />
-
+      
          </View>
      
     </View>
   );
 }
 
-export default CameraS;
+export default Scanner;

@@ -4,7 +4,7 @@ import { BarCodeScanner } from 'expo-barcode-scanner';
 import Head from '../Head';
 
 
-import styles from "./styles";
+import styles from "../scan/styles";
 
 // ETES*100891*0001*sbeext*localhost
 
@@ -65,7 +65,7 @@ import styles from "./styles";
         onBarCodeScanned={scanned ? undefined : handleBarCodeScanned}
         style={StyleSheet.absoluteFillObject}
       />
-
+      
          </View>
      
     </View>

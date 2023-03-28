@@ -25,7 +25,7 @@ const basePost = "http://192.168.248.20:8090/Api/ProcedureAsset"
 
 export default class InfoAssetControllo extends Component { 
 
-  off = true
+  off = false;
   data = {
     "description": "Estintore 1 reparto presse",
     "keyNum": 1,
@@ -196,7 +196,6 @@ export default class InfoAssetControllo extends Component {
       expand: true,
       visibleModal: null,
       visibleModalSave: null,
-      visibleModalGallery:null,
     }
     this.getData();
  
@@ -345,36 +344,19 @@ export default class InfoAssetControllo extends Component {
   );
   _renderModalContentSave = () => (
     <View style={styles.modalContentSave}>
-      <View style={{flex:0, flexDirection:"row-reverse"}}> 
-      {this._renderButton('Close', () => this.setState({ visibleModalSave: null }))}
-      </View>
-      <View>
-      <Text style={styles.titleSave}>Salvato con successo!</Text>
-      </View>
-      
-    </View>
-    
-  );
-  _renderModalContentGallery = () => (
-    <View style={styles.modalContent}>
-        {this._renderButton('Close', () => this.setState({ visibleModalGallery: null }))}
-        <Gallery />
+        {this._renderButton('Close', () => this.setState({ visibleModalSave: null }))}
+        
+        <Text style={styles.title}>Salvato con successo!</Text>
     </View>
     
   );
 
   _renderModalContent = () => (
     <View style={styles.modalContent}>
-      
-      <View style={{flex:0, alignItems:"center"}} >
-      {this._renderButton('Close', () => this.setState({ visibleModal: null }))}
-      <TouchableOpacity>
-    <View style={{width:50, height:50, borderColor:"#E4A83B", borderWidth:2, borderRadius:100, marginTop:200}}/>
-    </TouchableOpacity>
-      </View>
-
-      <CameraS/>
-  
+        {this._renderButton('Close', () => this.setState({ visibleModal: null }))}
+        {/* <Gallery /> 
+         <CameraRnc /> */}
+         <CameraS/>
     </View>
     
   );
@@ -397,11 +379,6 @@ export default class InfoAssetControllo extends Component {
               animationIn={'slideInLeft'}
               animationOut={'slideOutRight'}>
                     {this._renderModalContentSave()}
-                </Modal>
-                <Modal     isVisible={this.state.visibleModalGallery === 1}
-              animationIn={'slideInLeft'}
-              animationOut={'slideOutRight'}>
-                    {this._renderModalContentGallery()}
                 </Modal>
              
              
@@ -464,15 +441,6 @@ export default class InfoAssetControllo extends Component {
                     style={styles.buttonImage}
                     source={require('../../../assets/images/camera.png')}
                   />
-          
-                </TouchableOpacity>
-                <TouchableOpacity  style={{flex:0, alignItems:"center", paddingLeft:20}} onPress={ () =>
-                      this.setState({ visibleModalGallery: 1 })}>
-                  <Image
-                    style={styles.buttonImageGellery}
-                    source={require('../../../assets/images/icon_picture.png')}
-                  />
-                            <Text style={styles.infoDetail}>Galleria</Text>
                 </TouchableOpacity>
 
               </View>

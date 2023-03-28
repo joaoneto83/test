@@ -24,11 +24,6 @@ const styles = StyleSheet.create({
     width: 150, 
     height: 120,
   },
-  buttonImageGellery:{
-    width: 70, 
-    height: 60,
-    marginLeft:10
-  },
   check:{
     width: 80, 
     height: 52,
@@ -49,13 +44,12 @@ const styles = StyleSheet.create({
     borderColor: 'rgba(0, 0, 0, 0.1)',
   },
   modalContentSave: {
-    flexDirection:"column",
+    flexDirection:"row-reverse",
     backgroundColor: 'white',
     padding: 22,
     justifyContent:"space-between",
     borderRadius: 4,
     borderColor: 'rgba(0, 0, 0, 0.1)',
-    textAlign:"center"
   },
   buttonBorder:{
     borderColor: '#E4A83B'
@@ -100,7 +94,6 @@ const styles = StyleSheet.create({
   },
   boxImage: {
     flex: 0,
-    flexDirection: "row",
     alignItems: 'center',
     paddingTop:"10%"
   },
