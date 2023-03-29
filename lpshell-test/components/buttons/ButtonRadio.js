@@ -6,9 +6,9 @@ import styles from "./button-styles";
 
 function ButtonRadio(props) {
     const [onoff, getOnOff] = useState(props.values);
-
+    
    useEffect(() => {
-    console.log("radio",props,onoff )
+    console.log("radio",onoff,props.values )
     props.callbackButtonRadio(value = {value :onoff, id:props.id})
    }, [onoff]
    )
@@ -16,12 +16,12 @@ function ButtonRadio(props) {
  
       return (
         <View>
-        {onoff ?  
-        <TouchableOpacity   style={styles.containerOnOff}   onPress = {()=>  getOnOff(!onoff)}  >
+        {onoff == "true" ?  
+        <TouchableOpacity   style={styles.containerOnOff}   onPress = {()=>  getOnOff("false")}  >
            <Text style={styles.textTrue}> SI </Text>  
            <Text style={styles.textFalse}>NO</Text>     
        </TouchableOpacity> :
-       <TouchableOpacity   style={styles.containerOnOff}   onPress = {()=>  getOnOff(!onoff)}  >
+       <TouchableOpacity   style={styles.containerOnOff}   onPress = {()=>  getOnOff("true")}  >
        <Text style={styles.textFalse}> SI </Text>  
        <Text style={styles.textTrue}>NO</Text>
            </TouchableOpacity>

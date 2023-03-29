@@ -29,7 +29,7 @@ function Gallery(props) {
             </View>
             <View style={styles.ImageBOX}>
             <ScrollView style={{width:100}}>
-            {arrayImagem.map((item) => (
+            {arrayImagem?.map((item) => (
                     <TouchableOpacity onPress={() => getImagem(item?.url)}>
                     <Image
                         style={styles.Image}

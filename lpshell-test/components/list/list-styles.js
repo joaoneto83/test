@@ -58,6 +58,7 @@ const styles = StyleSheet.create({
         flex: 0,
         flexDirection: "row",
         alignItems: "stretch",
+        height:42
       },
       listControllo: {
         flex: 0,
@@ -65,13 +66,14 @@ const styles = StyleSheet.create({
         alignItems: "stretch",
         paddingBottom:10,
         paddingTop:10,
+
         borderBottomWidth:1,
         marginBottom:15,
         borderColor: "#9f9f9f29"
       },
       labelControllo: {
-        fontSize: 20, 
-        marginTop: 10,
+        fontSize: 18, 
+        marginTop: 8,
         color: '#000'
       },
   });

@@ -20,7 +20,7 @@ function ListProcedura(props) {
               <Text style={styles.title}>Procedures</Text>
         <View style={styles.containerProcedura} >   
        
-         {  props?.list.map((item) => (
+         {  props?.list?.map((item) => (
              <TouchableOpacity  onPress={() => props.callbackProcedura(item)}  >
             <Text style={styles.textTrueProcedura}> {item.name}</Text>
            </TouchableOpacity>

@@ -8,11 +8,12 @@ const styles = StyleSheet.create({
       },
     boxLeft:{
         paddingTop:30,
-       minWidth:"30%",
-       alignItems:"center",
-       justifyContent:"center",
-       borderEndWidth:1,
-       borderColor:"#e1e1e1"
+        minWidth:"30%",
+        maxWidth:"35%",
+        alignItems:"center",
+        justifyContent:"center",
+        borderEndWidth:1,
+        borderColor:"#e1e1e1"
     },
 
     boxRigth:{
