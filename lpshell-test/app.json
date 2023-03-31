@@ -43,6 +43,12 @@
         {
           "cameraPermission": "Allow $(PRODUCT_NAME) to access camera."
         }
+      ],
+      [
+        "expo-image-picker",
+        {
+          "photosPermission": "L'app accede alle tue foto in modo che tu possa condividerle con il tuo server"
+        }
       ]
     ],
     "extra": {

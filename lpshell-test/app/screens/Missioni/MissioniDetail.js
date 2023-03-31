@@ -8,7 +8,7 @@ import Head from '../../../components/Head';
 import styles from "./styles";
 import Styles from "./styles";
 
-const baseUrlMissio = "http://192.168.248.20:8090/Api/Mission/"
+const baseUrlMissio = "http://192.168.248.20:8090/Api/Mission/Mobile/"
 
 export default class MissioniDetail extends Component {
 
@@ -103,6 +103,9 @@ export default class MissioniDetail extends Component {
 
         )
     }
+    controllo = (item) =>{
+        this.props.navigation.navigate('QrcideMissioni', {procedureId: item});
+    }
 
     search = (value) => {
         let filterData = [...this.data];
@@ -119,7 +122,7 @@ export default class MissioniDetail extends Component {
     render() {
         return (
             <View style={{ flex: 1 }}>
-                <Head prop={this.props} routes="Missioni" title="Missioni" screem="Dettagli" search={this.search} />
+                <Head prop={this.props} routes="Mission" title="Missioni"  seach ="true" screem="Dettagli" search={this.search} />
                 <ScrollView >
                     <View style={styles.container} >
                         <View style={styles.boxLeft}>
@@ -156,8 +159,12 @@ export default class MissioniDetail extends Component {
                             </View>
                          { !this.state?.procedureAssets ? undefined : this.state?.procedureAssets.map((item) => (
                                 <View style={styles.DatacTableRow}>
-                                    <Text style={styles.labelRow}></Text>
-                                    <TouchableOpacity style={styles.rowD} >
+                                    <View style={{ maxWidth:"30%", minWidth:"30%",}}>
+                                    <Text style={styles.labelRowP}>{item.procedure}</Text>
+                                    <Text style={styles.labelRow}>{item.asset}</Text>
+                                   
+                                    </View>
+                                    <TouchableOpacity style={styles.rowD} onPress={() => this.controllo(item.procedureId)} >
                                         <Image
                                             style={Styles.iconRow}
                                             source={require('../../../assets/images/settings.png')}

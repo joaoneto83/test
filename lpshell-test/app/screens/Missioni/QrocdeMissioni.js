@@ -8,7 +8,7 @@ import styles from "./styles";
 
 
 
-export default class InfoAsset extends Component {
+export default class QrcideMissioni extends Component {
 
 
   constructor(props){
@@ -20,7 +20,7 @@ export default class InfoAsset extends Component {
   // }
   static getDerivedStateFromProps(props, state) {
     if (props !== state) {
-      console.log("r",props);
+      console.log("mission",props);
       return {
         value: props.value,
       }
@@ -34,22 +34,16 @@ export default class InfoAsset extends Component {
       this.props.navigation.navigate('Home');
     };
     scan = () => {
-      this.props.navigation.navigate('Scanner',{routes:"InfoAsset", title:"Info Asset", screem: this.props.route.params?.screem});
+      this.props.navigation.navigate('Scanner',{routes:"Mission", title:"Missioni", procedureId:this.props.route.params?.procedureId, screem: this.props.route.params?.screem});
     };
-    infoAsset = () => {
-      this.props.navigation.navigate('InfoAsset');
-    }
+
 
   render () {
     return (
-
-      <View style={styles.container}>
-        <Head prop = {this.props} routes = "InfoAsset" title ="Info Asset" screem= {this.props.route.params?.screem} />
+      <View style={styles.containerMission}>
+        <Head prop = {this.props}  title ="Missioni"/>
         <QrcodeScreen data = {this.props} scan={this.scan}/>
       </View>
-      
     );
-
   }
-  
 };

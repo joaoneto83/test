@@ -49,6 +49,7 @@ export default class Head extends Component {
   };
 
   screem = () => {
+    console.log("screen",this.props)
     this.props.prop.navigation.navigate(this.props.routes);
   }
 
@@ -63,7 +64,7 @@ export default class Head extends Component {
             source={require('../../assets/images/icone.png')}
           />
         </TouchableOpacity>
-        <TouchableOpacity style={styles.buttonHead}    >
+        <TouchableOpacity style={styles.buttonHead}   onPress={() => this.screem()} >
           {this.props?.title == "Missioni" ? <Image
             resizeMode="contain"
             style={styles.iconeMissioni}
@@ -77,7 +78,7 @@ export default class Head extends Component {
         <Text style={styles.title}>{this.props?.title}</Text>
         <Text style={styles.subTitle}>{this.props?.screem}</Text>
         <View style={styles.containerSearch}>
-          {this.props?.title == "Missioni" ?
+          {this.props?.seach == "true" ?
             <View style={styles.boxSearch}>
               <Image
                 style={styles.iconeSearch}

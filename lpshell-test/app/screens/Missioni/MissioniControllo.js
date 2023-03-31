@@ -4,14 +4,13 @@ import Head from '../../../components/Head';
 import axios from "axios";
 import AsyncStorage from '@react-native-community/async-storage';
 import Modal from 'react-native-modal';
+import * as ImagePicker from 'expo-image-picker';
 
 
 import styles from "./styles";
 import ButtonSave from '../../../components/buttons/ButtonSave';
 import ButtonEsc from '../../../components/buttons/ButtonEsc';
-import ListProcedura from '../../../components/list/listProcedura';
 import ListControllo from '../../../components/list/listControllo';
-import CameraRnc from '../../../components/camera';
 import Gallery from '../../../components/gallery';
 import CameraS from '../../../components/camera/CameraS';
 
@@ -19,169 +18,14 @@ import CameraS from '../../../components/camera/CameraS';
 
 
 const baseURLGet = "http://192.168.248.20:6090/api/assets/asset/QR/";
-const baseUrlGetControllo = "http://192.168.248.20:8090/Api/Asset/AvailableProcedures/"
-const basePost = "http://192.168.248.20:8090/Api/ProcedureAsset"
+const baseUrlGetControllo = "http://192.168.248.20:8090/Api/Procedure/Mobile/"
+const basePost = "http://192.168.248.20:8090/Api/ProcedureAsset/Prova/"
 
 
-export default class InfoAssetControllo extends Component { 
+export default class MissioniControllo extends Component { 
 
   off = false
-  // data = {
-  //   "description": "Estintore 1 reparto presse",
-  //   "keyNum": 1,
-  //   "idAssetType": "e1a52135-6530-448c-bcac-b146babe2ccc",
-  //   "qrCodes": [
-  //     {
-  //       "description": "Etichetta",
-  //       "sequenceNumber": 1
-  //     },
-  //     {
-  //       "description": "Carrello",
-  //       "sequenceNumber": 0
-  //     }
-  //   ],
-  //   "attributes": [
-  //     {
-  //       "attribute": {
-  //         "id": "c5208d79-5fc9-4da1-8ca9-04bcee027029",
-  //         "description": "Carrellato"
-  //       },
-  //       "value": "true"
-  //     },
-  //     {
-  //       "attribute": {
-  //         "id": "01de8210-c137-4e80-9635-1e4332ce7ab1",
-  //         "description": "Peso"
-  //       },
-  //       "value": "35"
-  //     },
-  //     {
-  //       "attribute": {
-  //         "id": "21ef4c99-9448-41a5-b22c-d5568edd43b3",
-  //         "description": "Posizionamento"
-  //       },
-  //       "value": "Dietro la pressa 20000"
-  //     },
-  //     {
-  //       "attribute": {
-  //         "id": "5ad9b23a-372a-4d8d-b805-fdb4056c3096",
-  //         "description": "Estinguente"
-  //       },
-  //       "value": "Polvere"
-  //     }
-  //   ],
-  //   "register": "100891",
-  //   "productionYear": 1999,
-  //   "factory": "Fire inc.",
-  //   "revisionFrequence": 1,
-  //   "maintenanceFrequence": 3,
-  //   "id": "5f4ebb3f-7782-46fa-be87-08b25f5aed2b"
-  // }
 
-  // dataControllo = [
-  //   {
-  //     "id": "0eda1a67-5136-4599-a4ca-8880a67bd5f8",
-  //     "name": "Procedura mensile estintori a polvere",
-  //     "assetTypeId": "e1a52135-6530-448c-bcac-b146babe2ccc",
-  //     "assetAttributeId": null,
-  //     "designedValue": null,
-  //     "attributes": [
-  //       {
-  //         "goodValue": "Corretto",
-  //         "format": 4,
-  //         "list": [
-  //           {
-  //             "value": "Corretto"
-  //           },
-  //           {
-  //             "value": "Errato"
-  //           },
-  //           {
-  //             "value": "Mancante"
-  //           }
-  //         ],
-  //         "id": "20973f0a-82bd-4ec1-9e88-497cc65097ef",
-  //         "description": "Numerato"
-  //       },
-  //       {
-  //         "goodValue": "true",
-  //         "format": 3,
-  //         "list": [],
-  //         "id": "3036cfd8-7cb1-46da-9517-b3494cfceb39",
-  //         "description": "Presente"
-  //       },
-  //       {
-  //         "goodValue": "10",
-  //         "format": 2,
-  //         "list": [],
-  //         "id": "e9b61be4-e041-44ce-91cc-c65483fa745a",
-  //         "description": "Pressione"
-  //       },
-  //       {
-  //         "goodValue": "1",
-  //         "format": 1,
-  //         "list": [],
-  //         "id": "8399d6a4-a916-4d13-9b9a-f8e81da79eae",
-  //         "description": "Nota"
-  //       }
-  //     ]
-  //   },
-  //   {
-  //     "id": "f9143d41-2da2-4362-a026-97d0014e64e7",
-  //     "name": "Procedura settimana",
-  //     "assetTypeId": "e1a52135-6530-448c-bcac-b146babe2ccc",
-  //     "assetAttributeId": null,
-  //     "designedValue": null,
-  //     "attributes": [
-  //       {
-  //         "goodValue": "Arrotolata correttamente",
-  //         "format": 4,
-  //         "list": [
-  //           {
-  //             "value": "Arrotolata correttamente"
-  //           },
-  //           {
-  //             "value": "Srotolata scorrettamente"
-  //           }
-  //         ],
-  //         "id": "edfa744b-d91c-438a-9bee-48b63cc2b9bf",
-  //         "description": "Stato della manichetta"
-  //       },
-  //       {
-  //         "goodValue": "Corretto",
-  //         "format": 4,
-  //         "list": [
-  //           {
-  //             "value": "Corretto"
-  //           },
-  //           {
-  //             "value": "Errato"
-  //           },
-  //           {
-  //             "value": "Mancante"
-  //           }
-  //         ],
-  //         "id": "20973f0a-82bd-4ec1-9e88-497cc65097ef",
-  //         "description": "Numerato"
-  //       },
-  //       {
-  //         "goodValue": "false",
-  //         "format": 3,
-  //         "list": [],
-  //         "id": "90dcbc00-aad4-48de-b403-a34ee0cb5592",
-  //         "description": "Anomalie"
-  //       },
-  //       {
-  //         "goodValue": "true",
-  //         "format": 3,
-  //         "list": [],
-  //         "id": "3036cfd8-7cb1-46da-9517-b3494cfceb39",
-  //         "description": "Presente"
-  //       }
-  //     ]
-  //   }
-
-  // ]
 
 
   constructor(props) {
@@ -202,15 +46,17 @@ export default class InfoAssetControllo extends Component {
  
   }
   postData= {
-    procedureId: "",
-    assetId:"",
-    assetValue:[],
+    // procedureId: "",
+    // assetId:"",
+    // assetValue:[],
+
   }
+   formData = new FormData();
   assetValueData = {
     procedureAttributeId:"",
     value:""
   }
- 
+  l
 
   callbackProcedura = (item) => {
     this.setState({
@@ -249,8 +95,32 @@ export default class InfoAssetControllo extends Component {
   callbackEsc = () => {
     console.log("callbackEsc")
   }
-  callbackSave = async () => {
 
+  pickImage = async () => {
+    // No permissions request is necessary for launching the image library
+    let result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.All,
+      allowsEditing: true,
+      aspect: [4, 3],
+      quality: 1,
+    });
+
+    let photo = {
+        uri: result.assets[0].uri,
+        type: 'image/jpeg',
+        name: 'photo.jpg',
+      };
+   
+    this.formData.append("filename", photo);
+
+    if (!result.canceled) {
+        console.log("test",result.assets[0].uri);
+        this.callbackSave()
+    }
+  };
+  
+  callbackSave = async () => {
+    
     this.setState({ visibleModal: null,
       visibleModalSave: 1,
      })
@@ -258,8 +128,8 @@ export default class InfoAssetControllo extends Component {
       Authorization: await AsyncStorage.getItem('DATA_KEY').then((response) => { return response }),
     })
     
-    console.log("callbackSalvett", this.postData)
-     await axios.post(basePost ,this.postData, {
+    console.log("callbackSalvett", this.formData)
+     await axios.post(basePost +  this.props?.route?.params?.procedureId ,this.formData, {
       headers: {
         'Content-Type': 'application/json;charset=UTF-8',
         'Authorization': `Bearer ${this.state.Authorization.replace(/"/g, '')}`,
@@ -269,12 +139,7 @@ export default class InfoAssetControllo extends Component {
       console.log("ok", response)
     });
   }
-  returnProdocedura = () => {
-    
-    this.setState({
-      dataControlloArray: []
-    })
-  }
+
   getExpand = ()=>{
    
    this.setState({
@@ -314,15 +179,12 @@ export default class InfoAssetControllo extends Component {
           console.log("p chamada", this.state)
         });
     }
-
-
  
   }
   getControllo = async (item) => {
     console.log("item", item)
    
-
-  await axios.get(baseUrlGetControllo + item, {
+  await axios.get(baseUrlGetControllo +  this.props?.route?.params?.procedureId, {
     headers: {
       'Content-Type': 'application/json;charset=UTF-8',
       'Authorization': `Bearer ${this.state.Authorization.replace(/"/g, '')}`,
@@ -332,9 +194,9 @@ export default class InfoAssetControllo extends Component {
     .then((response) => {
     
       this.setState({
-        dataArray: response.data,
+        dataControlloArray: response.data,
       })
-      console.log("segunda chamada", response.data)
+      console.log("procedura missini", response.data)
     });
 
   }
@@ -408,14 +270,14 @@ export default class InfoAssetControllo extends Component {
                 </Modal>
              
              
-        <Head prop={this.props} routes="InfoAsset" title="Info Asset" screem={this.props.route.params?.screem} ></Head>
+        <Head prop={this.props} route="Mission" title="Missioni" screem="controllo" ></Head>
         <ScrollView>
           <View style={styles.containerControllo}>
 
             <View style={styles.boxControlloLeft}>
               { !this.state.expand ? 
               <View style={styles.boxFlex}>
-              <Text style={styles.title}>Dettaglio</Text>
+              <Text style={styles.titleControllo}>Dettaglio</Text>
               <TouchableOpacity style={styles.BoxImagemButton} onPress={() => this.getExpand()}>
                       <Image
                         style={styles.imagemCheronI}
@@ -425,7 +287,7 @@ export default class InfoAssetControllo extends Component {
               </View>
               :<View>
               <View style={styles.boxFlex}>
-              <Text style={styles.title}>Dettaglio</Text>
+              <Text style={styles.titleControllo}>Dettaglio</Text>
               <TouchableOpacity style={styles.BoxImagemButton} onPress={() => this.getExpand()}>
                       <Image
                         style={styles.imagemChevron}
@@ -459,12 +321,12 @@ export default class InfoAssetControllo extends Component {
                             <Text style={styles.info}> {item.value}</Text>
                         </View>
                     ))} */}
-              <View style={styles.boxImage}>
+              <View style={styles.boxImageControllo}>
 
                 <TouchableOpacity onPress={ () =>
                       this.setState({ visibleModal: 1 })}>
                   <Image
-                    style={styles.buttonImage}
+                    style={styles.boxImageControllo}
                     source={require('../../../assets/images/camera.png')}
                   />
           
@@ -483,36 +345,13 @@ export default class InfoAssetControllo extends Component {
              
             </View>
             <View style={styles.boxControlloRight}>
-        
-              {this.state?.dataArray?.length != 0 && this.state?.dataControlloArray?.length == 0 ?
-
-                <ListProcedura list={this.state?.dataArray} callbackProcedura={this.callbackProcedura} />
-                : undefined
-              }
-              {this.state?.dataControlloArray.length != 0 ?
                 <View style={{ flex: 1}} >
-                    
-                  <ListControllo list={this.state?.dataControlloArray} callbackControllo = {this.callbackControllo} />
-                    
+                  <ListControllo list={this.state?.dataControlloArray} callbackControllo = {this.callbackControllo} />     
                   <View style={styles.boxButtonSave} >
-                    <TouchableOpacity style={styles.BoxImagemButton} onPress={() => this.returnProdocedura()}>
-                      <Image
-                        style={styles.ImagemButton}
-                        source={require('../../../assets/images/arrow.png')}
-                      />
-                    </TouchableOpacity>
-                    <View style={styles.boxButtonSave}>
                       <ButtonEsc callbackEsc={this.callbackEsc} />
-                      <ButtonSave callbackSave={this.callbackSave} procedura={this.state?.dataControlloArray}  />
-                    </View>
+                      <ButtonSave callbackSave={this.pickImage} procedura={this.state?.dataControlloArray}  />
                   </View>
-            
                 </View>
-                : undefined
-              }
-
-      
-
             </View>
 
           </View>

@@ -117,7 +117,7 @@ export default class InfoAssetDetail extends Component {
     return (
 
       <View style={styles.container}>
-        <Head prop = {this.props} route = "InfoAsset" title ="Info Asset"  ></Head>
+        <Head prop = {this.props} routes = "InfoAsset" title ="Info Asset"  ></Head>
 
         <View style={styles.boxDetail}>
                 <View >

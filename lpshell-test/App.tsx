@@ -9,6 +9,8 @@ import InfoAssetDetail from "./app/screens/infoAsset/InfoAssetDetail";
 import InfoAssetControllo from "./app/screens/infoAsset/InfoAssetControllo";7
 import missioniScreen from "./app/screens/Missioni";
 import missioniDetailScreen from "./app/screens/Missioni/MissioniDetail";
+import qrcideMissioniScreen from "./app/screens/Missioni/QrocdeMissioni";
+import MissioniControlloScreen from "./app/screens/Missioni/MissioniControllo"
 import Scanner from "./components/scan/BarcodeScanner";
 
 
@@ -25,8 +27,10 @@ const App = () => {
         <Stack.Screen options={ {title:'',headerTransparent:true, headerShown:false}}  name="InfoAsset" component={infoAssetScreen} />
         <Stack.Screen options={ {title:'',headerTransparent:true, headerShown:false}}  name="InfoAssetDetail" component={InfoAssetDetail} />
         <Stack.Screen options={ {title:'',headerTransparent:true, headerShown:false}}  name="InfoAssetControllo" component={InfoAssetControllo} />
-        <Stack.Screen options={ {title:'',headerTransparent:true, headerShown:false}}  name="Missioni" component={missioniScreen} />
+        <Stack.Screen options={ {title:'',headerTransparent:true, headerShown:false}}  name="Mission" component={missioniScreen} />
         <Stack.Screen options={ {title:'',headerTransparent:true, headerShown:false}}  name="MissioniDetail" component={missioniDetailScreen} />
+        <Stack.Screen options={ {title:'',headerTransparent:true, headerShown:false}}  name="QrcideMissioni" component={qrcideMissioniScreen} />
+        <Stack.Screen options={ {title:'',headerTransparent:true, headerShown:false}}  name="MissioniControllo" component={MissioniControlloScreen} />
        { test ? undefined : <Stack.Screen options={ {title:'',headerTransparent:true, headerShown:false}}  name="Scanner" component={Scanner} /> } 
       </Stack.Navigator>
     </NavigationContainer>

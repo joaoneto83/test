@@ -24,17 +24,31 @@ import styles from "./styles";
   }, []);
 
   const handleBarCodeScanned = ({ type, data }) => {
-
+    console.log("un",props?.route?.params?.title)
     if (data){
       setScanned(true);
-      // alert(`Bar code with type ${type} and data ${data} has been scanned!`);
-    if (props?.route?.params?.screem ){
-      props.navigation.navigate('InfoAssetControllo', { value: data, screem: props?.route?.params?.screem } )
-    } else {
-      props.navigation.navigate('InfoAssetDetail', { value: data } )
+       
+      switch (props?.route?.params?.title) {
+        case "Info Asset":
+          if (props?.route?.params?.screem ){
+     
+            props.navigation.navigate('InfoAssetControllo', { value: data, screem: props?.route?.params?.screem } )
+          } else {
+            props.navigation.navigate('InfoAssetDetail', { value: data } )
+      
+            //alert()
+          }
+          break;
+        case "Missioni":
 
-      //alert()
-    }
+            props.navigation.navigate('MissioniControllo', { value: data, procedureId: props?.route?.params?.procedureId} )
+          break;
+        default:
+        
+          undefined
+      }
+
+    
     }else {
       setScanned(false);
       props.navigation.navigate('InfoAsset')
@@ -60,7 +74,7 @@ import styles from "./styles";
 
   return (
     <View style={styles.container}>
-       <Head  prop = {props} routes ="InfoAsset" title ="Info Asset" screem= {props?.route?.params?.screem} ></Head>
+       <Head  prop = {props} routes ={props?.route?.params?.routes} title ={props?.route?.params?.title} screem= {props?.route?.params?.screem} ></Head>
          <View style={styles.containerScan}>
          <BarCodeScanner 
         onBarCodeScanned={scanned ? undefined : handleBarCodeScanned}

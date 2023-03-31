@@ -114,16 +114,16 @@ export default class Missioni extends Component {
    }
     render(){
         return (
-            <View>
-              <Head prop = {this.props} routes = "Missioni" title ="Missioni" screem= {this.props.route.params?.screem} search = {this.search}  />
-            <View style={Styles.DataTableHeader}>
+            <View >
+              <Head prop = {this.props} routes = "Mission" title ="Missioni"  seach ="true" screem= {this.props.route.params?.screem} search = {this.search}  />
+            <View style={Styles.DataTableHeaderHome}>
              <Text style={Styles.headerLabel}>Nome Missione</Text>
              <Text style={Styles.headerLabel}>Iniziata il</Text>
              <Text style={Styles.headerLabel}>Assegnata</Text>
             </View>
        
             { this.state.backData.map((item) => (
-                <TouchableOpacity style={Styles.DatacTableRow} onPress={()=> this.goDetail(item?.id)}>
+                <TouchableOpacity style={Styles.DatacTableRowHome} onPress={()=> this.goDetail(item?.id)}>
                 <Text style={Styles.rowLabel}>{item?.description}</Text>
                 <Text style={Styles.rowLabel}> {Moment(item?.creationTime).format('DD/MM/YYYY')}</Text>
                 <Text style={Styles.rowLabel}>{item?.assignedUser}</Text>
