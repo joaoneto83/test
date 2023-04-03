@@ -12,15 +12,16 @@ import styles from "./styles";
     
   const [hasPermission, setHasPermission] = useState(null);
   const [scanned, setScanned] = useState(false);
-
+ 
 
   useEffect(() => {
-
-    (async () => {
+    const getBarCodeScannerPermissions = async () => {
+      console.log("ok")
       const { status } = await BarCodeScanner.requestPermissionsAsync();
       setHasPermission(status === 'granted');
-      console.log("scan",props)
-    })();
+    };
+
+    getBarCodeScannerPermissions();
   }, []);
 
   const handleBarCodeScanned = ({ type, data }) => {
@@ -57,12 +58,12 @@ import styles from "./styles";
   
   };
 
-  if (hasPermission === null) {
-    return <Text>Requesting for camera permission</Text>;
-  }
-  if (hasPermission === false) {
-    return <Text>No access to camera</Text>;
-  }
+  // if (hasPermission === null) {
+  //   return <Text>Requesting for camera permission</Text>;
+  // }
+  // if (hasPermission === false) {
+  //   return <Text>No access to camera</Text>;
+  // }
   // onPress = {()=> setScanned(false)} 
   home = () => {
     navigation.navigate('Home')
@@ -74,7 +75,7 @@ import styles from "./styles";
 
   return (
     <View style={styles.container}>
-       <Head  prop = {props} routes ={props?.route?.params?.routes} title ={props?.route?.params?.title} screem= {props?.route?.params?.screem} ></Head>
+       <Head prop = {props} routes ={props?.route?.params?.routes} title ={props?.route?.params?.title} screem= {props?.route?.params?.screem} />
          <View style={styles.containerScan}>
          <BarCodeScanner 
         onBarCodeScanned={scanned ? undefined : handleBarCodeScanned}

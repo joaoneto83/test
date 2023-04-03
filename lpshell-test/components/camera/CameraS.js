@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { Text, View, StyleSheet } from 'react-native';
+import { Text, View, StyleSheet,TouchableOpacity,Image } from 'react-native';
 import { BarCodeScanner } from 'expo-barcode-scanner';
-import Head from '../Head';
-
+import Modal from 'react-native-modal';
+import Photo from "./cameraTest"
 
 import styles from "./styles";
 
@@ -12,6 +12,7 @@ import styles from "./styles";
     
   const [hasPermission, setHasPermission] = useState(null);
   const [scanned, setScanned] = useState(false);
+  const [photo, setPhoto] = useState(null);
 
 
   useEffect(() => {
@@ -58,14 +59,18 @@ import styles from "./styles";
     navigation.navigate('InfoAsset')
   }
 
+
+
   return (
     <View style={styles.container}>
+
+      {/* <TouchableOpacity  onPress={()=>  setPhoto(1)}
+        style={{width:100, height:100,right:"-10%", marginLeft:200, backgroundColor:"#fff", zIndex: 1, position: 'absolute', borderRadius: 50}}/> */}
          <View style={styles.containerScan}>
          <BarCodeScanner 
         onBarCodeScanned={scanned ? undefined : handleBarCodeScanned}
         style={StyleSheet.absoluteFillObject}
       />
-
          </View>
      
     </View>

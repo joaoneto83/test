@@ -5,11 +5,12 @@ const styles = StyleSheet.create({
      
     },
     containerScan: {
-        minWidth:"100%",
-        minHeight:"100%",
-        marginRight: '25%',
-        marginTop: '-5%',
-        transform: [{ rotate: '-90deg'}],
+     
+     
+        minHeight:"80%",
+        // marginRight: '25%',
+        // marginTop: '-5%',
+        // transform: [{ rotate: '-90deg'}],
       },
     Button: {
   

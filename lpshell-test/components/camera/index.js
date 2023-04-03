@@ -1,94 +1,65 @@
-import React, {useState} from 'react';
-import {
-  SafeAreaView,
-  StyleSheet,
-  Text,
-  View,
-  Image,
-  TouchableOpacity,
-} from 'react-native';
-import {captureScreen} from 'react-native-view-shot';
+import { Camera, CameraType } from 'expo-camera';
+import { useState } from 'react';
+import { Button, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
-const cameratest = () => {
-  const [imageURI, setImageURI] = useState(
-    'https://developerplus.com.br/wp-content/uploads/2021/10/react_native_logo.png',
-  );
-  const [savedImagePath, setSavedImagePath] = useState('');
+function Photo() {
+  const [type, setType] = useState(CameraType.back);
+  const [permission, requestPermission] = Camera.useCameraPermissions();
 
-  const takeScreenShot = () => {
-    captureScreen({
-      format: 'jpg',
-      quality: 0.8, 
-    }).then(
-      (uri) => {
-        setSavedImagePath(uri);
-        setImageURI(uri);
-      },
-      (error) => console.error('Ops, algo deu errado', error),
+  if (!permission) {
+    // Camera permissions are still loading
+    return <View />;
+  }
+
+  if (!permission.granted) {
+    // Camera permissions are not granted yet
+    return (
+      <View style={styles.container}>
+        <Text style={{ textAlign: 'center' }}>We need your permission to show the camera</Text>
+        <Button onPress={requestPermission} title="grant permission" />
+      </View>
     );
-  };
+  }
+
+  function toggleCameraType() {
+    setType(current => (current === CameraType.back ? CameraType.front : CameraType.back));
+  }
 
   return (
-    <SafeAreaView style={{flex: 1}}>
-      <View style={styles.container}>
-        <Text style={styles.titleText}>
-        clicca per fotografare
-        </Text>
-        <TouchableOpacity
-          style={styles.buttonStyle}
-          onPress={takeScreenShot}>
-        <Image
-          source={{uri: imageURI}}
-          style={{
-            width: 600,
-            height: 600,
-            resizeMode: 'contain',
-            marginTop: 5
-          }}
-        />
-
-          <Text style={styles.buttonTextStyle}>
-            Capturar Tela
-          </Text>
-        </TouchableOpacity>
-        <Text style={styles.textStyle}>
-          {
-            savedImagePath ?
-            `Caminho da Imagem Salva:
-             ${savedImagePath}` : ''
-          }
-        </Text>
-      </View>
-    </SafeAreaView>
+    <View style={styles.container}>
+      <Camera style={styles.camera} type={type}>
+        <View style={styles.buttonContainer}>
+          <TouchableOpacity style={styles.button} onPress={toggleCameraType}>
+            <Text style={styles.text}>Flip Camera</Text>
+          </TouchableOpacity>
+        </View>
+      </Camera>
+    </View>
   );
-};
-
-export default cameratest;
-
+}
+export default Photo;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: 'white',
   },
-  titleText: {
-    fontSize: 25,
+  camera: {
+    flex: 1,
+  },
+  buttonContainer: {
+    flex: 1,
+    flexDirection: 'row',
+    backgroundColor: 'transparent',
+    margin: 64,
+  },
+  button: {
+    flex: 1,
+    alignSelf: 'flex-end',
+    alignItems: 'center',
+  },
+  text: {
+    fontSize: 24,
     fontWeight: 'bold',
-  },
-  textStyle: {
-    textAlign: 'center',
-    padding: 10,
-  },
-  buttonStyle: {
-    backgroundColor: 'blue',
-    padding: 5,
-    minWidth: 250,
-  },
-  buttonTextStyle: {
-    fontSize: 20,
-    padding: 5,
     color: 'white',
-    textAlign: 'center',
   },
 });

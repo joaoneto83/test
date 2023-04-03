@@ -5,7 +5,7 @@ const styles = StyleSheet.create({
       justifyContent:"center",
     },
     containerScan: {
- 
+
         minWidth:"140%",
         minHeight:"140%",
         marginLeft:-20,

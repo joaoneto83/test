@@ -11,7 +11,7 @@ import ButtonSave from '../../../components/buttons/ButtonSave';
 import ButtonEsc from '../../../components/buttons/ButtonEsc';
 import ListProcedura from '../../../components/list/listProcedura';
 import ListControllo from '../../../components/list/listControllo';
-import CameraRnc from '../../../components/camera';
+import CameraRnc from '../../../components/camera/cameraTest';
 import Gallery from '../../../components/gallery';
 import CameraS from '../../../components/camera/CameraS';
 

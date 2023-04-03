@@ -6,6 +6,7 @@ const styles = StyleSheet.create({
       paddingTop:"3%",
       paddingLeft:"3%",
       paddingRight:"3%",
+      paddingBottom:"1%",
       alignItems:"center",
       justifyContent:"space-evenly"
    

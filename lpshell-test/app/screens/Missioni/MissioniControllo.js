@@ -12,7 +12,8 @@ import ButtonSave from '../../../components/buttons/ButtonSave';
 import ButtonEsc from '../../../components/buttons/ButtonEsc';
 import ListControllo from '../../../components/list/listControllo';
 import Gallery from '../../../components/gallery';
-import CameraS from '../../../components/camera/CameraS';
+import Photo from '../../../components/camera';
+
 
 
 
@@ -110,6 +111,7 @@ export default class MissioniControllo extends Component {
         type: 'image/jpeg',
         name: 'photo.jpg',
       };
+      console.log*
    
     this.formData.append("filename", photo);
 
@@ -229,17 +231,14 @@ export default class MissioniControllo extends Component {
   );
 
   _renderModalContent = () => (
-    <View style={styles.modalContent}>
-      
+    <View style={styles.modalContent}> 
       <View style={{flex:0, alignItems:"center"}} >
       {this._renderButton('Close', () => this.setState({ visibleModal: null }))}
       <TouchableOpacity>
     <View style={{width:50, height:50, borderColor:"#E4A83B", borderWidth:2, borderRadius:100, marginTop:200}}/>
     </TouchableOpacity>
       </View>
-
-      <CameraS/>
-  
+     <Photo/>
     </View>
     
   );
