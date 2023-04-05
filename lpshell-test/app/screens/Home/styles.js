@@ -1,12 +1,16 @@
-import { StyleSheet } from "react-native";
-const styles = StyleSheet.create({
+// import { StyleSheet } from "react-native";
+import StyleSheet from 'react-native-media-query';
+const {ids, styles} = StyleSheet.create({
   container: {
     flex: 1,
     padding: 30
   },
   buttonImageIconStyle:{
     width: 200, 
+    '@media (min-width: 1200px)': {
+      width: 300, 
   },
+},
   button:{
     padding:20,
     curso: 'pointer'

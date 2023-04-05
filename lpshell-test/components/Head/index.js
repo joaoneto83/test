@@ -25,12 +25,14 @@ export default class Head extends Component {
     }
     return null;
   }
+  
   // static getDerivedStateFromProps(props, state){
   //   this.setState({
   //     title: this.props?.title,
   //     screem: this.props?.screem
   //   })
   // }
+
   getTitle(title) {
     switch (title) {
       case "Info Asset":
@@ -56,7 +58,6 @@ export default class Head extends Component {
   render() {
     return (
       <View style={styles.container}>
-
         <TouchableOpacity onPress={() => this.home()} >
           <Image
             resizeMode="contain"
@@ -81,6 +82,7 @@ export default class Head extends Component {
           {this.props?.seach == "true" ?
             <View style={styles.boxSearch}>
               <Image
+               resizeMode="contain"
                 style={styles.iconeSearch}
                 source={require('../../assets/images/search.png')}
               />

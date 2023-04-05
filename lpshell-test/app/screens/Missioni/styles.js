@@ -1,6 +1,7 @@
-import {StyleSheet} from "react-native";
+// import { StyleSheet } from "react-native";
+import StyleSheet from 'react-native-media-query';
 
-const styles = StyleSheet.create({
+const {ids, styles} = StyleSheet.create({
     container: {
         flex: 0,
         flexDirection:"row",
@@ -51,6 +52,7 @@ const styles = StyleSheet.create({
         padding:5,  
         minWidth:"100%",
         maxWidth:"100%",
+
     },
     
     DatacTableRowHome:{
@@ -69,7 +71,10 @@ const styles = StyleSheet.create({
         paddingVertical:20,
         textAlign: 'center',
         alignItems: "center",
-        width:300
+        width:300,
+        '@media (min-width: 1200px)': {
+            width:400
+        },
     },
     labelHeaderD:{
         textAlign: 'center',
@@ -92,11 +97,18 @@ const styles = StyleSheet.create({
         fontSize: 14, 
         minWidth:"16%",
         color:"#787777",
+        '@media (min-width: 1200px)': {
+            fontSize: 16, 
+            minWidth:"20%",
+        },
     },
     labelRowP:{
         fontSize: 16, 
         minWidth:"16%",
-
+        '@media (min-width: 1200px)': {
+            fontSize: 18, 
+            minWidth:"20%",
+        },
     },
     rowD:{
         textAlign: 'center',
@@ -120,16 +132,24 @@ const styles = StyleSheet.create({
         borderColor:"#9F9F9F",
         alignItems: "center",
         textAlign: 'center',
-        width:300
+        width:300,
+        '@media (min-width: 1200px)': {
+            width:400
+        },
     },
     boxImage:{
      padding:20,
     },
+
+       
     boxImageControllo: {
         flex: 0,
         flexDirection: "row",
         alignItems: 'center',
-        paddingTop:"10%"
+        paddingTop:"10%",
+        '@media (min-width: 1200px)': {
+            paddingHorizontal :20,
+        },
       },
       boxButtonSave:{
         flex: 0,
@@ -149,11 +169,17 @@ const styles = StyleSheet.create({
     Title: {
         fontSize: 25, 
         color: '#9F9F9F',
-        padding:10
+        padding:10,
+        '@media (min-width: 1200px)': {
+            fontSize: 23,
+        },
       },
       titleControllo: {
         fontSize: 20,
         color: '#9F9F9F',
+        '@media (min-width: 1200px)': {
+            fontSize: 23,
+        },
       },
 
       BoxImagemButton:{
@@ -170,14 +196,17 @@ const styles = StyleSheet.create({
         flexDirection: "row",
         justifyContent: "flex-start",
         padding:30,
-        // borderWidth:2,
       },
       boxControlloLeft: {
         flex: 0,
         padding:10,
         borderEndWidth:1,
         borderColor:"#9f9f9f29",
-        justifyContent: "space-between"
+        justifyContent: "space-between",
+   
+        '@media (min-width: 1200px)': {
+          paddingLeft:20,
+      },
       },
       boxControlloRight: {
         flex: 0,
@@ -207,7 +236,10 @@ const styles = StyleSheet.create({
       labelControlloDetail: {
         fontSize: 15, 
         marginTop: 10,
-        color: '#000'
+        color: '#000',
+        '@media (min-width: 1200px)': {
+            fontSize: 18,
+        },
       },
       buttonImageGellery:{
         width: 70, 
@@ -225,6 +257,9 @@ const styles = StyleSheet.create({
         marginTop: 10,
         marginLeft:10,
         color: '#9F9F9F',
+        '@media (min-width: 1200px)': {
+            fontSize: 18,
+        },
       },
       boxInfo: {
         flex: 0,

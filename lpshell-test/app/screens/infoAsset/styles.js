@@ -1,5 +1,6 @@
-import { StyleSheet } from "react-native";
-const styles = StyleSheet.create({
+import StyleSheet from 'react-native-media-query';
+
+const {ids, styles} = StyleSheet.create({
   container: {
     flex: 1,
     paddingRight:30,
@@ -102,7 +103,11 @@ const styles = StyleSheet.create({
     flex: 0,
     flexDirection: "row",
     alignItems: 'center',
-    paddingTop:"10%"
+    paddingTop:"10%",
+    justifyContent: "space-between",
+    '@media (min-width: 1200px)': {
+      paddingHorizontal:20,
+  },
   },
 
   boxHome: {
@@ -130,7 +135,10 @@ const styles = StyleSheet.create({
     padding:10,
     borderEndWidth:1,
     borderColor:"#9f9f9f29",
-    justifyContent: "space-between"
+    justifyContent: "space-between",
+    '@media (min-width: 1200px)': {
+      paddingLeft:20,
+  },
   },
   boxControlloRight: {
     flex: 0,
@@ -159,6 +167,9 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 20,
     color: '#9F9F9F',
+    '@media (min-width: 1200px)': {
+      fontSize: 23,
+  },
   },
   titleSave: {
     textAlign:"center",
@@ -212,20 +223,28 @@ const styles = StyleSheet.create({
     marginTop: 10,
     marginLeft:10,
     color: '#9F9F9F',
-
+    '@media (min-width: 1200px)': {
+      fontSize: 25, 
+      marginLeft:15,
+  },
   },
   infoDetail: {
     fontSize: 15, 
     marginTop: 10,
     marginLeft:10,
     color: '#9F9F9F',
-
+    '@media (min-width: 1200px)': {
+      fontSize: 18,
+  },
   },
   label: {
     fontSize: 20, 
     marginTop: 10,
     marginLeft:100,
-    color: '#000'
+    color: '#000',
+    '@media (min-width: 1200px)': {
+      fontSize: 25, 
+  },
   },
   labelControllo: {
     fontSize: 20, 
@@ -235,7 +254,10 @@ const styles = StyleSheet.create({
   labelControlloDetail: {
     fontSize: 15, 
     marginTop: 10,
-    color: '#000'
+    color: '#000',
+    '@media (min-width: 1200px)': {
+      fontSize: 18,
+  },
   },
   text: {
     fontSize: 20, 

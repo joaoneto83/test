@@ -27,6 +27,7 @@ export default class QrcodeScreen extends Component {
               </TouchableOpacity>: undefined}
             <TouchableOpacity style={styles.buttonScan}  onPress = {()=>  this.props.scan()}  >
                 <Image
+                 resizeMode="contain"
              style={styles.buttonImageIconStyle}
                   source={require('../../assets/images/qrcode.png')}
                 />

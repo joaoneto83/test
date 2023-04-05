@@ -41,7 +41,7 @@ export default class QrcideMissioni extends Component {
   render () {
     return (
       <View style={styles.containerMission}>
-        <Head prop = {this.props}  title ="Missioni"/>
+        <Head prop = {this.props} routes="Mission"  title ="Missioni" seach ="false"/>
         <QrcodeScreen data = {this.props} scan={this.scan}/>
       </View>
     );

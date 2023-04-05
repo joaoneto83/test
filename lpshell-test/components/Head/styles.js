@@ -1,5 +1,6 @@
-import { StyleSheet } from "react-native";
-const styles = StyleSheet.create({
+// import { StyleSheet } from "react-native";
+import StyleSheet from 'react-native-media-query';
+const {ids, styles} = StyleSheet.create({
     container: {
       flex: 0,
       flexDirection: 'row',
@@ -18,7 +19,9 @@ const styles = StyleSheet.create({
       iconeLP: {
      
         height: 70,
- 
+        '@media (min-width: 1200px)': {
+        height: 100,
+      },
       },
       icone: {
         width: 50, 

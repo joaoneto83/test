@@ -157,7 +157,7 @@ export default class MissioniControllo extends Component {
       this.getControllo(this.data?.id);
       console.log("off", this.state.data)
     }else{
-      console.log("aa", this.state.data)
+
       this.state = {
         Authorization: await AsyncStorage.getItem('DATA_KEY').then((response) => { return response }),
         qrCode: this.props.route.params.value,
@@ -254,9 +254,7 @@ export default class MissioniControllo extends Component {
               animationIn={'slideInLeft'}
               animationOut={'slideOutRight'}>
                     {this._renderModalContent()}
-           
-                </Modal>
-              
+            </Modal>
                 <Modal     isVisible={this.state.visibleModalSave === 1}
               animationIn={'slideInLeft'}
               animationOut={'slideOutRight'}>
@@ -322,8 +320,7 @@ export default class MissioniControllo extends Component {
                     ))} */}
               <View style={styles.boxImageControllo}>
 
-                <TouchableOpacity onPress={ () =>
-                      this.setState({ visibleModal: 1 })}>
+                <TouchableOpacity onPress={ () => this.props.navigation.navigate('Photo') }>
                   <Image
                     style={styles.boxImageControllo}
                     source={require('../../../assets/images/camera.png')}

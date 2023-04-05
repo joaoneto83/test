@@ -159,7 +159,7 @@ export default class MissioniDetail extends Component {
                             </View>
                          { !this.state?.procedureAssets ? undefined : this.state?.procedureAssets.map((item) => (
                                 <View style={styles.DatacTableRow}>
-                                    <View style={{ maxWidth:"30%", minWidth:"30%",}}>
+                                    <View >
                                     <Text style={styles.labelRowP}>{item.procedure}</Text>
                                     <Text style={styles.labelRow}>{item.asset}</Text>
                                    

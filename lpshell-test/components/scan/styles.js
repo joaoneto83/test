@@ -1,12 +1,13 @@
-import { StyleSheet } from "react-native";
-const styles = StyleSheet.create({
+// import { StyleSheet } from "react-native";
+import StyleSheet from 'react-native-media-query';
+const {ids, styles} = StyleSheet.create({
     container: {
       flex:1,
      
     },
     containerScan: {
      
-     
+        paddingBottom:10,
         minHeight:"80%",
         // marginRight: '25%',
         // marginTop: '-5%',
@@ -72,12 +73,20 @@ const styles = StyleSheet.create({
       buttonImageIconStyleSecund:{
         width: 120, 
         height: 90,
+        '@media (min-width: 1200px)': {
+          width: 200, 
+    
+      },
       },
       check:{
         width: 80, 
         height: 52,
         marginTop: -60,
-        marginLeft: 20
+        marginLeft: 20,
+        '@media (min-width: 1200px)': {
+          marginLeft: 60,
+    
+      },
       },
       buttonScan:{
         padding:20,
@@ -86,7 +95,10 @@ const styles = StyleSheet.create({
       buttonImageIconStyle:{
         width: 265, 
         height: 200,
-     
+      '@media (min-width: 1200px)': {
+          width: 500, 
+          height: 400,
+      },
       },
       boxInfo: {
         flex: 0,

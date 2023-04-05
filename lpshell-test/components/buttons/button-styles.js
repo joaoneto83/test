@@ -1,5 +1,6 @@
-import { StyleSheet } from "react-native";
-const styles = StyleSheet.create({
+import StyleSheet from 'react-native-media-query';
+
+const {ids, styles} = StyleSheet.create({
     container: {
       flex: 0,
       flexDirection: 'row',
@@ -9,7 +10,12 @@ const styles = StyleSheet.create({
       borderColor:"#E4A83B",
       margin:10,
       paddingHorizontal:20,
-      paddingVertical:10
+      paddingVertical:10,
+      '@media (min-width: 1200px)': {
+       
+        paddingHorizontal:30,
+        paddingVertical:15,
+    },
     },
     containerOnOff:{
       flex: 0,
@@ -35,6 +41,10 @@ const styles = StyleSheet.create({
       icone: {
         width: 48, 
         height: 45,
+        '@media (min-width: 1200px)': {
+          width: 55, 
+          height: 50,
+      },
       },
       buttonHead:{
         curso: 'pointer'
@@ -43,7 +53,12 @@ const styles = StyleSheet.create({
         fontSize: 20,
         color: '#9F9F9F',
         paddingHorizontal:20,
-        paddingVertical:10
+        paddingVertical:10,
+        '@media (min-width: 1200px)': {
+          fontSize: 23,
+          paddingHorizontal:30,
+          paddingVertical:15,
+      },
       },
       textTrue: {
         fontSize: 16,
