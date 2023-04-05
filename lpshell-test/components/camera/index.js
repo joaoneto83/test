@@ -15,12 +15,13 @@ useEffect(() => {
   }, []);
 const takePicture = async () => {
     if(camera){
-        const data = await camera.takePictureAsync(null)
+        const data = await camera.current.takePictureAsync()
         setImage(data.uri);
+        alert(data.uri)
     }
   }
-
-//   if (hasCameraPermission === false) {
+ 
+//  if (hasCameraPermission === false) {
 //     return <Text>No access to camera</Text>;
 //   }
   return (
@@ -32,16 +33,6 @@ const takePicture = async () => {
             type={type}
             ratio={'1:1'} />
       </View>
-      <Button
-            title="Flip Image"
-            onPress={() => {
-              setType(
-                type === Camera.Constants.Type.back
-                  ? Camera.Constants.Type.front
-                  : Camera.Constants.Type.back
-              );
-            }}>
-        </Button>
        <Button title="Take Picture" onPress={() => takePicture()} />
         {image && <Image source={{uri: image}} style={{flex:1}}/>}
    </View>
