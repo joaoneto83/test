@@ -7,6 +7,7 @@ import AsyncStorage from '@react-native-community/async-storage';
 import Head from '../../../components/Head';
 import Styles from "./styles";
 import Moment from 'moment';
+import LoadingInline from "../../../components/loading/loadingInline";
 
 const baseUrlMissioni = "http://192.168.248.20:8090/Api/Mission/MyMissions"
 
@@ -115,11 +116,14 @@ export default class Missioni extends Component {
     render(){
         return (
             <View >
+          
               <Head prop = {this.props} routes = "Mission" title ="Missioni"  seach ="true" screem= {this.props.route.params?.screem} search = {this.search}  />
+              <LoadingInline/>
             <View style={Styles.DataTableHeaderHome}>
              <Text style={Styles.headerLabel}>Nome Missione</Text>
              <Text style={Styles.headerLabel}>Iniziata il</Text>
              <Text style={Styles.headerLabel}>Assegnata</Text>
+          
             </View>
        
             { this.state.backData.map((item) => (

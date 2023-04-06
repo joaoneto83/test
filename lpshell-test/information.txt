@@ -8,7 +8,8 @@ node v16.13.1
 npm start
 
 
-
+react-native-media-query
+2.0.1 
 
 
 ////////////////////////////////////

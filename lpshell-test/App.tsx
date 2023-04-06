@@ -12,7 +12,7 @@ import missioniDetailScreen from "./app/screens/Missioni/MissioniDetail";
 import qrcideMissioniScreen from "./app/screens/Missioni/QrocdeMissioni";
 import MissioniControlloScreen from "./app/screens/Missioni/MissioniControllo"
 import Scanner from "./components/scan/BarcodeScanner";
-import PhotoScreen from './components/camera';
+import PhotoScreen from './components/camera/cameraTake';
 
 
 
@@ -31,7 +31,7 @@ const App = () => {
         <Stack.Screen options={ {title:'',headerTransparent:true, headerShown:false}}  name="MissioniDetail" component={missioniDetailScreen} />
         <Stack.Screen options={ {title:'',headerTransparent:true, headerShown:false}}  name="QrcideMissioni" component={qrcideMissioniScreen} />
         <Stack.Screen options={ {title:'',headerTransparent:true, headerShown:false}}  name="MissioniControllo" component={MissioniControlloScreen} />
-        <Stack.Screen options={ {title:'',headerTransparent:true, headerShown:false}}  name="Photo" component={PhotoScreen} />
+        <Stack.Screen options={ {title:'',headerTransparent:true, headerShown:false}}  name="Photo" component={PhotoScreen} /> 
        { test ? undefined : <Stack.Screen options={ {title:'',headerTransparent:true, headerShown:false}}  name="Scanner" component={Scanner} /> } 
       </Stack.Navigator>
     </NavigationContainer>
