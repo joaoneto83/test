@@ -4,7 +4,7 @@ import{View, Text,Animated,StyleSheet,Easing,} from "react-native";
 
 
 
-export default function LoadingInline() {
+export default function LoadingBall() {
 
     const value = useRef(new Animated.Value(0.1));
 
@@ -12,8 +12,8 @@ export default function LoadingInline() {
         Animated.timing(value.current,{
         toValue: 1,
         useNativeDriver: true,
-    
-        duration: 3000,
+
+        duration: 4000,
       }
       )
 
@@ -28,15 +28,15 @@ export default function LoadingInline() {
         ball: {
             fontSize: 20,
             backgroundColor:"#E4A83B",
-            marginLeft:-600,
-            width:300,
-            height:5,
-
+            borderRadius:10,
+            margin:5,
+            width:10,
+            height:10,
             transform: [
               {
                 translateX: value.current.interpolate({
-                  inputRange: [0, 1],
-                  outputRange: [0, 2000],
+                  inputRange: [0, 0.2, 0.5,0.8, 1],
+                  outputRange: [0, 10,300, 250,0],
                 })
               },
             ],
@@ -45,10 +45,11 @@ export default function LoadingInline() {
     })
     
     return (
-<View style={{ flexDirection:"row", alignItems:"center",width:"100%",   height:5,backgroundColor:"#ECDCBE" }}>
+      <View style={{ flexDirection:"row", alignItems:"center", }}>
 
 <Animated.Text style={Styles.ball}/>
-
+<Animated.Text style={Styles.ball}/>
+<Animated.Text style={Styles.ball}/>
 
 
       </View>

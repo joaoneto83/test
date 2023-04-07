@@ -5,6 +5,7 @@ import axios from "axios";
 import AsyncStorage from '@react-native-community/async-storage';
 
 import Head from '../../../components/Head';
+import LoadingInline from "../../../components/loading/loadingInline";
 import styles from "./styles";
 import Styles from "./styles";
 
@@ -68,7 +69,8 @@ export default class MissioniDetail extends Component {
         this.state = {
             backData: {},
             Authorization: "",
-            procedureAssets: []
+            procedureAssets: [],
+            loading:true
         }
         this.getData();
     }
@@ -94,7 +96,8 @@ export default class MissioniDetail extends Component {
         
             this.setState({
                 backData: response.data,
-                procedureAssets:[...response.data.procedureAssets]
+                procedureAssets:[...response.data.procedureAssets],
+                loading:false
             })
             console.log("tess", this.state?.backData?.procedureAssets)
         }).catch((erro) => {
@@ -123,6 +126,7 @@ export default class MissioniDetail extends Component {
         return (
             <View style={{ flex: 1 }}>
                 <Head prop={this.props} routes="Mission" title="Missioni"  seach ="true" screem="Dettagli" search={this.search} />
+                { this.state.loading ? <LoadingInline/> : undefined  } 
                 <ScrollView >
                     <View style={styles.container} >
                         <View style={styles.boxLeft}>

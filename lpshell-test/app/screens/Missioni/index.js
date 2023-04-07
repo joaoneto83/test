@@ -13,11 +13,13 @@ const baseUrlMissioni = "http://192.168.248.20:8090/Api/Mission/MyMissions"
 
 export default class Missioni extends Component {
 
+
     constructor(props){
         super(props)
         this.state = {
             backData: [...this.data],
             Authorization: "",
+            loading: true
         }
         this.getData();
     }
@@ -89,7 +91,8 @@ export default class Missioni extends Component {
    
          this.data = response.data;
          this.setState({
-            backData: [...this.data]
+            backData: [...this.data],
+            loading:false
         })
          console.log("tes",this.data)
       }).catch((erro)=>{
@@ -118,7 +121,7 @@ export default class Missioni extends Component {
             <View >
           
               <Head prop = {this.props} routes = "Mission" title ="Missioni"  seach ="true" screem= {this.props.route.params?.screem} search = {this.search}  />
-              <LoadingInline/>
+             { this.state.loading ? <LoadingInline/> : undefined  } 
             <View style={Styles.DataTableHeaderHome}>
              <Text style={Styles.headerLabel}>Nome Missione</Text>
              <Text style={Styles.headerLabel}>Iniziata il</Text>

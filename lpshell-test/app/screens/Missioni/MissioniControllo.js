@@ -13,6 +13,7 @@ import ButtonEsc from '../../../components/buttons/ButtonEsc';
 import ListControllo from '../../../components/list/listControllo';
 import Gallery from '../../../components/gallery';
 import Photo from '../../../components/camera';
+import LoadingInline from "../../../components/loading/loadingInline";
 
 
 
@@ -42,15 +43,14 @@ export default class MissioniControllo extends Component {
       visibleModal: null,
       visibleModalSave: null,
       visibleModalGallery:null,
+      loading:true
     }
     this.getData();
- 
   }
   postData= {
     // procedureId: "",
     // assetId:"",
     // assetValue:[],
-
   }
    formData = new FormData();
   assetValueData = {
@@ -123,12 +123,13 @@ export default class MissioniControllo extends Component {
   
   callbackSave = async () => {
     
-    this.setState({ visibleModal: null,
+    this.setState({ 
+        visibleModal: null,
       visibleModalSave: 1,
-     })
-    this.setState({
       Authorization: await AsyncStorage.getItem('DATA_KEY').then((response) => { return response }),
-    })
+      loading:true
+     })
+
     
     console.log("callbackSalvett", this.formData)
      await axios.post(basePost +  this.props?.route?.params?.procedureId ,this.formData, {
@@ -137,9 +138,16 @@ export default class MissioniControllo extends Component {
         'Authorization': `Bearer ${this.state.Authorization.replace(/"/g, '')}`,
       }
     }).then((response) => {
-   
+        this.setState({ 
+         
+          loading:false
+         })
       console.log("ok", response)
-    });
+    }).catch((error)=> {
+        this.setState({
+          loading:false
+        })
+      });
   }
 
   getExpand = ()=>{
@@ -176,6 +184,9 @@ export default class MissioniControllo extends Component {
           }
           this.setState({
             data: response.data,
+
+              loading:false
+           
           })
           this.postData.assetId = response.data?.id,
           console.log("p chamada", this.state)
@@ -197,6 +208,7 @@ export default class MissioniControllo extends Component {
     
       this.setState({
         dataControlloArray: response.data,
+        loading:false
       })
       console.log("procedura missini", response.data)
     });
@@ -268,6 +280,7 @@ export default class MissioniControllo extends Component {
              
              
         <Head prop={this.props} route="Mission" title="Missioni" screem="controllo" ></Head>
+        { this.state.loading ? <LoadingInline/> : undefined  } 
         <ScrollView>
           <View style={styles.containerControllo}>
 

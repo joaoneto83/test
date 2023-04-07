@@ -7,7 +7,7 @@ import AsyncStorage from '@react-native-community/async-storage'
 
 import styles from "./styles";
 
-
+import LoadingInline from "../../../components/loading/loadingInline";
 
 const baseURLGet = " http://192.168.248.20:6090/api/assets/asset/QR/";
 
@@ -76,6 +76,7 @@ export default class InfoAssetDetail extends Component {
             data:  {},
             Authorization:{},
             qrCode: this.props.route.params.value,
+            loading:true
      
          } 
         
@@ -103,6 +104,8 @@ export default class InfoAssetDetail extends Component {
         }
       this.setState({  
           data:  response.data,
+          loading: false
+        
        } )
        console.log("state",this.state.data)
        console.log("state",this.state.data.attributes)
@@ -118,7 +121,7 @@ export default class InfoAssetDetail extends Component {
 
       <View style={styles.container}>
         <Head prop = {this.props} routes = "InfoAsset" title ="Info Asset"  ></Head>
-
+        { this.state.loading ? <LoadingInline/> : undefined  } 
         <View style={styles.boxDetail}>
                 <View >
                     <View style={styles.boxInfo}>

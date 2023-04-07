@@ -14,6 +14,7 @@ import ListControllo from '../../../components/list/listControllo';
 import CameraRnc from '../../../components/camera/cameraTest';
 import Gallery from '../../../components/gallery';
 import CameraS from '../../../components/camera/CameraS';
+import LoadingInline from "../../../components/loading/loadingInline";
 
 
 
@@ -197,6 +198,7 @@ export default class InfoAssetControllo extends Component {
       visibleModal: null,
       visibleModalSave: null,
       visibleModalGallery:null,
+      loading:true
     }
     this.getData();
  
@@ -253,6 +255,9 @@ export default class InfoAssetControllo extends Component {
 
     this.setState({ visibleModal: null,
       visibleModalSave: 1,
+  
+        loading: true
+   
      })
     this.setState({
       Authorization: await AsyncStorage.getItem('DATA_KEY').then((response) => { return response }),
@@ -265,14 +270,23 @@ export default class InfoAssetControllo extends Component {
         'Authorization': `Bearer ${this.state.Authorization.replace(/"/g, '')}`,
       }
     }).then((response) => {
-   
+      this.setState({
+        loading:false
+      })
       console.log("ok", response)
-    });
+    }).catch((error)=> {
+      this.setState({
+        loading:false
+      })
+    }
+      
+    )
   }
   returnProdocedura = () => {
     
     this.setState({
-      dataControlloArray: []
+      dataControlloArray: [],
+
     })
   }
   getExpand = ()=>{
@@ -333,6 +347,7 @@ export default class InfoAssetControllo extends Component {
     
       this.setState({
         dataArray: response.data,
+        loading:false
       })
       console.log("segunda chamada", response.data)
     });
@@ -409,6 +424,7 @@ export default class InfoAssetControllo extends Component {
              
              
         <Head prop={this.props} routes="InfoAsset" title="Info Asset" screem={this.props.route.params?.screem} ></Head>
+        { this.state.loading ? <LoadingInline/> : undefined  } 
         <ScrollView>
           <View style={styles.containerControllo}>
 

@@ -17,7 +17,6 @@ const {ids, styles} = StyleSheet.create({
         minWidth:"30%",
         maxWidth:"35%",
         alignItems:"center",
-        justifyContent:"center",
         borderEndWidth:1,
         borderColor:"#e1e1e1"
     },
