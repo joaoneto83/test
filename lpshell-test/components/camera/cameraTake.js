@@ -10,7 +10,7 @@ import {
 } from "react-native";
 import styles from "./style"
 import { Camera } from "expo-camera";
-import { FontAwesome } from "@expo/vector-icons";
+import { FontAwesome,AntDesign } from "@expo/vector-icons";
  
 export default function CameraTake(props) {
   const camRef = useRef(null);
@@ -60,7 +60,8 @@ export default function CameraTake(props) {
             //   );
             }}
           >
-            <FontAwesome name="exchange" size={23} color="red"></FontAwesome>
+           
+            <AntDesign name="back" size={23} color="#E4A83B" />
           </TouchableOpacity>
           <TouchableOpacity style={styles.buttonCamera} onPress={takePicture}>
             <FontAwesome name="camera" size={23} color="#fff"></FontAwesome>
