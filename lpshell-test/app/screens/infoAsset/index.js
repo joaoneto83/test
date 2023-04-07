@@ -37,15 +37,14 @@ export default class InfoAsset extends Component {
     home = () => {
       this.props.navigation.navigate('Home');
     };
-   
       scan = () => {
         this.setState({loading:true})
    setTimeout(()=> {
     this.props.navigation.navigate('Scanner',{routes:"InfoAsset", title:"Info Asset", screem: this.props.route.params?.screem});
-     this.loadingClena();
+     this.loadingClean();
    })     
     };
-    loadingclean = () =>{
+    loadingClean = () =>{
       setTimeout(()=> {
         this.setState({loading:false})
        },2000)  

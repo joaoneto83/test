@@ -46,6 +46,33 @@ const styles = StyleSheet.create({
     alignItems: "flex-end",
     margin: 20,
   },
+  boxImg:{
+    backgroundColor:"rgba( 0, 0, 0, .6)",
+    padding:10,
+    flexDirection:"row",
+    justifyContent:"center",
+    width:"100%",
+    alignItems:"center"
+  },
+  sendButton:{
+    margin:20,
+    alignItems:"center",
+    justifyContent:"center",
+    width:150,
+    height:50,
+    backgroundColor:"#86F330",
+    borderRadius:5
+  },
+  cancelButton:{
+    margin:20,
+    alignItems:"center",
+    justifyContent:"center",
+    width:150,
+    height:50,
+    backgroundColor:"#F35330",
+    borderRadius:5
+  },
+
   closeButton: {
     position: "absolute",
     top: 10,
@@ -53,7 +80,9 @@ const styles = StyleSheet.create({
     margin: 10,
   },
   imgPhoto: {
-    width: "100%",
+    borderWidth:2,
+    borderColor:"white",
+    width: 600,
     height: 400,
   },
 });

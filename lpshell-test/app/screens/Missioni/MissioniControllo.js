@@ -57,8 +57,7 @@ export default class MissioniControllo extends Component {
     procedureAttributeId:"",
     value:""
   }
-  l
-
+  
   callbackProcedura = (item) => {
     this.setState({
       dataControlloArray: item
@@ -66,9 +65,7 @@ export default class MissioniControllo extends Component {
     this.postData.procedureId = item.id
 
   } 
-
   callbackControllo = (item) => {
-
     this.postData.assetValue = this.state?.dataControlloArray?.attributes?.map( (data)=> 
     { 
       if (item.id == data.id) {
@@ -279,7 +276,7 @@ export default class MissioniControllo extends Component {
                 </Modal>
              
              
-        <Head prop={this.props} route="Mission" title="Missioni" screem="controllo" ></Head>
+        <Head prop={this.props} routes="Mission" title="Missioni" screem="controllo" ></Head>
         { this.state.loading ? <LoadingInline/> : undefined  } 
         <ScrollView>
           <View style={styles.containerControllo}>
