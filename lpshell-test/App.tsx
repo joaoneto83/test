@@ -6,13 +6,14 @@ import LoginScreen from "./app/screens/Login";
 import ProfileScreen from "./app/screens/Home";
 import infoAssetScreen from "./app/screens/infoAsset";
 import InfoAssetDetail from "./app/screens/infoAsset/InfoAssetDetail";
-import InfoAssetControllo from "./app/screens/infoAsset/InfoAssetControllo";7
+import InfoAssetControllo from "./app/screens/infoAsset/InfoAssetControllo";
 import missioniScreen from "./app/screens/Missioni";
 import missioniDetailScreen from "./app/screens/Missioni/MissioniDetail";
 import qrcideMissioniScreen from "./app/screens/Missioni/QrocdeMissioni";
 import MissioniControlloScreen from "./app/screens/Missioni/MissioniControllo"
 import Scanner from "./components/scan/BarcodeScanner";
 import PhotoScreen from './components/camera/cameraTake';
+import InfoDocumentScreen from "./app/screens/infoAsset/InfoDocument";
 
 
 
@@ -27,10 +28,11 @@ const App = () => {
         <Stack.Screen options={ {title:'',headerTransparent:true, headerShown:false}}  name="InfoAsset" component={infoAssetScreen} />
         <Stack.Screen options={ {title:'',headerTransparent:true, headerShown:false}}  name="InfoAssetDetail" component={InfoAssetDetail} />
         <Stack.Screen options={ {title:'',headerTransparent:true, headerShown:false}}  name="InfoAssetControllo" component={InfoAssetControllo} />
+        <Stack.Screen options={ {title:'',headerTransparent:true, headerShown:false}}  name="InfoDocument" component={InfoDocumentScreen} />
         <Stack.Screen options={ {title:'',headerTransparent:true, headerShown:false}}  name="Mission" component={missioniScreen} />
         <Stack.Screen options={ {title:'',headerTransparent:true, headerShown:false}}  name="MissioniDetail" component={missioniDetailScreen} />
-        <Stack.Screen options={ {title:'',headerTransparent:true, headerShown:false}}  name="QrcideMissioni" component={qrcideMissioniScreen} />
         <Stack.Screen options={ {title:'',headerTransparent:true, headerShown:false}}  name="MissioniControllo" component={MissioniControlloScreen} />
+        <Stack.Screen options={ {title:'',headerTransparent:true, headerShown:false}}  name="QrcideMissioni" component={qrcideMissioniScreen} />
         <Stack.Screen options={ {title:'',headerTransparent:true, headerShown:false}}  name="Photo" component={PhotoScreen} /> 
        { test ? undefined : <Stack.Screen options={ {title:'',headerTransparent:true, headerShown:false}}  name="Scanner" component={Scanner} /> } 
       </Stack.Navigator>

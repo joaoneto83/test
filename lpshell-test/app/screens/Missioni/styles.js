@@ -41,8 +41,10 @@ const {ids, styles} = StyleSheet.create({
         justifyContent:"center",
         alignItems:"center",
         padding:5,
-        minWidth:"85%",
-        maxWidth:"85%",
+        Width:"100%",
+   
+        borderWidth:1,
+
     },
     DataTableHeaderHome:{
         flex:0,
@@ -77,8 +79,8 @@ const {ids, styles} = StyleSheet.create({
     },
     labelHeaderD:{
         textAlign: 'center',
-        maxWidth:"30%",
-        minWidth:"30%",
+        maxWidth:"21%",
+        minWidth:"21%",
         fontSize: 20, 
         color:"#787777",
         height:50
@@ -98,7 +100,8 @@ const {ids, styles} = StyleSheet.create({
         color:"#787777",
         '@media (min-width: 1200px)': {
             fontSize: 16, 
-            minWidth:"20%",
+            maxWidth:100,
+            minWidth:70,
         },
     },
     labelRowP:{
@@ -106,7 +109,8 @@ const {ids, styles} = StyleSheet.create({
         minWidth:"16%",
         '@media (min-width: 1200px)': {
             fontSize: 18, 
-            minWidth:"20%",
+            maxWidth:100,
+            minWidth:70,
         },
     },
     rowD:{
@@ -116,7 +120,6 @@ const {ids, styles} = StyleSheet.create({
         minWidth:"20%",
         paddingTop:10,
         height:60,
-       
     },
     iconRow:{
         width:35,

@@ -69,15 +69,15 @@ export default class InfoAssetDetail extends Component {
   // }
    
     constructor(props){ 
-    
+       console.log("props",props)
         super(props);  
     
         this.state = {  
             data:  {},
             Authorization:{},
             qrCode: this.props.route.params.value,
-            loading:true
-     
+            loading:true,
+      
          } 
         
          this.getData();
@@ -161,7 +161,7 @@ export default class InfoAssetDetail extends Component {
                 </View>
   
         <View style={styles.boxButton}>
-        <ButtonBasi prop = {this.props} routes = "Document"  title ="Document" ></ButtonBasi>
+        <ButtonBasi prop = {this.props} routes = "Document"  title ="Document" id = {this.state.data.id} ></ButtonBasi>
         <ButtonBasi prop = {this.props} routes = "Mappa" title ="Mappa" ></ButtonBasi>
         <ButtonBasi prop = {this.props} routes = "Controllo" title ="Controllo" qrCodes = {this.state.data.qrCodes}></ButtonBasi>
         </View>
@@ -174,3 +174,4 @@ export default class InfoAssetDetail extends Component {
   }
   
 };
+

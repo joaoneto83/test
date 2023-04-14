@@ -4,7 +4,7 @@ const styles = StyleSheet.create({
     containerControllo:{
       flex: 0,
       flexDirection: 'row',
-      alignItems: 'center',
+      justifyContent:"center",
       margin:5,
       borderWidth: 2,
       borderColor:"#E4A83B",
@@ -20,6 +20,9 @@ const styles = StyleSheet.create({
       },
       buttonHead:{
         curso: 'pointer'
+      },
+      imageDocument:{
+        height: 60,
       },
       title: {
         fontSize: 20,
@@ -60,13 +63,23 @@ const styles = StyleSheet.create({
         alignItems: "stretch",
         height:42
       },
+      listDocument: {
+        flex: 0,
+        minWidth:"80%",
+        flexDirection: "row",
+        alignItems: "center",
+        paddingBottom:10,
+        paddingTop:10,
+        borderBottomWidth:1,
+        marginBottom:15,
+        borderColor: "#9f9f9f29"
+      },
       listControllo: {
         flex: 0,
         flexDirection: "row",
         alignItems: "stretch",
         paddingBottom:10,
         paddingTop:10,
-
         borderBottomWidth:1,
         marginBottom:15,
         borderColor: "#9f9f9f29"
@@ -76,6 +89,14 @@ const styles = StyleSheet.create({
         marginTop: 8,
         color: '#000'
       },
+      arancia:{
+
+        color: '#E4A83B'
+      },
+      fonts: {
+        fontSize: 23, 
+      }
+      
   });
 
   export default styles;

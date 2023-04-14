@@ -120,7 +120,7 @@ export default class Missioni extends Component {
         return (
             <View >
           
-              <Head prop = {this.props} routes = "Mission" title ="Missioni"  seach ="true" screem= {this.props.route.params?.screem} search = {this.search}  />
+              <Head prop = {this.props} routes = "Mission" title ="Missioni"  search ="true" screem= {this.props.route.params?.screem} getSearch = {this.search}  />
              { this.state.loading ? <LoadingInline/> : undefined  } 
             <View style={Styles.DataTableHeaderHome}>
              <Text style={Styles.headerLabel}>Nome Missione</Text>

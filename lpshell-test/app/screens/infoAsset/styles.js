@@ -5,7 +5,17 @@ const {ids, styles} = StyleSheet.create({
     flex: 1,
     paddingRight:30,
   },
-
+  containerDocument:{
+    flexDirection:"row",
+    padding:60, 
+    paddingTop:10,
+   },
+   imageArrow:{
+    height:30
+   },
+   boxImageArrow:{
+    paddingTop:15,
+   },
   containerDetail: {
     flex: 1,
     flexDirection: "column",
@@ -106,7 +116,7 @@ const {ids, styles} = StyleSheet.create({
     paddingTop:"10%",
     justifyContent: "space-between",
     '@media (min-width: 1200px)': {
-      paddingHorizontal:20,
+      paddingHorizontal :20,
   },
   },
 

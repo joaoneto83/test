@@ -13,7 +13,7 @@ export default class Head extends Component {
     this.state = {
       text: ''
     };
-    console.log("head", props, this.state)
+    console.log("head-----", props, this.state)
   }
 
   static getDerivedStateFromProps(props, state) {
@@ -46,6 +46,7 @@ export default class Head extends Component {
     }
     return this.images
   }
+
   home = () => {
     this.props.prop.navigation.navigate('Home');
   };
@@ -79,7 +80,13 @@ export default class Head extends Component {
         <Text style={styles.title}>{this.props?.title}</Text>
         <Text style={styles.subTitle}>{this.props?.screem}</Text>
         <View style={styles.containerSearch}>
-          {this.props?.seach == "true" ?
+          { this.props?.modalQRcode  ?
+               <TouchableOpacity style={styles.buttonQRCode}   onPress={() => this.props?.modalQRcode()} >
+               <Text style={styles.textQRcode}>senza QR code</Text>
+            </TouchableOpacity>: undefined
+           }
+     
+          {this.props?.search == "true" ?
             <View style={styles.boxSearch}>
               <Image
                resizeMode="contain"
@@ -88,7 +95,7 @@ export default class Head extends Component {
               />
               <TextInput
                 style={styles.input}
-                onChangeText={(text) => this.props.search(text)}
+                onChangeText={(text) => this.props.getSearch(text)}
                 placeholder=""
               />
             </View> : undefined}
@@ -97,3 +104,5 @@ export default class Head extends Component {
     );
   }
 };
+
+

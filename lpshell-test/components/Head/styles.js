@@ -39,6 +39,15 @@ const {ids, styles} = StyleSheet.create({
         padding:20,
         curso: 'pointer'
       },
+      buttonQRCode:{
+        backgroundColor:"#E4A83B",
+        borderRadius:5,
+        padding:10,
+      },
+      textQRcode:{
+        color:"#fff",
+        fontSize:23,
+      },
       title: {
         fontSize: 30,
         marginBottom: 10,

@@ -39,14 +39,25 @@ export default class ButtonBasi extends Component {
 
     screem = () => {
       // this.props.prop.navigation.navigate(this.props.route);
-      console.log(this.props.qrCodes)
+      console.log(this.props)
+      switch(this.props.title) {
+        case "Document":
+          this.props.prop.navigation.navigate("InfoDocument", id = this.props.id)
+          break;
+         case "Mappa":
+          this.props.prop.navigation.navigate("mappa")
+            break;
+          case "Controllo":
+            if (this.props.qrCodes.length < 2){
+              this.props.prop.navigation.navigate('InfoAssetControllo',{ item: "Pannello", screem: "Controllo" }); 
+            }else{
+              this.props.prop.navigation.navigate('InfoAsset',{ item: "Pannello", screem: "Controllo" });
+            }
+                break;
+        default:
+         undefined
       
-      if (this.props.qrCodes.length < 2){
-        this.props.prop.navigation.navigate('InfoAssetControllo',{ item: "Pannello", screem: "Controllo" }); 
-      }else{
-        this.props.prop.navigation.navigate('InfoAsset',{ item: "Pannello", screem: "Controllo" });
-      }
-     
+    }
     }
 
   render () {
@@ -61,3 +72,5 @@ export default class ButtonBasi extends Component {
     );
   }
 };
+
+

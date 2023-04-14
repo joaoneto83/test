@@ -98,8 +98,9 @@ const {ids, styles} = StyleSheet.create({
         paddingLeft:10,
         paddingBottom:12,
         paddingRight:15,
-   
-
+      },
+      font:{
+       fontSize:23
       }
   
   });

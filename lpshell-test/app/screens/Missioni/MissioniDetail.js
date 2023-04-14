@@ -120,12 +120,10 @@ export default class MissioniDetail extends Component {
         })
     }
 
-
-
     render() {
         return (
             <View style={{ flex: 1 }}>
-                <Head prop={this.props} routes="Mission" title="Missioni"  seach ="true" screem="Dettagli" search={this.search} />
+                <Head prop={this.props} routes="Mission" title="Missioni"  search ="true" screem="Dettagli" getSearch={this.search} />
                 { this.state.loading ? <LoadingInline/> : undefined  } 
                 <ScrollView >
                     <View style={styles.container} >
@@ -143,10 +141,6 @@ export default class MissioniDetail extends Component {
                                     <Text style={styles.label}>{this.state.backData.totalTasks - this.state.backData.completedTasks}</Text>
                                 </View>
                             </View>
-
-
-
-
                             <TouchableOpacity style={styles.boxImage}>
                                 <Image
                                     style={Styles.buttonImage}
@@ -156,18 +150,20 @@ export default class MissioniDetail extends Component {
                         </View>
                         <View style={styles.boxRigth}>
                             <View style={styles.DataTableHeader}>
+                            <Text style={styles.labelHeaderD}>Procedura</Text>
                                 <Text style={styles.labelHeaderD}>Asset</Text>
                                 <Text style={styles.labelHeaderI}>Controllo</Text>
                                 <Text style={styles.labelHeaderI}>Mappa</Text>
                                 <Text style={styles.labelHeaderI}>Carica</Text>
                             </View>
                          { !this.state?.procedureAssets ? undefined : this.state?.procedureAssets.map((item) => (
-                                <View style={styles.DatacTableRow}>
-                                    <View >
-                                    <Text style={styles.labelRowP}>{item.procedure}</Text>
-                                    <Text style={styles.labelRow}>{item.asset}</Text>
+                                <View style={styles.DataTableHeader}>
+
+                                    
+                                    <Text style={[styles.labelHeaderD, {  color:"#000",}]}>{item.procedure}</Text>
                                    
-                                    </View>
+                                    <Text style={styles.labelHeaderD}>{item.asset}</Text>
+                                   
                                     <TouchableOpacity style={styles.rowD} onPress={() => this.controllo(item.procedureId)} >
                                         <Image
                                             style={Styles.iconRow}
