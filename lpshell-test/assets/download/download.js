@@ -1,6 +1,7 @@
 import React from 'react';
 import { View, Button } from 'react-native';
 import * as FileSystem from 'expo-file-system';
+import * as IntentLauncher from 'expo-intent-launcher';
 
 import { requestPermissionsAsync, MediaLibrary} from 'expo-media-library';
 
@@ -21,41 +22,25 @@ class DownloadT extends React.Component {
             FileSystem.downloadAsync("http://www.pdf995.com/samples/pdf.pdf", FileSystem.documentDirectory + 'test.pdf')
             .then( async ({uri}) => {
                 console.log("ok", uri)
-                await MediaLibrary.createAssetAsync(uri)
+                alert(uri);
+                // await MediaLibrary.createAssetAsync(uri)
+                // try {
+                //     const cUri = await FileSystem.getContentUriAsync(uri);
+                //     await IntentLauncher.startActivityAsync("android.intent.action.VIEW", {
+                //         data: cUri,
+                //         flags: 1,
+                //         type: "application/pdf",
+                //     });
+                  
+                //   }catch(e){
+                //       console.log(e.message);
+                //   }
             }).catch((err) => {
                console.log(err)
             })
 
-        // try {
-        //   const asset = await MediaLibrary.createAssetAsync(downloadedFile.uri);
-        //   const album = await MediaLibrary.getAlbumAsync('Download');
-        //   if (album == null) {
-        //     await MediaLibrary.createAlbumAsync('Download', asset, false);
-        //   } else {
-        //     await MediaLibrary.addAssetsToAlbumAsync([asset], album, false);
-        //   }
-        // } catch (e) {
-        //   handleError(e);
-        // }
-        }
-
-        // const perm = await Permissions.askAsync(Permissions.MEDIA_LIBRARY);
-        // if (perm.status != 'granted') {
-        //   return;
-        // }
         
-        // try {
-        //   const asset = await MediaLibrary.createAssetAsync(downloadedFile.uri);
-        //   const album = await MediaLibrary.getAlbumAsync('Download');
-        //   if (album == null) {
-        //     await MediaLibrary.createAlbumAsync('Download', asset, false);
-        //   } else {
-        //     await MediaLibrary.addAssetsToAlbumAsync([asset], album, false);
-        //   }
-        // } catch (e) {
-        //   handleError(e);
-        // }
-
+        }
 
     }
     render(){
