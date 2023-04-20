@@ -19,22 +19,22 @@ class DownloadT extends React.Component {
         console.log("ok1")
       if (permission.status !== 'granted') {
  
-            FileSystem.downloadAsync("http://www.pdf995.com/samples/pdf.pdf", FileSystem.documentDirectory + 'test.pdf')
+            FileSystem.downloadAsync("http://www.pdf995.com/samples/pdf.pdf", FileSystem.documentDirectory + 'testr.pdf')
             .then( async ({uri}) => {
                 console.log("ok", uri)
                 alert(uri);
                 // await MediaLibrary.createAssetAsync(uri)
-                // try {
-                //     const cUri = await FileSystem.getContentUriAsync(uri);
-                //     await IntentLauncher.startActivityAsync("android.intent.action.VIEW", {
-                //         data: cUri,
-                //         flags: 1,
-                //         type: "application/pdf",
-                //     });
+                try {
+                    const cUri = await FileSystem.getContentUriAsync(uri);
+                    await IntentLauncher.startActivityAsync("android.intent.action.VIEW", {
+                        data: cUri,
+                        flags: 1,
+                        type: "application/pdf",
+                    });
                   
-                //   }catch(e){
-                //       console.log(e.message);
-                //   }
+                  }catch(e){
+                      console.log(e.message);
+                  }
             }).catch((err) => {
                console.log(err)
             })
