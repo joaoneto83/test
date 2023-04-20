@@ -13,13 +13,13 @@ class DownloadT extends React.Component {
 
 
     async saveFile() {
-        const permission = await requestPermissionsAsync();
+       
 
 
         console.log("ok1")
-      if (permission.status !== 'granted') {
+
  
-            FileSystem.downloadAsync("http://www.pdf995.com/samples/pdf.pdf", FileSystem.documentDirectory + 'testr.pdf')
+            FileSystem.downloadAsync("http://www.pdf995.com/samples/pdf.pdf", FileSystem.documentDirectory + 'tes.pdf')
             .then( async ({uri}) => {
                 console.log("ok", uri)
                 alert(uri);
@@ -33,6 +33,7 @@ class DownloadT extends React.Component {
                     });
                   
                   }catch(e){
+                    alert("erro",uri);
                       console.log(e.message);
                   }
             }).catch((err) => {
@@ -40,8 +41,6 @@ class DownloadT extends React.Component {
             })
 
         
-        }
-
     }
     render(){
         return(
