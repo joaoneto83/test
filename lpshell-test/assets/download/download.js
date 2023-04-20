@@ -46,7 +46,7 @@ class DownloadT extends React.Component {
     render(){
         return(
             <View style={{flex : 1, justifyContent : 'center', alignItems: 'center'}}>
-                <Button title="Create PDF" onPress={() => this.saveFile()}/>
+                <Button title="teste PDF" onPress={() => this.saveFile()}/>
             </View>
         )
     }
