@@ -31,6 +31,7 @@ const {ids, styles} = StyleSheet.create({
         width: 20, 
         height: 20,
       },
+  
       iconeMissioni:{
         width: 35, 
         height: 50,
@@ -50,6 +51,12 @@ const {ids, styles} = StyleSheet.create({
       },
       title: {
         fontSize: 30,
+        marginBottom: 10,
+        marginTop: 20,
+        color: '#787777'
+      },
+      offlineTitle: {
+        fontSize: 18,
         marginBottom: 10,
         marginTop: 20,
         color: '#787777'

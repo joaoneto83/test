@@ -1,25 +1,30 @@
 import React, {Component} from "react";
-import {Text, View,TouchableOpacity } from "react-native";
+import {Text, View,TouchableOpacity, Image } from "react-native";
 
 import axios from "axios";
 import AsyncStorage from '@react-native-community/async-storage';
+import Modal from 'react-native-modal';
 
 import Head from '../../../components/Head';
 import Styles from "./styles";
 import Moment from 'moment';
 import LoadingInline from "../../../components/loading/loadingInline";
+import ButtonSave from "../../../components/buttons/ButtonSave";
+import DownloadT from "../../../assets/download/download"
 
 const baseUrlMissioni = "http://192.168.248.20:8090/Api/Mission/MyMissions"
+const missioniOff = "http://192.168.248.20:8090/Api/Mission/AllMissionDetails/"
 
 export default class Missioni extends Component {
-
-
     constructor(props){
         super(props)
         this.state = {
             backData: [...this.data],
             Authorization: "",
-            loading: true
+            loading: true,
+            visibleModal: null,
+            offLineId:"",
+            offLineName:""
         }
         this.getData();
     }
@@ -75,11 +80,9 @@ export default class Missioni extends Component {
   //   }
   //  ];
    getData = async () => {
-
     this.state = {
       Authorization: await AsyncStorage.getItem('DATA_KEY').then((response) => { return response }),
     }
-   
     await axios.get( baseUrlMissioni, {
       headers: {
         "Content-Type": "application/x-www-form-urlencoded",
@@ -99,9 +102,59 @@ export default class Missioni extends Component {
         console.log("erro", erro)
       })
   }
+  MissioniOff = async (id, name) => {
+    this.state = {
+      loading:true,
+      Authorization: await AsyncStorage.getItem('DATA_KEY').then((response) => { return response }),
+    }
+    await axios.get( missioniOff + id, {
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded",
+        'Authorization': `Bearer ${this.state.Authorization.replace(/"/g, '')}`,
+      }
+    }
+    )
+      .then((response) => {
+       this.data = response.data;
+        this.setState({ visibleModal: 1, offLineId: id, offLineName:name, loading:false,})
+      
+      }).catch((erro)=>{
+        console.log("erro", erro)
+      })
+  }
+  _renderButton = (text, onPress) => (
+    <TouchableOpacity  style={{width:"100%", alignItems:"flex-end"}} onPress={onPress}>
+      <Image
+                        style={Styles.imagemClose}
+                        source={require('../../../assets/images/close.png')}
+                      />
+    </TouchableOpacity>
+  );
+
+
+  callbackSave = () =>
+  {
+    this.setState({ visibleModal: null })
+    this.props.navigation.navigate("MissioniDetail", {data: this.data})
+
+  }
+
+  _renderModalContent = () => (
+    <View style={{ justifyContent:"center", backgroundColor:"white", padding:10}}>
+      <View style={{alignItems:"center"}} >
+      {this._renderButton('Close', () => this.setState({ visibleModal: null }))}
+      <TouchableOpacity style={{flexDirection:"row", alignItems:"center"}} onPress={() => this.MissioniOff(this.state.offLineId)} >
+        <Text style={Styles.modalHeader}>scaricato con successo la missione: {this.state.offLineName}, modalità off-line. </Text>
+        <ButtonSave  callbackSave= {this.callbackSave}></ButtonSave>
+      </TouchableOpacity>
+      </View>
+
+  
+    </View>
+    
+  );
 
    goDetail = (id) => {
-    console.log("go")
     this.props.navigation.navigate('MissioniDetail', {id:id});
    }
    handleForceupdateMethod() {
@@ -119,22 +172,41 @@ export default class Missioni extends Component {
     render(){
         return (
             <View >
-          
+
+            <Modal     isVisible={this.state.visibleModal === 1}
+              animationIn={'slideInLeft'}
+              animationOut={'slideOutRight'}>
+                    {this._renderModalContent()}
+            </Modal>
+
               <Head prop = {this.props} routes = "Mission" title ="Missioni"  search ="true" screem= {this.props.route.params?.screem} getSearch = {this.search}  />
              { this.state.loading ? <LoadingInline/> : undefined  } 
             <View style={Styles.DataTableHeaderHome}>
-             <Text style={Styles.headerLabel}>Nome Missione</Text>
-             <Text style={Styles.headerLabel}>Iniziata il</Text>
-             <Text style={Styles.headerLabel}>Assegnata</Text>
-          
+              <DownloadT></DownloadT>
+            <View style={{flexDirection:"row"}}>
+            <Text style={Styles.boxTableHeader}>Nome Missione</Text>
+             <Text style={Styles.boxTableHeader}>Iniziata il</Text>
+             <Text style={Styles.boxTableHeader}>Assegnata</Text>
             </View>
-       
+             <View>
+             <Text style={Styles.boxTableHeader}>Off-line</Text>
+             </View>
+            </View>
             { this.state.backData.map((item) => (
-                <TouchableOpacity style={Styles.DatacTableRowHome} onPress={()=> this.goDetail(item?.id)}>
-                <Text style={Styles.rowLabel}>{item?.description}</Text>
-                <Text style={Styles.rowLabel}> {Moment(item?.creationTime).format('DD/MM/YYYY')}</Text>
-                <Text style={Styles.rowLabel}>{item?.assignedUser}</Text>
+              <View style={Styles.DataTableHeaderHome}>
+                <TouchableOpacity style={{flexDirection:"row"}} onPress={()=> this.goDetail(item?.id)}>
+                <Text style={Styles.boxTableBody}>{item?.description}</Text>
+                <Text style={Styles.boxTableBody}> {Moment(item?.creationTime).format('DD/MM/YYYY')}</Text>
+                <Text style={Styles.boxTableBody}>{item?.assignedUser}</Text>
                </TouchableOpacity>
+               <TouchableOpacity style={Styles.boxTableBody} onPress={() => this.MissioniOff(item?.id,item?.description ) } >
+                                      <Image
+                                            resizeMode="contain"
+                                            style={[Styles.iconRow]}
+                                            source={require('../../../assets/images/download.png')}
+                                        />
+              </TouchableOpacity>
+               </View>
             )
             )       
             } 

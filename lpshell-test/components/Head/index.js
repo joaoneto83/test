@@ -78,7 +78,13 @@ export default class Head extends Component {
           />}
         </TouchableOpacity>
         <Text style={styles.title}>{this.props?.title}</Text>
+        { this.props?.screem ? 
+        <TouchableOpacity style={styles.buttonHead}   onPress={() => { this.props.prop.navigation.goBack(null) }}>
         <Text style={styles.subTitle}>{this.props?.screem}</Text>
+        </TouchableOpacity> : undefined
+        }
+        
+        <Text style={styles.subTitle}>{this.props?.subTitle}</Text>
         <View style={styles.containerSearch}>
           { this.props?.modalQRcode  ?
                <TouchableOpacity style={styles.buttonQRCode}   onPress={() => this.props?.modalQRcode()} >
@@ -99,7 +105,16 @@ export default class Head extends Component {
                 placeholder=""
               />
             </View> : undefined}
+      
         </View>
+        { this.props.offline ?
+        <View style={{flexDirection:"row"}}>
+                   <Text style={[styles.offlineTitle, {color:"red"}]}>off-line</Text>
+                   <View style={{width:15, height:15, borderRadius:20, backgroundColor:"red"}} ></View>
+          </View>
+   
+            :undefined
+            }
       </View>
     );
   }

@@ -11,7 +11,7 @@ function ButtonSave(props) {
    }
  
       return (
-          <TouchableOpacity onPress={() => props.callbackSave()}  >
+          <TouchableOpacity onPress={() => props?.callbackSave()}  >
             <Text style={styles.save}>OK</Text> 
           </TouchableOpacity>
       );

@@ -5,7 +5,7 @@ const {ids, styles} = StyleSheet.create({
     container: {
         flex: 0,
         flexDirection:"row",
-        paddingHorizontal:30,
+        paddingHorizontal:10,
       },
       containerMission: {
         flex: 1,
@@ -14,8 +14,8 @@ const {ids, styles} = StyleSheet.create({
     
     boxLeft:{
         paddingTop:30,
-        minWidth:"30%",
-        maxWidth:"35%",
+        minWidth:"25%",
+        maxWidth:"27%",
         alignItems:"center",
         borderEndWidth:1,
         borderColor:"#e1e1e1"
@@ -23,17 +23,22 @@ const {ids, styles} = StyleSheet.create({
 
     boxRigth:{
         paddingTop:10,
-        minWidth:"70%",
-        alignItems:"center",
+        paddingLeft:10,
+        width:"70%",
+        minHeight:"80%"
     },
     DataTableHeader:{
         flex:0,
-        flexDirection: "row",
-        justifyContent:"center",
-        padding:5,  
-        minWidth:"85%",
-        maxWidth:"85%",
+        flexDirection: "row", 
+        alignItems:"center",
     },
+    DataTableBody:{
+      flex:0,
+      flexDirection: "row", 
+      alignItems:"center",
+      borderBottomWidth:0.5,
+      borderBottomColor:"#e1e1e1",
+  },
     
     DatacTableRow:{
         flex:0,
@@ -47,12 +52,11 @@ const {ids, styles} = StyleSheet.create({
 
     },
     DataTableHeaderHome:{
-        flex:0,
+    
         flexDirection: "row",
         justifyContent:"center",
         padding:5,  
-        minWidth:"100%",
-        maxWidth:"100%",
+
 
     },
     
@@ -65,6 +69,56 @@ const {ids, styles} = StyleSheet.create({
         minWidth:"100%",
         maxWidth:"100%",
     },
+    boxTableHeader:{
+      width:200,
+      fontSize: 20, 
+      color:"#787777",
+      paddingVertical:20,
+      textAlign: 'center',
+      alignItems: "center",
+
+      '@media (min-width: 1200px)': {
+        width:270
+      },
+    },
+    modalHeader:{
+     
+      fontSize: 20, 
+      color:"#787777",
+      paddingVertical:20,
+      textAlign: 'center',
+      alignItems: "center",
+
+    },
+    boxTableBody:{
+      width:200,
+      fontSize: 16, 
+      color:"#000000",
+      paddingVertical:5,
+      borderBottomWidth:1,
+      borderColor:"#e1e1e1",
+      alignItems: "center",
+      textAlign: 'center',
+      
+      '@media (min-width: 1200px)': {
+        width:270
+      },
+    },
+    iconeArrow:{
+      width:21
+    },
+    modalContent: {
+      flexDirection:"row-reverse",
+      backgroundColor: 'white',
+      padding: 22,
+      justifyContent:"space-between",
+      borderRadius: 4,
+      borderColor: 'rgba(0, 0, 0, 0.1)',
+    },
+    imagemClose:{
+      width: 25, 
+      height: 25, 
+    },
     headerLabel:{
         flex:0,
         fontSize: 20, 
@@ -72,18 +126,19 @@ const {ids, styles} = StyleSheet.create({
         paddingVertical:20,
         textAlign: 'center',
         alignItems: "center",
-        width:300,
+        width:200,
         '@media (min-width: 1200px)': {
-            width:400
+            width:350
         },
     },
     labelHeaderD:{
         textAlign: 'center',
-        maxWidth:"21%",
-        minWidth:"21%",
+        width:150,
+    
         fontSize: 20, 
         color:"#787777",
-        height:50
+        height:50,
+        paddingHorizontal:5
     },
     labelHeaderI:{
         textAlign: 'center',
@@ -122,7 +177,6 @@ const {ids, styles} = StyleSheet.create({
         height:60,
     },
     iconRow:{
-        width:35,
         height:35
     },
     rowLabel:{
@@ -134,9 +188,9 @@ const {ids, styles} = StyleSheet.create({
         borderColor:"#9F9F9F",
         alignItems: "center",
         textAlign: 'center',
-        width:300,
+        width:200,
         '@media (min-width: 1200px)': {
-            width:400
+          width:350
         },
     },
     boxImage:{

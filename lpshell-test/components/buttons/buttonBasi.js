@@ -14,10 +14,8 @@ export default class ButtonBasi extends Component {
     super()
     const {title} = props;
     console.log("button",props)
- 
   }
 
-   
    getTitle(title){
     switch(title) {
         case "Document":
@@ -53,10 +51,9 @@ export default class ButtonBasi extends Component {
             }else{
               this.props.prop.navigation.navigate('InfoAsset',{ item: "Pannello", screem: "Controllo" });
             }
-                break;
+            break;
         default:
          undefined
-      
     }
     }
 
@@ -64,9 +61,9 @@ export default class ButtonBasi extends Component {
     return (
          <TouchableOpacity   style={styles.container}   onPress = {()=>  this.screem()}  >
         <Image
+          resizeMode="contain"
           style={styles.icone}
-          source={this.getTitle(this.props.title)}
-        />
+          source={this.getTitle(this.props.title)}/>
          <Text style={styles.title}>{this.props.title}</Text>
          </TouchableOpacity>
     );

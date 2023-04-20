@@ -96,7 +96,7 @@ export default class QrcideMissioni extends Component {
               animationOut={'slideOutRight'}>
                     {this._renderModalContent()}
             </Modal>
-        <Head prop = {this.props} routes="Mission"  title ="Missioni" search ="false" modalQRcode={this.modalQRcode}/>
+        <Head prop = {this.props} routes="Mission"  title ="Missioni" screem ="Dettagli" subTitle ="Controllo" search ="false" modalQRcode={this.modalQRcode}/>
         { this.state.loading ? <LoadingInline/> : undefined } 
         <QrcodeScreen data = {this.props} scan={this.scan}/>
       </View>
