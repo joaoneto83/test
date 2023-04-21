@@ -8,7 +8,7 @@ import Head from '../../../components/Head';
 import LoadingInline from "../../../components/loading/loadingInline";
 import styles from "./styles";
 import Styles from "./styles";
-
+import DownloadPdf from "../../../assets/download-off-line/downloadPdf"
 const baseUrlMissio = "http://192.168.248.20:8090/Api/Mission/Mobile/"
 
 export default class MissioniDetail extends Component {
@@ -19,6 +19,7 @@ export default class MissioniDetail extends Component {
             backData: {},
             Authorization: "",
             procedureAssets: [],
+            data:[],
             loading: true
         }
         if (props.route.params?.data) {
@@ -31,6 +32,7 @@ export default class MissioniDetail extends Component {
 
     iconControllo = require('../../../assets/images/settings.png')
     data = [];
+    filterData = [];
     procedureAssetsOffline = [];
     offline = false
     getDataOff = () => {
@@ -40,8 +42,8 @@ export default class MissioniDetail extends Component {
                 procedure: x.procedure.name,
                 asset: x.asset?.description,
                 statusId: x.statusId,
-                procedureId: x.procedure.id
-
+                procedureId: x.procedure.id,
+                loading: true
             }
             return i
         }
@@ -72,9 +74,10 @@ export default class MissioniDetail extends Component {
         ).then((response) => {
 
             console.log("response", response.data)
-
+        
             this.setState({
                 backData: response.data,
+                data: [...response.data.procedureAssets],
                 procedureAssets: [...response.data.procedureAssets],
                 loading: false
             })
@@ -103,12 +106,25 @@ export default class MissioniDetail extends Component {
         this.props.navigation.navigate('QrcideMissioni', { procedureId: item });
     }
     search = (value) => {
-        let filterData = [...this.data];
-        console.log("", filterData)
+        console.log("this.data", this.data.procedureAssets)
+        this.setState(
+            {
+                loading: true
+            }
+        )
+      if(this.props.route.params?.data){
+        this.filterData = [...this.procedureAssetsOffline];
+      }else{
+        this.filterData = [...this.state.data];
+      }
+        
+      
         this.setState({
-            procedureAssets: filterData.filter(x => {
-                return x.assetId.toLowerCase().indexOf(value.toLowerCase()) > -1 || x.executionUserId.toLowerCase().indexOf(value.toLowerCase()) > -1
-            })
+            procedureAssets: this.filterData.filter(x => {
+                return x.procedure.toLowerCase().indexOf(value.toLowerCase()) > -1 || x.asset.toLowerCase().indexOf(value.toLowerCase()) > -1
+            }
+            ),
+            loading: false
         })
     }
     render() {
@@ -116,9 +132,9 @@ export default class MissioniDetail extends Component {
             <View>
                 <Head prop={this.props} routes="Mission" title="Missioni" search="true" screem="Dettagli" getSearch={this.search} offline={this.offline} />
                 {this.state.loading ? <LoadingInline /> : undefined}
-   
+            
                 <View style={[styles.container,]} >
-    
+                <DownloadPdf></DownloadPdf>
                     <View style={styles.boxLeft}>
                    
                         <Text style={styles.Title}>{this.state.backData.description}</Text>

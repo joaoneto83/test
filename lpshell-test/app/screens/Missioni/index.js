@@ -10,7 +10,7 @@ import Styles from "./styles";
 import Moment from 'moment';
 import LoadingInline from "../../../components/loading/loadingInline";
 import ButtonSave from "../../../components/buttons/ButtonSave";
-import DownloadT from "../../../assets/download/download"
+import DownloadPdf from "../../../assets/download-off-line/downloadPdf"
 
 const baseUrlMissioni = "http://192.168.248.20:8090/Api/Mission/MyMissions"
 const missioniOff = "http://192.168.248.20:8090/Api/Mission/AllMissionDetails/"
@@ -136,7 +136,6 @@ export default class Missioni extends Component {
   {
     this.setState({ visibleModal: null })
     this.props.navigation.navigate("MissioniDetail", {data: this.data})
-
   }
 
   _renderModalContent = () => (
@@ -148,12 +147,8 @@ export default class Missioni extends Component {
         <ButtonSave  callbackSave= {this.callbackSave}></ButtonSave>
       </TouchableOpacity>
       </View>
-
-  
     </View>
-    
   );
-
    goDetail = (id) => {
     this.props.navigation.navigate('MissioniDetail', {id:id});
    }
@@ -182,7 +177,7 @@ export default class Missioni extends Component {
               <Head prop = {this.props} routes = "Mission" title ="Missioni"  search ="true" screem= {this.props.route.params?.screem} getSearch = {this.search}  />
              { this.state.loading ? <LoadingInline/> : undefined  } 
             <View style={Styles.DataTableHeaderHome}>
-              <DownloadT></DownloadT>
+            <DownloadPdf></DownloadPdf>
             <View style={{flexDirection:"row"}}>
             <Text style={Styles.boxTableHeader}>Nome Missione</Text>
              <Text style={Styles.boxTableHeader}>Iniziata il</Text>

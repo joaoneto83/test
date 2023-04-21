@@ -32,7 +32,7 @@
       "permissions": [
         "android.permission.CAMERA"
       ],
-      "package": "com.jneto83.lpshelltest"
+      "package": "com.lpshelltest"
     },
     "web": {
       "favicon": "./assets/favicon.png"
