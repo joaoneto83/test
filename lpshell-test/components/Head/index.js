@@ -18,7 +18,7 @@ export default class Head extends Component {
 
   static getDerivedStateFromProps(props, state) {
     if (props !== state) {
-      console.log("ts", props);
+
       return {
         value: props.value,
       }
@@ -77,13 +77,15 @@ export default class Head extends Component {
             source={this.getTitle(this.props?.title)}
           />}
         </TouchableOpacity>
+        <TouchableOpacity  onPress={() => this.screem()} >
         <Text style={styles.title}>{this.props?.title}</Text>
+        </TouchableOpacity>
         { this.props?.screem ? 
         <TouchableOpacity style={styles.buttonHead}   onPress={() => { this.props.prop.navigation.goBack(null) }}>
         <Text style={styles.subTitle}>{this.props?.screem}</Text>
         </TouchableOpacity> : undefined
         }
-        
+
         <Text style={styles.subTitle}>{this.props?.subTitle}</Text>
         <View style={styles.containerSearch}>
           { this.props?.modalQRcode  ?
@@ -109,7 +111,7 @@ export default class Head extends Component {
         </View>
         { this.props.offline ?
         <View style={{flexDirection:"row"}}>
-                   <Text style={[styles.offlineTitle, {color:"red"}]}>off-line</Text>
+                   <Text style={[styles.offlineTitle, {color:"red", marginLeft:20}]}>off-line</Text>
                    <View style={{width:15, height:15, borderRadius:20, backgroundColor:"red"}} ></View>
           </View>
    

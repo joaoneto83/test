@@ -10,7 +10,7 @@ const styles = StyleSheet.create({
         minHeight:"140%",
         marginLeft:-20,
   
-        transform: [{ rotate: '-90deg'}],
+        transform: [{ rotate:'-90deg'}],
       },
 
     image: {

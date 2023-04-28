@@ -4,6 +4,7 @@ import {Text, View,TouchableOpacity, Image } from "react-native";
 import axios from "axios";
 import AsyncStorage from '@react-native-community/async-storage';
 import Modal from 'react-native-modal';
+import * as FileSystem from 'expo-file-system';
 
 import Head from '../../../components/Head';
 import Styles from "./styles";
@@ -11,9 +12,12 @@ import Moment from 'moment';
 import LoadingInline from "../../../components/loading/loadingInline";
 import ButtonSave from "../../../components/buttons/ButtonSave";
 import DownloadPdf from "../../../assets/download-off-line/downloadPdf"
+import ListDocument from "../../../components/list/listDocument";
+import ShowPdf from '../../../assets/download-off-line/showPdf';
 
 const baseUrlMissioni = "http://192.168.248.20:8090/Api/Mission/MyMissions"
 const missioniOff = "http://192.168.248.20:8090/Api/Mission/AllMissionDetails/"
+const gifDir = FileSystem.cacheDirectory + 'giphy/';
 
 export default class Missioni extends Component {
     constructor(props){
@@ -28,7 +32,8 @@ export default class Missioni extends Component {
         }
         this.getData();
     }
-     data = []
+     data = [];
+     documents=[];
   //  data = [
   //   {
   //     "id": "6739d643-20f5-494b-8873-0007a0010e36",
@@ -80,6 +85,19 @@ export default class Missioni extends Component {
   //   }
   //  ];
    getData = async () => {
+   
+   
+     if (await FileSystem.getInfoAsync(gifDir)) {
+      await FileSystem.deleteAsync(gifDir);
+      console.log("file",await FileSystem.getInfoAsync(gifDir))
+     }
+   
+      await FileSystem.makeDirectoryAsync(gifDir, { intermediates: true });
+   
+      console.log("file",await FileSystem.getInfoAsync(gifDir))
+
+
+   // test ShowPdf("file:///data/user/0/host.exp.exponent/cache/ExperienceData/%2540jneto83%252Flpshell-test/giphy/ProvaMobile.pdf")
     this.state = {
       Authorization: await AsyncStorage.getItem('DATA_KEY').then((response) => { return response }),
     }
@@ -93,11 +111,12 @@ export default class Missioni extends Component {
       .then((response) => {
    
          this.data = response.data;
+
          this.setState({
             backData: [...this.data],
             loading:false
         })
-         console.log("tes",this.data)
+ 
       }).catch((erro)=>{
         console.log("erro", erro)
       })
@@ -116,12 +135,16 @@ export default class Missioni extends Component {
     )
       .then((response) => {
        this.data = response.data;
-        this.setState({ visibleModal: 1, offLineId: id, offLineName:name, loading:false,})
-      
+       console.log("off", response.data)
+       this.documents = response.data.documents,
+       AsyncStorage.setItem('Offline_Data', JSON.stringify(response.data.documents));
+      this.setState({ visibleModal: 1, offLineId: id, offLineName:name, loading:false,})
+         
       }).catch((erro)=>{
         console.log("erro", erro)
       })
   }
+
   _renderButton = (text, onPress) => (
     <TouchableOpacity  style={{width:"100%", alignItems:"flex-end"}} onPress={onPress}>
       <Image
@@ -135,7 +158,7 @@ export default class Missioni extends Component {
   callbackSave = () =>
   {
     this.setState({ visibleModal: null })
-    this.props.navigation.navigate("MissioniDetail", {data: this.data})
+    this.props.navigation.navigate("MissioniDetail", {data: this.data, offline:true})
   }
 
   _renderModalContent = () => (
@@ -167,7 +190,6 @@ export default class Missioni extends Component {
     render(){
         return (
             <View >
-
             <Modal     isVisible={this.state.visibleModal === 1}
               animationIn={'slideInLeft'}
               animationOut={'slideOutRight'}>
@@ -176,8 +198,15 @@ export default class Missioni extends Component {
 
               <Head prop = {this.props} routes = "Mission" title ="Missioni"  search ="true" screem= {this.props.route.params?.screem} getSearch = {this.search}  />
              { this.state.loading ? <LoadingInline/> : undefined  } 
+             {   this.documents ?  
+             <View>     
+           <DownloadPdf documents = {this.documents} gifDir = {gifDir} /> 
+            
+             </View>
+         
+              : undefined
+              }
             <View style={Styles.DataTableHeaderHome}>
-            <DownloadPdf></DownloadPdf>
             <View style={{flexDirection:"row"}}>
             <Text style={Styles.boxTableHeader}>Nome Missione</Text>
              <Text style={Styles.boxTableHeader}>Iniziata il</Text>

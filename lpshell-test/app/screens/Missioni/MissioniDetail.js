@@ -22,7 +22,7 @@ export default class MissioniDetail extends Component {
             data:[],
             loading: true
         }
-        if (props.route.params?.data) {
+        if (props.route.params?.offline) {
             this.getDataOff();
         } else {
             this.getData();
@@ -32,15 +32,26 @@ export default class MissioniDetail extends Component {
 
     iconControllo = require('../../../assets/images/settings.png')
     data = [];
+    documents=[];
+    asset=[];
     filterData = [];
     procedureAssetsOffline = [];
     offline = false
     getDataOff = () => {
-        this.offline = true
+        this.offline = true;
+        this.documents = this.props?.route?.params?.data?.documents;
+        this.assest = this.props?.route?.params?.data?.procedureAssets;
+       
         this.procedureAssetsOffline = this.props?.route?.params?.data.procedureAssets.map(x => {
             let i = {
                 procedure: x.procedure.name,
+                procedureData:  x.procedure,
                 asset: x.asset?.description,
+                id: x.asset?.id,
+                factory:x.asset?.factory,
+                keyNum:x.asset?.keyNum,
+                productionYear:x.asset?.productionYear,
+                register:x.asset?.register,
                 statusId: x.statusId,
                 procedureId: x.procedure.id,
                 loading: true
@@ -53,10 +64,9 @@ export default class MissioniDetail extends Component {
             backData: this.props?.route?.params?.data,
             Authorization: "",
             procedureAssets: [...this.procedureAssetsOffline],
-
             loading: false
         }
-        console.log("off", this.state)
+        console.log("off", this.documents)
     }
 
     getData = async () => {
@@ -102,8 +112,9 @@ export default class MissioniDetail extends Component {
         return this.iconControllo
     }
 
-    controllo = (item) => {
-        this.props.navigation.navigate('QrcideMissioni', { procedureId: item });
+    controllo = (item, procedureId, assetId) => {
+        console.log("controllo ", item)
+        this.props.navigation.navigate('QrcideMissioni', { data:item,  procedureId: procedureId , assetId: assetId, documents: this.documents, offline: this.props.route.params?.offline });
     }
     search = (value) => {
         console.log("this.data", this.data.procedureAssets)
@@ -195,7 +206,7 @@ export default class MissioniDetail extends Component {
                                         <Text style={[styles.labelHeaderD, { color: "#000", }]}>{item?.procedure}</Text>
                                         <Text style={styles.labelHeaderD}>{item?.asset}</Text>
 
-                                        <TouchableOpacity style={[styles.rowD]} onPress={() => this.controllo(item?.procedureId)} >
+                                        <TouchableOpacity style={[styles.rowD]} onPress={() => this.controllo( item, item?.procedureId, item?.assetId)} >
                                             <Image
                                                 resizeMode="contain"
                                                 style={[Styles.iconRow]}

@@ -17,6 +17,7 @@ export default class ButtonBasi extends Component {
   }
 
    getTitle(title){
+
     switch(title) {
         case "Document":
           this.images = require('../../assets/images/document.png')
@@ -37,7 +38,7 @@ export default class ButtonBasi extends Component {
 
     screem = () => {
       // this.props.prop.navigation.navigate(this.props.route);
-      console.log(this.props)
+      console.log("controllo a",  this.props)
       switch(this.props.title) {
         case "Document":
           this.props.prop.navigation.navigate("InfoDocument", id = this.props.id)
@@ -47,7 +48,7 @@ export default class ButtonBasi extends Component {
             break;
           case "Controllo":
             if (this.props.qrCodes.length < 2){
-              this.props.prop.navigation.navigate('InfoAssetControllo',{ item: "Pannello", screem: "Controllo" }); 
+              this.props.prop.navigation.navigate('InfoAssetControllo',{ item: "Pannello", screem: "Controllo", value:this.props.value }); 
             }else{
               this.props.prop.navigation.navigate('InfoAsset',{ item: "Pannello", screem: "Controllo" });
             }

@@ -14,6 +14,7 @@ import ListControllo from '../../../components/list/listControllo';
 import Gallery from '../../../components/gallery';
 import Photo from '../../../components/camera';
 import LoadingInline from "../../../components/loading/loadingInline";
+import ButtonDocument from '../../../components/buttons/buttonDocument';
 
 
 
@@ -35,6 +36,8 @@ export default class MissioniControllo extends Component {
   super(props);
     this.state = {
       data:  [],
+      asset:"",
+      documents:[],
       dataArray: this.dataControllo,
       dataControlloArray: [],
       Authorization: "",
@@ -45,8 +48,19 @@ export default class MissioniControllo extends Component {
       visibleModalGallery:null,
       loading:true
     }
-    this.getData();
+   
+
+if (props.route.params?.offline) {
+
+   this.getDataOff();
+   } else {
+
+      this.getData();
   }
+
+
+  }
+
   postData= {
     // procedureId: "",
     // assetId:"",
@@ -57,7 +71,7 @@ export default class MissioniControllo extends Component {
     procedureAttributeId:"",
     value:""
   }
-  
+
   callbackProcedura = (item) => {
     this.setState({
       dataControlloArray: item
@@ -72,7 +86,7 @@ export default class MissioniControllo extends Component {
      
         x = {
           procedureAttributeId: item.id,
-          value: item.value.toString()
+          value: item?.value?.toString()
           } 
          
           return x
@@ -119,7 +133,6 @@ export default class MissioniControllo extends Component {
   };
   
   callbackSave = async () => {
-    
     this.setState({ 
         visibleModal: null,
       visibleModalSave: 1,
@@ -154,7 +167,18 @@ export default class MissioniControllo extends Component {
     })
 
   }
+
+  getDataOff = () => {
+    console.log("off controllo",this.props.route.params.data.procedureData.attributes)
+    this.state.asset =this.props.route.params?.data.asset;
+    this.state.data =  this.props.route.params?.data;
+    this.state.documents = this.props.route.params?.documnets;
+    this.state.dataControlloArray = this.props.route.params?.data.procedureData;
+    this.state.loading = false
+  };
+
   getData = async () => {
+   
     if(this.off){
       this.setState({
         data: this.data,
@@ -176,14 +200,11 @@ export default class MissioniControllo extends Component {
       )
         .then((response) => {
           this.getControllo(response.data?.id);
-          this.state = {
-            data: response.data,
-          }
           this.setState({
             data: response.data,
-
+            documents: response.data.documents,
+            asset:response.data.description,
               loading:false
-           
           })
           this.postData.assetId = response.data?.id,
           console.log("p chamada", this.state)
@@ -191,6 +212,7 @@ export default class MissioniControllo extends Component {
     }
  
   }
+
   getControllo = async (item) => {
     console.log("item", item)
    
@@ -274,9 +296,7 @@ export default class MissioniControllo extends Component {
               animationOut={'slideOutRight'}>
                     {this._renderModalContentGallery()}
                 </Modal>
-             
-             
-        <Head prop={this.props} routes="Mission" title="Missioni" screem="controllo" ></Head>
+        <Head prop={this.props} routes="Mission" title="Missioni" screem="controllo"  offline = {this.props.route.params?.offline}  />
         { this.state.loading ? <LoadingInline/> : undefined  } 
         <ScrollView>
           <View style={styles.containerControllo}>
@@ -304,7 +324,7 @@ export default class MissioniControllo extends Component {
               </View>
               <View style={styles.boxInfo}>
                 <Text style={styles.labelControlloDetail}>Descrizione -</Text>
-                <Text style={styles.infoDetail}>{this.state?.data?.description}</Text>
+                <Text style={styles.infoDetail}>{this.state?.asset}</Text>
               </View>
               <View style={styles.boxInfo}>
                 <Text style={styles.labelControlloDetail}>Marca -</Text>
@@ -328,7 +348,9 @@ export default class MissioniControllo extends Component {
                             <Text style={styles.info}> {item.value}</Text>
                         </View>
                     ))} */}
+              <ButtonDocument prop = {this.props} routes = "Documents"  title ="Documents" documents= {this.state.documents} id = {this.state.data.id} ></ButtonDocument>
               <View style={styles.boxImageControllo}>
+             
 
                 <TouchableOpacity onPress={ () => this.props.navigation.navigate('Photo') }>
                   <Image

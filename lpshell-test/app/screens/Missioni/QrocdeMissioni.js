@@ -85,7 +85,7 @@ export default class QrcideMissioni extends Component {
     scan = () => {
     this.setState({loading:true})
    setTimeout(()=> {
-    this.props.navigation.navigate('Scanner',{routes:"Mission", title:"Missioni", procedureId:this.props.route.params?.procedureId, screem: this.props.route.params?.screem});
+    this.props.navigation.navigate('Scanner',{routes:"Mission", data:this.props.route.params?.data , title:"Missioni", offline:this.props.route.params?.offline ,assetId: this.props.route.params?.assetId, data:this.props.route.params?.data, procedureId:this.props.route.params?.procedureId, documents: this.props.route.params?.documents, screem: this.props.route.params?.screem});
    })     
     };
   render () {
@@ -96,7 +96,7 @@ export default class QrcideMissioni extends Component {
               animationOut={'slideOutRight'}>
                     {this._renderModalContent()}
             </Modal>
-        <Head prop = {this.props} routes="Mission"  title ="Missioni" screem ="Dettagli" subTitle ="Controllo" search ="false" modalQRcode={this.modalQRcode}/>
+        <Head prop = {this.props} routes="Mission"  title ="Missioni" offline={this.props.route.params?.offline} screem ="Dettagli" subTitle ="Controllo" search ="false" modalQRcode={this.modalQRcode}/>
         { this.state.loading ? <LoadingInline/> : undefined } 
         <QrcodeScreen data = {this.props} scan={this.scan}/>
       </View>

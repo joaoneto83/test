@@ -17,6 +17,19 @@ const {ids, styles} = StyleSheet.create({
         paddingVertical:15,
     },
     },
+    containerNoBorder: {
+      flex: 0,
+      flexDirection: 'row',
+      alignItems: 'center',
+      margin:10,
+      paddingHorizontal:20,
+      paddingVertical:10,
+      '@media (min-width: 1200px)': {
+       
+        paddingHorizontal:30,
+        paddingVertical:15,
+    },
+    },
     containerOnOff:{
       flex: 0,
       flexDirection: 'row',
@@ -26,7 +39,6 @@ const {ids, styles} = StyleSheet.create({
       borderColor:"#E4A83B",
       borderRadius:6,
       height:32
-
     },
     containerControllo:{
       flex: 0,
@@ -90,7 +102,6 @@ const {ids, styles} = StyleSheet.create({
         fontSize: 16,
         color: '#FFFFFF',
         backgroundColor:'#86F330',
-
         borderRadius:4,
         marginLeft:20,
         marginRight:20,

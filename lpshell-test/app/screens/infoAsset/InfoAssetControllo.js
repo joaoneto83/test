@@ -304,7 +304,7 @@ export default class InfoAssetControllo extends Component {
       this.getControllo(this.data?.id);
       console.log("off", this.state.data)
     }else{
-      console.log("aa", this.state.data)
+      console.log("on", this.props.route.params)
       this.state = {
         Authorization: await AsyncStorage.getItem('DATA_KEY').then((response) => { return response }),
         qrCode: this.props.route.params.value,
@@ -317,6 +317,7 @@ export default class InfoAssetControllo extends Component {
       }
       )
         .then((response) => {
+          console.log("aa", response.data?.id)
           this.getControllo(response.data?.id);
           this.state = {
             data: response.data,
@@ -326,7 +327,10 @@ export default class InfoAssetControllo extends Component {
           })
           this.postData.assetId = response.data?.id,
           console.log("p chamada", this.state)
-        });
+        }).catch((erro) => {
+          console.log("erro", erro)
+      }
+      )
     }
 
 
@@ -409,7 +413,7 @@ export default class InfoAssetControllo extends Component {
               animationOut={'slideOutRight'}>
                     {this._renderModalContent()}
            
-                </Modal>
+            </Modal>
               
                 <Modal     isVisible={this.state.visibleModalSave === 1}
               animationIn={'slideInLeft'}

@@ -11,7 +11,17 @@ const {ids, styles} = StyleSheet.create({
         flex: 1,
         paddingRight:30,
       },
-    
+      containerDocument:{
+        flexDirection:"row",
+        padding:60, 
+        paddingTop:10,
+       },
+       boxImageArrow:{
+        paddingTop:15,
+       },
+       imageArrow:{
+        height:30
+       },
     boxLeft:{
         paddingTop:30,
         minWidth:"25%",

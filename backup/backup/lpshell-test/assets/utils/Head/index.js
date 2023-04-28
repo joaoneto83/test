@@ -17,7 +17,6 @@ export default class Head extends Component {
 
   static getDerivedStateFromProps(props, state) {
     if (props !== state) {
-      console.log("ts",props);
       return {
         value: props.value,
       }

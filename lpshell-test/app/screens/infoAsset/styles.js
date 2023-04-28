@@ -298,7 +298,5 @@ const {ids, styles} = StyleSheet.create({
     paddingRight:20
   
   },
-  
-
 });
 export default styles;

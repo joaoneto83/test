@@ -44,6 +44,7 @@ const {ids, styles} = StyleSheet.create({
         backgroundColor:"#E4A83B",
         borderRadius:5,
         padding:10,
+        marginRight:50
       },
       textQRcode:{
         color:"#fff",

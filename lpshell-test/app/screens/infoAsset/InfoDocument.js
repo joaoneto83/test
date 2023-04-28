@@ -54,7 +54,6 @@ export default class InfoDocument extends Component {
             })
           }
       )
-
    }
    search = (value) => {
     let filterData = [...this.state.data];

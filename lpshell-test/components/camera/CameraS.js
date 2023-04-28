@@ -14,7 +14,6 @@ import styles from "./styles";
   const [scanned, setScanned] = useState(false);
   const [photo, setPhoto] = useState(null);
 
-
   useEffect(() => {
 
     (async () => {
@@ -25,7 +24,6 @@ import styles from "./styles";
   }, []);
 
   const handleBarCodeScanned = ({ type, data }) => {
-
     if (data){
       setScanned(true);
       // alert(`Bar code with type ${type} and data ${data} has been scanned!`);
@@ -63,7 +61,6 @@ import styles from "./styles";
 
   return (
     <View style={styles.container}>
-
       {/* <TouchableOpacity  onPress={()=>  setPhoto(1)}
         style={{width:100, height:100,right:"-10%", marginLeft:200, backgroundColor:"#fff", zIndex: 1, position: 'absolute', borderRadius: 50}}/> */}
          <View style={styles.containerScan}>

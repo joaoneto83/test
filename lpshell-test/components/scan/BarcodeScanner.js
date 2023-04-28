@@ -16,7 +16,7 @@ import styles from "./styles";
 
   useEffect(() => {
     const getBarCodeScannerPermissions = async () => {
-      console.log("ok")
+      console.log("ok", props)
       const { status } = await BarCodeScanner.requestPermissionsAsync();
       setHasPermission(status === 'granted');
     };
@@ -25,7 +25,7 @@ import styles from "./styles";
   }, []);
 
   const handleBarCodeScanned = ({ type, data }) => {
-    console.log("un",props?.route?.params?.title)
+    console.log("unss",data)
     if (data){
       setScanned(true);
        
@@ -41,8 +41,8 @@ import styles from "./styles";
           }
           break;
         case "Missioni":
-
-            props.navigation.navigate('MissioniControllo', { value: data, procedureId: props?.route?.params?.procedureId} )
+         
+            props.navigation.navigate('MissioniControllo', { value: data, data: props?.route?.params?.data, procedureId: props?.route?.params?.procedureId, assetId: props?.route?.params?.assetId, offline: props?.route?.params?.offline,  documents: props?.route?.params?.documents} )
           break;
         default:
         
@@ -75,7 +75,7 @@ import styles from "./styles";
 
   return (
     <View style={styles.container}>
-       <Head prop = {props} routes ={props?.route?.params?.routes} title ={props?.route?.params?.title} screem= {props?.route?.params?.screem} />
+       <Head prop = {props} routes ={props?.route?.params?.routes} title ={props?.route?.params?.title} offline= {props?.route?.params?.offline} screem= {props?.route?.params?.screem} />
          <View style={styles.containerScan}>
          <BarCodeScanner 
         onBarCodeScanned={scanned ? undefined : handleBarCodeScanned}

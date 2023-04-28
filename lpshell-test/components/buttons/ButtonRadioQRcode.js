@@ -17,13 +17,13 @@ function ButtonRadioQRcode (props) {
       return (
         <View>
         {onoff == "Senza QRcode" ?  
-        <TouchableOpacity   style={[styles.containerOnOff,{height:40}]}   onPress = {()=>  getOnOff("Non legge QRcode")}  >
+        <TouchableOpacity   style={[styles.containerOnOff,{height:40}]}   onPress = {()=>  getOnOff("Non leggere QRcode")}  >
            <Text style={[styles.textTrue , styles.font]}> Senza QRcode </Text>  
-           <Text style={[styles.textFalse, styles.font]}>Non legge QRcode</Text>     
+           <Text style={[styles.textFalse, styles.font]}>Non leggere il QRcode</Text>     
        </TouchableOpacity> :
        <TouchableOpacity   style={[styles.containerOnOff,{height:40}]}   onPress = {()=>  getOnOff("Senza QRcode")}  >
        <Text style={[styles.textFalse, styles.font]}> Senza QRcode </Text>  
-       <Text style={[styles.textTrue, styles.font]}>Non legge QRcode</Text>
+       <Text style={[styles.textTrue, styles.font]}>Non leggere il QRcode</Text>
            </TouchableOpacity>
         }
         </View>   

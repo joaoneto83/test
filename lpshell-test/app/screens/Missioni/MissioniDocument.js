@@ -23,7 +23,7 @@ export default class MissioniDocument extends Component {
         data:[],
         listDocument:[]
     }
-    if (props.route.params?.data) {
+    if (props.route.params?.offline) {
         this.getDataOff();
     } else {
         this.getData();
@@ -31,13 +31,27 @@ export default class MissioniDocument extends Component {
 
    }
 
+  data = []
+
+   getDataOff = async () => {
+    console.log("online_Data", this.props.route.params.documents)
+//    this.data = await AsyncStorage.getItem('Offline_Data').then((response) => { return response }),
+//    console.log("Offline_Datacc", [this.data])
+this.state.data = this.props.route.params.documents;
+this.state.listDocument = this.props.route.params.documents;
+this.state.loading = false;
+
+     console.log("online_Data", this.state.listDocument)
+   };
+
    getData  = async () =>{
+    console.log("online_Data", this.props.route.params)
     this.setState({ 
       Authorization: await AsyncStorage.getItem('DATA_KEY').then((response) => { return response }),
       loading:true
      })
      console.log("ok1",this.state)
-    await axios.get(baseURLGet + this.props.route.params, {
+    await axios.get(baseURLGet + this.props.route.params.assetId, {
         headers: {
           'Content-Type': 'application/json;charset=UTF-8',
           'Authorization': `Bearer ${this.state.Authorization.replace(/"/g, '')}`,
@@ -73,7 +87,7 @@ export default class MissioniDocument extends Component {
     render() {
         return(
             <View style={{flex:1}}>
-            <Head prop={this.props} routes="InfoAsset" title="Info Asset" screem="Document" search="true" getSearch={this.search} /> 
+                <Head prop={this.props} routes="Mission" title="Missioni" screem="Documents" search="true" getSearch={this.search}   offline = {this.props.route.params?.offline} />
             { this.state.loading ? <LoadingInline/> : undefined  } 
             <ScrollView>
             <View style={styles.containerDocument} >
@@ -81,7 +95,7 @@ export default class MissioniDocument extends Component {
             <Image  resizeMode="contain" style={styles.imageArrow}
             source={require('../../../assets/images/arrow.png')}/>
             </TouchableOpacity>
-             <ListDocument  list={this.state?.listDocument}/> 
+            <ListDocument  list={this.state.listDocument} offline="false" />  
             </View> 
             </ScrollView>
             </View>
