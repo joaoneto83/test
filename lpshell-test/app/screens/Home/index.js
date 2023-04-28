@@ -1,18 +1,30 @@
 import React, { Component } from 'react';
 import { Text, View,TouchableOpacity,Image } from "react-native";
 import styles from "./styles";
+import NetInfo from '@react-native-community/netinfo';
 
+
+
+// To unsubscribe to these update, just use: 
 
 
 export default class Home extends Component {
 
+unsubscribe = NetInfo.addEventListener(state => {
+    console.log('Connection type', state.type);
+    alert( state.isConnected);
+  });
+  
+
    constructor(props){
     super()
        console.log("tes", props)
+
    }
  
    goMissioni = () => {
     this.props.navigation.navigate("Mission")
+
    }
 
  handleCreateAccountPress = () => {
@@ -24,8 +36,6 @@ export default class Home extends Component {
   return (
 
     <View style={styles.container}>
-     
-    
           <View style={styles.boxHead}>
           <Image
             resizeMode="contain"

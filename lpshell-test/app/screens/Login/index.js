@@ -5,6 +5,7 @@ import {View,ImageBackground, StatusBar, TouchableOpacity } from 'react-native';
 import { Ionicons }from "@expo/vector-icons";
 
 import AsyncStorage from '@react-native-community/async-storage'
+import NetInfo from '@react-native-community/netinfo';
 
 import api from '../../../services/api';
 
@@ -27,57 +28,7 @@ export default class SignIn extends Component {
 
     // id :fc3babc0-7ea1-42f6-872b-c634adb76b91
 
-  // mock to
-  // [
-  //   {
-  //     "id": "18c00dcb-4ab6-4a9a-958f-05f028d155ae",
-  //     "description": "MissionMP1",
-  //     "creationTime": "2023-03-22T07:56:35.6745451",
-  //     "creationUserId": "fc3babc0-7ea1-42f6-872b-c634adb76b91",
-  //     "modificationUserId": "fc3babc0-7ea1-42f6-872b-c634adb76b91",
-  //     "modificationTime": "2023-03-22T07:56:35.6745779",
-  //     "statusId": 0,
-  //     "errors": 0,
-  //     "assignedUserId": "fc3babc0-7ea1-42f6-872b-c634adb76b91",
-  //     "lastExecutionUserId": null,
-  //     "lastExecutionTime": null,
-  //     "procedureAssets": []
-  //   }
-  // ]
-
-  // [
-  //   {
-  //     "id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-  //     "description": "string",
-  //     "creationTime": "2023-03-22T15:48:05.267Z",
-  //     "creationUserId": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-  //     "modificationUserId": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-  //     "modificationTime": "2023-03-22T15:48:05.267Z",
-  //     "statusId": 0,
-  //     "assignedUserId": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-  //     "lastExecutionUserId": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-  //     "lastExecutionTime": "2023-03-22T15:48:05.267Z",
-  //     "procedureAssets": [
-  //       {
-  //         "id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-  //         "procedureId": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-  //         "assetId": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-  //         "status": 0,
-  //         "errors": 0,
-  //         "executionUserId": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-  //         "executionDate": "2023-03-22T15:48:05.267Z",
-  //         "assetValue": [
-  //           {
-  //             "procedureAttributeId": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-  //             "procedureAttribute": "string",
-  //             "value": "string"
-  //           }
-  //         ]
-  //       }
-  //     ]
-  //   }
-  // ]
-  
+   
   constructor(props) {
     super(props);
      this.state = {

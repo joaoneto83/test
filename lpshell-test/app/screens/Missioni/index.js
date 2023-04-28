@@ -85,14 +85,15 @@ export default class Missioni extends Component {
   //   }
   //  ];
    getData = async () => {
+    const getInfoAsync = await FileSystem.getInfoAsync(gifDir)
    
-   
-     if (await FileSystem.getInfoAsync(gifDir)) {
+     if (getInfoAsync.exists) {
       await FileSystem.deleteAsync(gifDir);
       console.log("file",await FileSystem.getInfoAsync(gifDir))
      }
    
       await FileSystem.makeDirectoryAsync(gifDir, { intermediates: true });
+
    
       console.log("file",await FileSystem.getInfoAsync(gifDir))
 
