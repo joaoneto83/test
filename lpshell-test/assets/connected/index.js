@@ -32,11 +32,11 @@ export default class Connected extends Component {
         
   unsubscribe = NetInfo.addEventListener(
     state => {
-        if(this.props.callbackisConnected){
+     if(this.props.callbackisConnected){
             this.props.callbackisConnected(state.isConnected)
-           }
+        }
 
-    if (this.affet == 1) {
+    if (this.affet == 3) {
         console.log('Connectio', this.affet);
         this.visibleModal= 1,
         this.isConnected = state.isConnected
@@ -47,7 +47,7 @@ export default class Connected extends Component {
         })
      
     }else {
-     this.affet = 1 ;
+     this.affet ++ ;
      console.log('Connectio', this.affet);
     }
    
