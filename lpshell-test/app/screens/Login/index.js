@@ -1,13 +1,15 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import axios from "axios";
-import {View,ImageBackground, StatusBar, TouchableOpacity } from 'react-native';
+import {View,ImageBackground, StatusBar, TouchableOpacity, Image, Text } from 'react-native';
 import { Ionicons }from "@expo/vector-icons";
 
 import AsyncStorage from '@react-native-community/async-storage'
-import NetInfo from '@react-native-community/netinfo';
+
+import Connected from '../../../assets/connected'; 
 
 import api from '../../../services/api';
+
 
 import {
   Container,
@@ -27,7 +29,9 @@ export default class SignIn extends Component {
   // password: 'L0g1caPr0!',
 
     // id :fc3babc0-7ea1-42f6-872b-c634adb76b91
-
+    visibleModal = 0;
+    isConnected = null;
+    affet = 0
    
   constructor(props) {
     super(props);
@@ -35,9 +39,20 @@ export default class SignIn extends Component {
       email: 'admin@logicapro',
       password: 'L0g1caPr0!',
       error: '',
-      hidepass:true
+      hidepass:true,
+      visibleModal: this.visibleModal,
+      isConnected : this.isConnected
      };
+
+
   }
+
+
+
+
+
+
+
   static navigationOptions = {
     header: null,
   };
@@ -49,6 +64,7 @@ export default class SignIn extends Component {
       dispatch: PropTypes.func,
     }).isRequired,
   };
+
  
 
 
@@ -71,6 +87,7 @@ export default class SignIn extends Component {
   }
 
 
+
   handleEmailChange = (email) => {
     this.setState({ email });
   };
@@ -86,7 +103,7 @@ export default class SignIn extends Component {
   handleSignInPress = async () => {
   
     //return this.props.navigation.navigate("Home");
-  
+
 
     if (this.state.email.length === 0 ) {
        this.setState({ error: 'Inserisci username' }, () => false);
@@ -128,6 +145,8 @@ export default class SignIn extends Component {
     <ImageBackground source={require('../../../assets/images/fundo.png')} style={{flex: 1, padding: 0}}> 
       <Container>
         <View style={{backgroundColor: 'rgba( 0, 0, 0, .6)', padding: 10 ,paddingHorizontal: 30, borderRadius: 10,  margin: 'auto'}}>
+     
+            <Connected  modal = "true"></Connected>
         <StatusBar hidden />
         <Logo source={require('../../../assets/images/logica_logo.png')} resizeMode="contain" style={{marginTop: -30}} />
         <Input

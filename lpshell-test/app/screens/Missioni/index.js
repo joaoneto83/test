@@ -7,6 +7,7 @@ import Modal from 'react-native-modal';
 import * as FileSystem from 'expo-file-system';
 
 import Head from '../../../components/Head';
+import Connected from '../../../assets/connected'; 
 import Styles from "./styles";
 import Moment from 'moment';
 import LoadingInline from "../../../components/loading/loadingInline";
@@ -91,14 +92,10 @@ export default class Missioni extends Component {
       await FileSystem.deleteAsync(gifDir);
       console.log("file",await FileSystem.getInfoAsync(gifDir))
      }
-   
       await FileSystem.makeDirectoryAsync(gifDir, { intermediates: true });
-
-   
       console.log("file",await FileSystem.getInfoAsync(gifDir))
 
 
-   // test ShowPdf("file:///data/user/0/host.exp.exponent/cache/ExperienceData/%2540jneto83%252Flpshell-test/giphy/ProvaMobile.pdf")
     this.state = {
       Authorization: await AsyncStorage.getItem('DATA_KEY').then((response) => { return response }),
     }
@@ -119,6 +116,7 @@ export default class Missioni extends Component {
         })
  
       }).catch((erro)=>{
+       
         console.log("erro", erro)
       })
   }
@@ -136,7 +134,6 @@ export default class Missioni extends Component {
     )
       .then((response) => {
        this.data = response.data;
-       console.log("off", response.data)
        this.documents = response.data.documents,
        AsyncStorage.setItem('Offline_Data', JSON.stringify(response.data.documents));
       this.setState({ visibleModal: 1, offLineId: id, offLineName:name, loading:false,})
@@ -179,6 +176,9 @@ export default class Missioni extends Component {
    handleForceupdateMethod() {
     this.backData = [];
    };
+   callbackisConnected(item){
+    alert("3",item)
+  } 
    search = (value) => {
     let filterData = [...this.data];
     console.log("",filterData)
@@ -196,7 +196,7 @@ export default class Missioni extends Component {
               animationOut={'slideOutRight'}>
                     {this._renderModalContent()}
             </Modal>
-
+            <Connected  callbackisConnected = {this.callbackisConnected}></Connected>
               <Head prop = {this.props} routes = "Mission" title ="Missioni"  search ="true" screem= {this.props.route.params?.screem} getSearch = {this.search}  />
              { this.state.loading ? <LoadingInline/> : undefined  } 
              {   this.documents ?  
