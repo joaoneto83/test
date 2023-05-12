@@ -6,7 +6,7 @@ import { Ionicons }from "@expo/vector-icons";
 
 import AsyncStorage from '@react-native-community/async-storage'
 
-import api from '../../../services/api';
+
 
 import {
   Container,

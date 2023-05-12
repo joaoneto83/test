@@ -1,0 +1,22 @@
+
+
+----version----
+npm 8.1.2
+node v16.13.1
+
+-----start----- 
+npm start
+
+
+react-native-media-query
+2.0.1 
+
+
+////////////////////////////////////
+need an expo account to build
+https://expo.dev/accounts
+
+expo go
+
+-------build sdk android------
+eas build -p android --profile preview
