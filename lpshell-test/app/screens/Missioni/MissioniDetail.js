@@ -49,7 +49,7 @@ export default class MissioniDetail extends Component {
         this.documents = this.props?.route?.params?.data?.documents;
         this.assest = this.props?.route?.params?.data?.procedureAssets;
        
-        this.procedureAssetsOffline = this.props?.route?.params?.data.procedureAssets.map(x => {
+        this.procedureAssetsOffline = this.props?.route?.params?.data?.procedureAssets?.map(x => {
             let i = {
                 procedure: x.procedure.name,
                 procedureData:  x.procedure,
@@ -229,7 +229,7 @@ export default class MissioniDetail extends Component {
                         </View>
                         <View style={{ flex: 1 }}>
                             <ScrollView >
-                                {!this.state?.procedureAssets ? undefined : this.state?.procedureAssets.map((item) => (
+                                {!this.state?.procedureAssets ? undefined : this.state?.procedureAssets?.map((item) => (
                                     <View style={styles.DataTableBody} key={item?.id}>
                                         <Text style={[styles.labelHeaderD, { color: "#000", }]}>{item?.procedure}</Text>
                                         <Text style={styles.labelHeaderD}>{item?.asset}</Text>

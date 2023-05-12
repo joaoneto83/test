@@ -21,10 +21,11 @@ const baseUrlMissioni = "Api/Mission/MyMissions"
 const missioniOff = "Api/Mission/AllMissionDetails/"
 const gifDir = FileSystem.cacheDirectory + 'giphy/';
 
-
+const self = this
 
 export default class Missioni extends Component {
     constructor(props){
+         
         super(props)
         this.state = {
             backData: [...this.data],
@@ -122,18 +123,26 @@ export default class Missioni extends Component {
       })
   }
   MissioniOff = async (id, name) => {
-    this.state = {
-      loading:true,
-      Authorization: await AsyncStorage.getItem('DATA_KEY').then((response) => { return response }),
-    }
+  
+
+    this.setState (
+      {
+        loading:true,
+        Authorization: await AsyncStorage.getItem('DATA_KEY').then((response) => { return response }),
+ 
+      }
+    ) 
+    console.log("off", id, name, this.state.loading, this.state.Authorization)
+
     await api.get( missioniOff + id)
       .then((response) => {
-       this.data = response.data;
-       this.documents = response.data.documents,
-       AsyncStorage.setItem('Offline_Data', JSON.stringify(response.data.documents));
-      this.setState({ visibleModal: 1, offLineId: id, offLineName:name, loading:false,})
-         
-      }).catch((erro)=>{
+        console.log("off-ok", response.data)
+        self.data = response.data;
+        self.documents = response.data.documents
+    
+         AsyncStorage.setItem('Offline_Data', JSON.stringify(response.data.documents));
+       this.setState( { visibleModal: 1,offLineId: id, offLineName:name, loading:false} );
+      } ).catch((erro)=>{
         console.log("erro", erro)
       })
   }
@@ -151,7 +160,7 @@ export default class Missioni extends Component {
   callbackSave = () =>
   {
     this.setState({ visibleModal: null })
-    this.props.navigation.navigate("MissioniDetail", {data: this.data, offline:true})
+    this.props.navigation.navigate("MissioniDetail", {data: self.data, offline:true})
   }
 
   _renderModalContent = () => (
@@ -170,9 +179,9 @@ export default class Missioni extends Component {
     <View style={{ justifyContent:"center", backgroundColor:"white", padding:10}}>
       <View style={{alignItems:"center"}} >
       {this._renderButton('Close', () => this.setState({ visibleModalAdvanced: null }))}
-      <TouchableOpacity style={{flexDirection:"row", alignItems:"center"}} onPress={() => this.MissioniOff(this.state.offLineId)} >
+      
       <Search fields={[{field:"Nome Missione", value:"description"}, {field:"Iniziata", value:"creationTime"}]} data={[...this.data]}   advancedSearch = {this.advancedSearch} /> 
-      </TouchableOpacity>
+
       </View>
     </View>
   );
@@ -245,7 +254,7 @@ export default class Missioni extends Component {
              <Text style={Styles.boxTableHeader}>Off-line</Text>
              </View>
             </View>
-            { this.state.backData.map((item) => (
+            { this.state.backData?.map((item) => (
               <View style={Styles.DataTableHeaderHome} key={item?.id}>
                 <TouchableOpacity style={{flexDirection:"row"}} onPress={()=> this.goDetail(item?.id)}>
                 <Text style={Styles.boxTableBody}>{item?.description}</Text>
