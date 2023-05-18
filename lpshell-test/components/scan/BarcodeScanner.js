@@ -64,6 +64,7 @@ if (props?.route?.params?.offline){
    if (!props?.route?.params?.offline){
     setOkQR(true) 
    }
+
    if (!okQR){
     setTime(time++)
    
@@ -99,9 +100,9 @@ if (props?.route?.params?.offline){
           break;
         case "Missioni":
          if(dataOff){
-          props.navigation.navigate('MissioniControllo', { mission: props.route.params?.mission,  procedureAssets: controllo?.procedureAssets, data: controllo , procedureId: controllo.procedure?.id, assetId: controllo.asset?.id, offline: props?.route?.params?.offline,  documents: props?.route?.params?.documents} )
+          props.navigation.navigate('MissioniControllo', { mission: props.route.params?.mission,screem: props?.route?.params?.screem,  procedureAssets: controllo?.procedureAssets, data: controllo , procedureId: controllo.procedure?.id, assetId: controllo.asset?.id, offline: props?.route?.params?.offline,  documents: props?.route?.params?.documents} )
          }else {
-          props.navigation.navigate('MissioniControllo', { mission: props.route.params?.mission, value: data, procedureAssets: props?.route?.params?.procedureAssets, data: props?.route?.params?.data, procedureId: props?.route?.params?.procedureId, assetId: props?.route?.params?.assetId, offline: props?.route?.params?.offline,  documents: props?.route?.params?.documents} )
+          props.navigation.navigate('MissioniControllo', { mission: props.route.params?.mission, screem: props?.route?.params?.screem, value: data, procedureAssets: props?.route?.params?.procedureAssets, data: props?.route?.params?.data, procedureId: props?.route?.params?.procedureId, assetId: props?.route?.params?.assetId, offline: props?.route?.params?.offline,  documents: props?.route?.params?.documents} )
          }
            
           break;
@@ -113,8 +114,7 @@ if (props?.route?.params?.offline){
     
     }else {
       setScanned(false);
-      props.navigation.navigate('InfoAsset')
-     
+      props.navigation.navigate('InfoAsset') 
     }
   
   };
@@ -130,7 +130,7 @@ if (props?.route?.params?.offline){
 
   return (
     <View style={styles.container}>
-       <Head prop = {props} routes ={props?.route?.params?.routes} title ={props?.route?.params?.title} offline= {props?.route?.params?.offline} screem= {props?.route?.params?.screem} />
+       <Head prop = {props} routes ={props?.route?.params?.routes} id ={props?.route?.params?.mission.id || props?.route?.params?.mission} title ={props?.route?.params?.title} offline= {props?.route?.params?.offline} screem= {props?.route?.params?.screem} />
          <View style={styles.containerScan}>
          <BarCodeScanner 
         onBarCodeScanned={scanned ? undefined : handleBarCodeScanned}

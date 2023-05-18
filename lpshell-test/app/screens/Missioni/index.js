@@ -14,6 +14,7 @@ import ButtonSave from "../../../components/buttons/ButtonSave";
 import DownloadPdf from "../../../assets/download-off-line/downloadPdf"
 import Search from "../../../components/search/searchs"
 import UploadMission from "./uploadMission";
+import SetMissioni from "./setMissioni";
 
 import {api} from '../../../services/api_base';
 
@@ -29,27 +30,28 @@ export default class Missioni extends Component {
         this.state = {
             backData: [...this.data],
             Authorization: "",
-            loading: true,
+            loading: false,
             visibleModal: null,
             visibleModalAdvanced:null,
             isConnected: null,
             offLineId:"",
             offLineName:"",
-            memoriaMissionSalve:[]
+            memoriaMissionSalve:null
         }
         this.missioniCache()
         
     }
      data = [];
      documents=[];
-
+     
    
   missioniCache = async () => {
     this.setState({
-      isConnected :await AsyncStorage.getItem('isConnected').then((response) => { return response })
-    
+      isConnected :await AsyncStorage.getItem('isConnected').then((response) => { return response }),
+      loading:true
     } )
-
+   
+   
 
     if (this.state.isConnected == "false"){
       if (await AsyncStorage.getItem('missioni')){
@@ -109,7 +111,7 @@ export default class Missioni extends Component {
   }
  
   }
-  MissioniOff = async (id, name) => {
+  MissioniOff = async (id, name, mission) => {
 
     this.setState (
       {
@@ -122,7 +124,7 @@ if (this.state.isConnected == "true"){
   await api.get( missioniOff + id)
   .then((response) => {
     this.DataOff(response.data)
-
+    
    
    // AsyncStorage.setItem('Offline_Data', JSON.stringify(response.data.documents));
 
@@ -132,7 +134,7 @@ if (this.state.isConnected == "true"){
     console.log("erro", erro)
   })
 }else {
-  this.callbackSave()
+  this.callbackOff(mission)
   if (await AsyncStorage.getItem(id)){
     self.data =  AsyncStorage.setItem( id, JSON.stringify(response.data));
     alert("self.data"+ "" + self.data)
@@ -153,6 +155,7 @@ if (this.state.isConnected == "true"){
       return x
     } 
     )
+
     let dataOFF = {
       id: data.id,
       description: data.description,
@@ -162,6 +165,7 @@ if (this.state.isConnected == "true"){
       procedureAssets: procedureAssetsOFF,
       documents: data.documents
     }
+
     self.data = dataOFF;
     self.documents = dataOFF.documents;
    AsyncStorage.setItem( data.id, JSON.stringify(dataOFF));
@@ -176,10 +180,14 @@ if (this.state.isConnected == "true"){
     </TouchableOpacity>
   );
 
-
+  callbackOff = (mission) =>
+  {
+    this.setState({ visibleModal: null, loading:false})
+    this.props.navigation.navigate("MissioniDetail", {data: mission, offline:true})
+  }
   callbackSave = () =>
   {
-    this.setState({ visibleModal: null })
+    this.setState({ visibleModal: null , loading:false})
     this.props.navigation.navigate("MissioniDetail", {data: self.data, offline:true})
   }
 
@@ -285,19 +293,20 @@ if (this.state.isConnected == "true"){
             </View>
             { this.state.backData?.map((item) => (
               <View style={Styles.DataTableHeaderHome} key={item?.id}>
-                <TouchableOpacity style={{flexDirection:"row"}} onPress={()=> (this.state.isConnected == "false")? this.MissioniOff(item?.id,item?.description )  :this.goDetail(item?.id)}>
+                {/* <TouchableOpacity style={{flexDirection:"row"}} onPress={()=> (this.state.isConnected == "false")? this.MissioniOff(item?.id,item?.description )  :this.goDetail(item?.id)}>
                 <Text style={Styles.boxTableBody}>{item?.description}</Text>
                 <Text style={Styles.boxTableBody}> {Moment(item?.creationTime).format('DD/MM/YYYY')}</Text>
                 <Text style={Styles.boxTableBody}>{item?.assignedUser}</Text>
                </TouchableOpacity>
 
-               <TouchableOpacity disabled={this.state.isConnected == "false"} style={this.state.isConnected == "false"? [ Styles.boxTableBody,{ opacity:0.5 } ]  : Styles.boxTableBody } onPress={() => this.MissioniOff(item?.id,item?.description ) } >
+               <TouchableOpacity disabled={this.state.isConnected == "false"}  style={this.state.isConnected == "false" ? [ Styles.boxTableBody,{ opacity:0.5 } ]  : Styles.boxTableBody }    onPress={() => this.MissioniOff(item?.id,item?.description ) } >
                                       <Image
                                             resizeMode="contain"
                                             style={[Styles.iconRow]}
                                             source={require('../../../assets/images/download.png')}
                                         />
-              </TouchableOpacity>
+              </TouchableOpacity> */}
+              <SetMissioni id={item?.id} description={item?.description} missioniOff={this.MissioniOff}  goDetail= {this.goDetail} />
               <UploadMission id={item.id}  />
                </View>
             )

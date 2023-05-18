@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Text, View, TouchableOpacity, Image, TextInput } from "react-native";
 import styles from "./styles";
-
+import AsyncStorage from '@react-native-community/async-storage';
 
 const images = require('../../assets/images/infoAssetIcon.png')
 
@@ -52,6 +52,13 @@ export default class Head extends Component {
     this.props.prop.navigation.navigate('Home');
   };
 
+  mission = async (id) => {
+    console.log("ok11",this.props.id)
+    let dataMission = await AsyncStorage.getItem(this.props.id.toString()).then((response) => { return JSON.parse(response) })
+    console.log("ok12",this.props.id)
+    this.props.prop.navigation.navigate("MissioniDetail", {data: dataMission, offline:true})
+  };
+
   screem = () => {
     console.log("screen",this.props)
     this.props.prop.navigation.navigate(this.props.routes);
@@ -83,7 +90,7 @@ export default class Head extends Component {
         <Text style={styles.title}>{this.props?.title}</Text>
         </TouchableOpacity>
         { this.props?.screem ? 
-        <TouchableOpacity style={styles.buttonHead}   onPress={() => { this.props.prop.navigation.goBack(null) }}>
+        <TouchableOpacity style={styles.buttonHead}   onPress={() => this.props?.screem == "Dettagli" ? this.mission(this.props.id) : this.props.prop.navigation.goBack(null) }>
         <Text style={styles.subTitle}>{this.props?.screem}</Text>
         </TouchableOpacity> : undefined
         }
@@ -108,7 +115,7 @@ export default class Head extends Component {
                 onChangeText={(text) => this.props.getSearch(text)}
                 placeholder=""
               />
-              { this.props.adancedSearch ?
+              {/* { this.props.adancedSearch ?
                     <TouchableOpacity onPress= {()=> this.props.adancedSearch(1)} >
                     <Image
                      resizeMode="contain"
@@ -116,7 +123,7 @@ export default class Head extends Component {
                       source={require('../../assets/images/filter.png')}
                     />
                     </TouchableOpacity>: undefined
-              }
+              } */}
           
                
             </View> : undefined}

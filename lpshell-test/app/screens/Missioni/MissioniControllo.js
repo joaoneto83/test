@@ -9,6 +9,7 @@ import * as ImagePicker from 'expo-image-picker';
 
 import styles from "./styles";
 import ButtonSave from '../../../components/buttons/ButtonSave';
+import ButtonOk from '../../../components/buttons/ButtonOk';
 import ButtonEsc from '../../../components/buttons/ButtonEsc';
 import ListControllo from '../../../components/list/listControllo';
 import Gallery from '../../../components/gallery';
@@ -288,16 +289,28 @@ if (props.route.params?.offline) {
       <View style={{flex:0, flexDirection:"row-reverse"}}> 
       {this._renderButton('Close', () => this.setState({ visibleModalSave: null }))}
       </View>
-      <View>
+      <View style={{flexDirection:"row", justifyContent:"center"}}>
         { this.props.route.params?.offline ?  <Text style={styles.titleSave}>Salvato in memoria con successo!</Text>
          :<Text style={styles.titleSave}>Salvato con successo!</Text>
         }
-     
+         <TouchableOpacity style={{width:100}}>
+         <ButtonOk  callbackOk ={this.callbackOk}/>
+         </TouchableOpacity>
+      
       </View>
       
     </View>
     
   );
+
+
+  callbackOk = async ()=>{
+    let id = this.props?.route?.params?.mission.id || this.props?.route?.params?.mission
+    let data =  await AsyncStorage.getItem(id).then((response) => { return JSON.parse(response) })
+  
+    this.props.navigation.navigate('MissioniDetail',{data: data, offline:true});
+  }
+
   _renderModalContentGallery = () => (
     <View style={styles.modalContent}>
         {this._renderButton('Close', () => this.setState({ visibleModalGallery: null }))}
@@ -341,7 +354,7 @@ if (props.route.params?.offline) {
               animationOut={'slideOutRight'}>
                     {this._renderModalContentGallery()}
                 </Modal>
-        <Head prop={this.props} routes="Mission" title="Missioni" screem="controllo"  offline = {this.props.route.params?.offline}  />
+        <Head prop={this.props} routes="Mission" title="Missioni" screem="Dettagli" id ={this.props?.route?.params?.mission.id || this.props?.route?.params?.mission}  subTitle ="Controllo"  offline = {this.props.route.params?.offline}  />
         { this.state.loading ? <LoadingInline/> : undefined  } 
         <ScrollView>
           <View style={styles.containerControllo}>

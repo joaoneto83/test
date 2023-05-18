@@ -166,7 +166,7 @@ export default class UploadMission extends Component {
             </Modal>
             <Connected  callbackisConnected = {this.callbackisConnected}></Connected>
         { this.state.mission ?
-    <TouchableOpacity style={ this.state.isConnected  ?  [styles.boxTableBody] : [ styles.boxTableBody,{ opacity:0.3 } ] }  onPress={() =>  this.state.isConnected  ? this.saveListMission(): undefined } >
+    <TouchableOpacity style={ this.state.isConnected  ?  [styles.boxTableBody, {marginTop:6}] : [ styles.boxTableBody,{ opacity:0.3 } ] }  onPress={() =>  this.state.isConnected  ? this.saveListMission(): undefined } >
     <Image
         resizeMode="contain"
         style={styles.iconRow}
