@@ -49,7 +49,7 @@ export default class ButtonDocument extends Component {
   render () {
     return (
          <TouchableOpacity   style={[styles.containerNoBorder,{marginRight:-20}]}   onPress = {()=>  this.screem()}  >
-            <Text style={[styles.title, {marginRight:-20}]}>{this.props.prop.route.params.documents.length ||  this.props.documents}</Text>
+            <Text style={[styles.title, {marginRight:-20}]}>{this.props.prop.route.params.documents?.length ||  this.props.documents}</Text>
         <Image
           resizeMode="contain"
           style={styles.icone}

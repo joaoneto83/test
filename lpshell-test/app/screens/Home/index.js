@@ -57,7 +57,7 @@ export default class Home extends Component {
         
       <View style={styles.box}>
 
-         <TouchableOpacity      style={styles.button}  onPress = { this.state.isConnected ? ()=>  this.handleCreateAccountPress() :undefined}  >
+         <TouchableOpacity      style={styles.button}  onPress = { this.state.isConnected ? ()=>  this.handleCreateAccountPress() : undefined}  >
           <Image
       resizeMode="contain"
        style={ this.state.isConnected  ? styles.buttonImageIconStyle : [ styles.buttonImageIconStyle,{ opacity:0.5 } ] }

@@ -8,7 +8,7 @@ import Styles from "./styles";
 import DownloadPdf from "../../../assets/download-off-line/downloadPdf"
 import Modal from 'react-native-modal';
 import ButtonSave from '../../../components/buttons/ButtonSave';
-
+import UploadMission from "./uploadMission";
 
 import { api } from '../../../services/api_base';
 
@@ -30,6 +30,7 @@ export default class MissioniDetail extends Component {
             item: ""
         }
         if (props.route.params?.offline) {
+            console.log("c",props?.route?.params?.data?.id)
             this.getDataOff();
         } else {
             this.getData();
@@ -45,6 +46,7 @@ export default class MissioniDetail extends Component {
     procedureAssetsOffline = [];
     offline = false
     getDataOff = () => {
+        
         this.offline = true;
         this.documents = this.props?.route?.params?.data?.documents;
         this.assest = this.props?.route?.params?.data?.procedureAssets;
@@ -54,7 +56,8 @@ export default class MissioniDetail extends Component {
                 procedure: x.procedure.name,
                 procedureData:  x.procedure,
                 asset: x.asset?.description,
-                id: x.asset?.id,
+                assetId:x.asset?.id,
+                id: x.procedureAssets,
                 factory:x.asset?.factory,
                 keyNum:x.asset?.keyNum,
                 productionYear:x.asset?.productionYear,
@@ -88,7 +91,7 @@ export default class MissioniDetail extends Component {
             })
             console.log("tess", this.state?.backData?.procedureAssets)
         }).catch((erro) => {
-            console.log("erro", erro)
+            console.log("erroOnline", erro)
         }
         )
     }
@@ -129,6 +132,9 @@ export default class MissioniDetail extends Component {
       </View>
   
       );
+      searchQR = () => {
+        this.props.navigation.navigate('QrcideMissioni', { mission: this.props.route.params?.data?.id || this.props.route.params, offline: this.props.route.params?.offline });
+      }
 
       callbackSave = () =>
       {
@@ -190,7 +196,7 @@ export default class MissioniDetail extends Component {
                             </View>
                   
                         </View>
-                        <TouchableOpacity style={styles.boxImage}>
+                        <TouchableOpacity style={styles.boxImage} onPress={() => this.searchQR()}>
                             <Image
                                 style={Styles.buttonImage}
                                 source={require('../../../assets/images/qrcode.png')}
@@ -230,7 +236,7 @@ export default class MissioniDetail extends Component {
                         <View style={{ flex: 1 }}>
                             <ScrollView >
                                 {!this.state?.procedureAssets ? undefined : this.state?.procedureAssets?.map((item) => (
-                                    <View style={styles.DataTableBody} key={item?.id}>
+                                    <View style={styles.DataTableBody} key={item?.id || item?.procedureAssets }>
                                         <Text style={[styles.labelHeaderD, { color: "#000", }]}>{item?.procedure}</Text>
                                         <Text style={styles.labelHeaderD}>{item?.asset}</Text>
 
@@ -248,13 +254,15 @@ export default class MissioniDetail extends Component {
                                                 source={require('../../../assets/images/map.png')}
                                             />
                                         </TouchableOpacity>
-                                        <TouchableOpacity style={styles.rowD}>
+
+                                        {/* <UploadMission id={item.id} status={item?.statusId} /> */}
+                                      <TouchableOpacity style={styles.rowD} opa>
                                             <Image
                                                 resizeMode="contain"
                                                 style={Styles.iconRow}
                                                 source={require('../../../assets/images/upload.png')}
                                             />
-                                        </TouchableOpacity>
+                                        </TouchableOpacity> 
                                     </View>
                                 )
                                 )

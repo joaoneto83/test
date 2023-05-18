@@ -29,8 +29,6 @@ export default class MissioniControllo extends Component {
 
   off = false
 
-
-
   constructor(props) {
 
   super(props);
@@ -46,13 +44,14 @@ export default class MissioniControllo extends Component {
       visibleModal: null,
       visibleModalSave: null,
       visibleModalGallery:null,
+      isConnected: null,
       loading:true,
       statusId:null
     }
    
 
 if (props.route.params?.offline) {
-
+   console.log("entrou",this.props.route.params)
    this.getDataOff();
    } else {
 
@@ -81,10 +80,12 @@ if (props.route.params?.offline) {
 
   } 
   callbackControllo = (item) => {
+    console.log("calloff1", item, this.state?.dataControlloArray?.attributes )
     this.postData.assetValue = {
     assetValue: this.state?.dataControlloArray?.attributes?.map( (data)=> 
     { 
-      if (item.id == data.id) {
+     
+      if (item.id == (data.id || data.procedureAttribute.id)) {
      
         x = {
           procedureAttributeId: item.id,
@@ -95,8 +96,8 @@ if (props.route.params?.offline) {
         
       }else {
         x = {
-          procedureAttributeId: data.id,
-          value: data?.goodValue
+          procedureAttributeId: data.id || data.procedureAttribute.id,
+          value: data?.goodValue || data.procedureAttribute.goodValue
           }
           return x
       }
@@ -137,6 +138,28 @@ if (props.route.params?.offline) {
   };
   
   callbackSave = async () => {
+   
+    let postData = {
+      missionId:  this.props?.route?.params?.mission.id || this.props?.route?.params?.mission,
+      procedureId: this.props?.route?.params?.data?.procedureId || this.props?.route?.params?.data?.procedure.id,
+      assetId: this.props?.route?.params?.assetId,
+      notes: this.postData.assetValue.notes,
+      assetValue: this.postData.assetValue.assetValue
+     }
+     console.log("l",this.props?.route?.params?.procedureAssets )
+    
+    if (this.props.route.params?.offline){
+      console.log("salvato in memorias",postData.missionId,   postData)
+      this.setState({ 
+        visibleModal: null,
+        visibleModalSave: 1,
+        Authorization: await AsyncStorage.getItem('DATA_KEY').then((response) => { return response }),
+        loading:false
+       })
+       AsyncStorage.setItem( "controllo"+ postData.missionId, JSON.stringify(postData.missionId));
+     return AsyncStorage.setItem( this.props?.route?.params?.procedureAssets.toString(), JSON.stringify( postData));
+    }
+
     this.setState({ 
       visibleModal: null,
       visibleModalSave: 1,
@@ -144,18 +167,11 @@ if (props.route.params?.offline) {
       loading:true
      })
 
-    console.log("callbackSalvett",this.props?.route?.params?.procedureAssets, this.postData.assetValue)
+    console.log("callbackSalvett",this.props?.route?.params?.procedureAssets, postData)
 
     if (this.state.statusId == 1 || this.state.statusId == 2){
-     
-     let postData = {
-      missionId:  this.props?.route?.params?.mission.id || this.props?.route?.params?.mission,
-      procedureId: this.props?.route?.params?.data?.procedureId,
-      assetId: this.props?.route?.params?.assetId,
-      notes: this.postData.assetValue.notes,
-      assetValue: this.postData.assetValue.assetValue
-     }
-     console.log("oka", postData, this.state.statusId)
+
+
 
       await api.post(diversoPost, postData).then((response) => {
         this.setState({ 
@@ -168,23 +184,22 @@ if (props.route.params?.offline) {
           loading:false
         })
       });
+
     }else{
-      console.log("ok", this.state.statusId)
-      await api.put(basePut+ this.props?.route?.params?.procedureAssets , this.postData.assetValue).then((response) => {
-        this.setState({ 
-          loading:false
-         })
-      console.log("ok", response.status)
-    }).catch((error)=> {
-      console.log("errore", error)
-        this.setState({
-          loading:false
-        })
-      });
-    }
- 
-
-
+    console.log("ok", this.state.statusId)
+    await api.put(basePut+ this.props?.route?.params?.procedureAssets , postData).then((response) => {
+      this.setState({ 
+        loading:false
+       })
+    console.log("ok", response.status)
+  }).catch((error)=> {
+    console.log("errore", error)
+      this.setState({
+        loading:false
+      })
+    });
+    
+  }
   }
 
   getExpand = ()=>{
@@ -195,16 +210,26 @@ if (props.route.params?.offline) {
 
   }
 
-  getDataOff = () => {
-    console.log("off controllo",this.props.route.params.data.procedureData.attributes)
-    this.state.asset =this.props.route.params?.data.asset;
-    this.state.data =  this.props.route.params?.data;
+  getDataOff  = async () => {
+ 
+    console.log("off controllo3",this.props.route.params.data?.procedure?.attributes)
+    this.state.asset =this.props.route.params?.data.asset.description;
+    this.state.data =  this.props.route.params?.data.asset;
     this.state.documents = this.props.route.params?.documnets;
-    this.state.dataControlloArray = this.props.route.params?.data.procedureData;
-    this.state.loading = false
+    this.state.dataControlloArray = this.props.route.params?.data.procedureData || this.props.route.params?.data.procedure ;
+    this.state.loading = false;
+    this.state.expand = false;
+
+    this.setState({
+      isConnected :await AsyncStorage.getItem('isConnected').then((response) => { return response })
+    }) 
+
+    console.log("set",this.state.isConnected)
+
   };
 
   getData = async () => {
+
     Authorization(baseURLGet)
     console.log("i", this.props?.route?.params?.data)
     if(this.off){
@@ -236,7 +261,7 @@ if (props.route.params?.offline) {
   }
 
   getControllo = async (item) => {
-    console.log("item", item)
+    console.log("item online", item)
    
   await api.get(baseUrlGetControllo +  this.props?.route?.params?.procedureId
   )
@@ -264,7 +289,10 @@ if (props.route.params?.offline) {
       {this._renderButton('Close', () => this.setState({ visibleModalSave: null }))}
       </View>
       <View>
-      <Text style={styles.titleSave}>Salvato con successo!</Text>
+        { this.props.route.params?.offline ?  <Text style={styles.titleSave}>Salvato in memoria con successo!</Text>
+         :<Text style={styles.titleSave}>Salvato con successo!</Text>
+        }
+     
       </View>
       
     </View>

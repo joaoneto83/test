@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Text, View, StyleSheet } from 'react-native';
 import { BarCodeScanner } from 'expo-barcode-scanner';
 import Head from '../Head';
+import AsyncStorage from '@react-native-community/async-storage';
 
 
 import styles from "./styles";
@@ -12,7 +13,10 @@ import styles from "./styles";
     
   const [hasPermission, setHasPermission] = useState(null);
   const [scanned, setScanned] = useState(false);
- 
+  let [okQR, setOkQR] = useState(false);
+  let [dataOff, setprocedureAssets] =  useState ();
+  let [controllo, setcontrollo] =  useState ([]);
+  let [time, setTime] =  useState (0);
 
   useEffect(() => {
     const getBarCodeScannerPermissions = async () => {
@@ -20,15 +24,68 @@ import styles from "./styles";
       const { status } = await BarCodeScanner.requestPermissionsAsync();
       setHasPermission(status === 'granted');
     };
+if (props?.route?.params?.offline){
+  console.log("e",props?.route?.params?.mission )
+  offline()
+}
 
     getBarCodeScannerPermissions();
   }, []);
+  
+  const offline = async ()=>{
+    setprocedureAssets(await AsyncStorage.getItem(props.route.params?.mission).then((response) => { return JSON.parse(response) }))
+
+  }
+   
 
   const handleBarCodeScanned = ({ type, data }) => {
     console.log("unss", props?.route?.params)
+    const arrayData = data.replace(/%/g, '').split("*")
+
+   if (dataOff){
+    dataOff.procedureAssets.map((item)=> {  
+      if (arrayData[1] == "Lp" && arrayData[2] == item.asset.id){
+        setcontrollo(item)
+        setOkQR(true) 
+     
+        }else if (arrayData[0] == "IDRA" && arrayData[1] == item.asset.keyNum ){
+          console.log("IDRA")
+          setcontrollo(item)
+          setOkQR(true) 
+        
+       }
+         else if (arrayData[0] != "IDRA"  && arrayData[1] == item.asset.register){
+          setcontrollo(item)
+          setOkQR(true) 
+        }
+
+    })
+   } 
+   if (!props?.route?.params?.offline){
+    setOkQR(true) 
+   }
+   if (!okQR){
+    setTime(time++)
+   
+    console.log(time)
+    if (time > 15){
+    setTimeout(()=>{
+      alert("errore QR code")
+    }, 0)
+   }
+  
+
+    return undefined
+  }
+   
+
+ 
+  
+    
+
     if (data){
       setScanned(true);
-       
+
       switch (props?.route?.params?.title) {
         case "Info Asset":
           if (props?.route?.params?.screem ){
@@ -37,12 +94,16 @@ import styles from "./styles";
           } else {
             props.navigation.navigate('InfoAssetDetail', { value: data } )
       
-            //alert()
+           
           }
           break;
         case "Missioni":
-         
-            props.navigation.navigate('MissioniControllo', { mission: props.route.params?.mission, value: data, procedureAssets: props?.route?.params?.procedureAssets, data: props?.route?.params?.data, procedureId: props?.route?.params?.procedureId, assetId: props?.route?.params?.assetId, offline: props?.route?.params?.offline,  documents: props?.route?.params?.documents} )
+         if(dataOff){
+          props.navigation.navigate('MissioniControllo', { mission: props.route.params?.mission,  procedureAssets: controllo?.procedureAssets, data: controllo , procedureId: controllo.procedure?.id, assetId: controllo.asset?.id, offline: props?.route?.params?.offline,  documents: props?.route?.params?.documents} )
+         }else {
+          props.navigation.navigate('MissioniControllo', { mission: props.route.params?.mission, value: data, procedureAssets: props?.route?.params?.procedureAssets, data: props?.route?.params?.data, procedureId: props?.route?.params?.procedureId, assetId: props?.route?.params?.assetId, offline: props?.route?.params?.offline,  documents: props?.route?.params?.documents} )
+         }
+           
           break;
         default:
         
@@ -53,18 +114,12 @@ import styles from "./styles";
     }else {
       setScanned(false);
       props.navigation.navigate('InfoAsset')
-      console.log("it not ok",type, data)
+     
     }
   
   };
 
-  // if (hasPermission === null) {
-  //   return <Text>Requesting for camera permission</Text>;
-  // }
-  // if (hasPermission === false) {
-  //   return <Text>No access to camera</Text>;
-  // }
-  // onPress = {()=> setScanned(false)} 
+ 
   home = () => {
     navigation.navigate('Home')
  

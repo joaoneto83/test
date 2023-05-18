@@ -20,12 +20,12 @@ export default class Connected extends Component {
       visibleModal: this.visibleModal,
       isConnected : this.isConnected
      };
-    
       }
 
       connected = async (state) => {
         AsyncStorage.setItem('isConnected', JSON.stringify(state));
-        const tes= await AsyncStorage.getItem('isConnected').then((response) => { return response })
+        let tes= await AsyncStorage.getItem('isConnected').then((response) => { return JSON.parse(response) })
+        console.log("tst", tes)
       }
 
     
@@ -35,12 +35,12 @@ export default class Connected extends Component {
      if(this.props.callbackisConnected){
             this.props.callbackisConnected(state.isConnected)
         }
-
+        this.connected(state.isConnected)
     if (this.affet == 3) {
         console.log('Connectio', this.affet);
         this.visibleModal= 1,
         this.isConnected = state.isConnected
-        this.connected(state.isConnected)
+     
         this.setState({
           visibleModal: this.visibleModal,
           isConnected : this.isConnected

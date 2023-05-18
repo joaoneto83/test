@@ -13,9 +13,9 @@ import LoadingInline from "../../../components/loading/loadingInline";
 import ButtonSave from "../../../components/buttons/ButtonSave";
 import DownloadPdf from "../../../assets/download-off-line/downloadPdf"
 import Search from "../../../components/search/searchs"
+import UploadMission from "./uploadMission";
 
-import {api } from '../../../services/api_base';
-
+import {api} from '../../../services/api_base';
 
 const baseUrlMissioni = "Api/Mission/MyMissions"
 const missioniOff = "Api/Mission/AllMissionDetails/"
@@ -25,7 +25,6 @@ const self = this
 
 export default class Missioni extends Component {
     constructor(props){
-         
         super(props)
         this.state = {
             backData: [...this.data],
@@ -35,68 +34,49 @@ export default class Missioni extends Component {
             visibleModalAdvanced:null,
             isConnected: null,
             offLineId:"",
-            offLineName:""
+            offLineName:"",
+            memoriaMissionSalve:[]
         }
-        this.getData();
+        this.missioniCache()
+        
     }
      data = [];
      documents=[];
-  //  data = [
-  //   {
-  //     "id": "6739d643-20f5-494b-8873-0007a0010e36",
-  //     "description": "GoodMissione",
-  //     "creationTime": "2023-03-27T09:41:19.3825809",
-  //     "creationUserId": "fc3babc0-7ea1-42f6-872b-c634adb76b91",
-  //     "modificationUserId": "fc3babc0-7ea1-42f6-872b-c634adb76b91",
-  //     "modificationTime": "2023-03-27T09:41:19.3826843",
-  //     "statusId": 2,
-  //     "errors": 0,
-  //     "assignedUserId": "fc3babc0-7ea1-42f6-872b-c634adb76b91",
-  //     "assignedUser": "ADMIN@LOGICAPRO",
-  //     "lastExecutionUserId": "b8101b01-95a2-43fd-9be2-002ec0382658",
-  //     "lastExecutionTime": "2023-03-27T12:52:40.554922",
-  //     "totalTasks": 1,
-  //     "completedTasks": 1
-  //   },
-  //   {
-  //     "id": "d81401cd-9ff8-4fde-8f18-9dca8f8b5ff8",
-  //     "description": "PerJoao",
-  //     "creationTime": "2023-03-24T07:57:01.6845391",
-  //     "creationUserId": "fc3babc0-7ea1-42f6-872b-c634adb76b91",
-  //     "modificationUserId": "fc3babc0-7ea1-42f6-872b-c634adb76b91",
-  //     "modificationTime": "2023-03-24T07:57:01.6845691",
-  //     "statusId": 2,
-  //     "errors": 1,
-  //     "assignedUserId": "fc3babc0-7ea1-42f6-872b-c634adb76b91",
-  //     "assignedUser": "ADMIN@LOGICAPRO",
-  //     "lastExecutionUserId": "b8101b01-95a2-43fd-9be2-002ec0382658",
-  //     "lastExecutionTime": "2023-03-27T12:53:22.4917673",
-  //     "totalTasks": 3,
-  //     "completedTasks": 2
-  //   },
-  //   {
-  //     "id": "4aba92fb-7d84-4f29-9ae0-fed0a0ecf2f7",
-  //     "description": "BadMission",
-  //     "creationTime": "2023-03-27T08:44:06.5554182",
-  //     "creationUserId": "fc3babc0-7ea1-42f6-872b-c634adb76b91",
-  //     "modificationUserId": "fc3babc0-7ea1-42f6-872b-c634adb76b91",
-  //     "modificationTime": "2023-03-27T08:44:06.5555447",
-  //     "statusId": 1,
-  //     "errors": 1,
-  //     "assignedUserId": "fc3babc0-7ea1-42f6-872b-c634adb76b91",
-  //     "assignedUser": "ADMIN@LOGICAPRO",
-  //     "lastExecutionUserId": "b8101b01-95a2-43fd-9be2-002ec0382658",
-  //     "lastExecutionTime": "2023-03-27T12:53:52.9524054",
-  //     "totalTasks": 2,
-  //     "completedTasks": 0
-  //   }
-  //  ];
-   getData = async () => {
+
+   
+  missioniCache = async () => {
+    this.setState({
+      isConnected :await AsyncStorage.getItem('isConnected').then((response) => { return response })
+    
+    } )
+
+
+    if (this.state.isConnected == "false"){
+      if (await AsyncStorage.getItem('missioni')){
+        this.data = await AsyncStorage.getItem('missioni').then((response) => { return JSON.parse(response)})
+        this.setState({
+          backData : [...this.data ],
+          loading:false
+        } )
+      
+      }
+      else {
+        this.setState({
+          loading:false
+        }
+        )
+      }
+
+    }
+    
+    this.getData();
+  }
+  
+  getData = async () => {
 
     this.state = {
       Authorization: await AsyncStorage.getItem('DATA_KEY').then((response) => { return response }),
     }
-
 
     const getInfoAsync = await FileSystem.getInfoAsync(gifDir)
 
@@ -107,44 +87,84 @@ export default class Missioni extends Component {
       await FileSystem.makeDirectoryAsync(gifDir, { intermediates: true });
       console.log("file",await FileSystem.getInfoAsync(gifDir))
 
+  if (this.data.length == 0){
     await api.get( baseUrlMissioni)
-      .then((response) => {
-   
-         this.data = response.data;
-
-         this.setState({
-            backData: [...this.data],
-            loading:false
-        })
- 
-      }).catch((erro)=>{
-       
-        console.log("erro", erro)
+    .then((response) => {
+       this.data = response.data;
+       AsyncStorage.setItem('missioni', JSON.stringify(this.data));
+       console.log("data",this.data)
+       this.setState({
+          backData: [...this.data],
+          loading:false
       })
+
+    }).catch((erro)=>{
+      console.log("erro", erro)
+    })
+
+  }else {
+    this.setState({
+      loading:false
+  })
+  }
+ 
   }
   MissioniOff = async (id, name) => {
-  
 
     this.setState (
       {
         loading:true,
         Authorization: await AsyncStorage.getItem('DATA_KEY').then((response) => { return response }),
- 
       }
     ) 
     console.log("off", id, name, this.state.loading, this.state.Authorization)
+if (this.state.isConnected == "true"){
+  await api.get( missioniOff + id)
+  .then((response) => {
+    this.DataOff(response.data)
 
-    await api.get( missioniOff + id)
-      .then((response) => {
-        console.log("off-ok", response.data)
-        self.data = response.data;
-        self.documents = response.data.documents
-    
-         AsyncStorage.setItem('Offline_Data', JSON.stringify(response.data.documents));
-       this.setState( { visibleModal: 1,offLineId: id, offLineName:name, loading:false} );
-      } ).catch((erro)=>{
-        console.log("erro", erro)
-      })
+   
+   // AsyncStorage.setItem('Offline_Data', JSON.stringify(response.data.documents));
+
+   this.setState( { visibleModal: 1,offLineId: id, offLineName:name, loading:false} );
+
+  } ).catch((erro)=>{
+    console.log("erro", erro)
+  })
+}else {
+  this.callbackSave()
+  if (await AsyncStorage.getItem(id)){
+    self.data =  AsyncStorage.setItem( id, JSON.stringify(response.data));
+    alert("self.data"+ "" + self.data)
+  }
+}
+  }
+
+  
+  DataOff = async (data) =>{
+    let n = 0;
+   let procedureAssetsOFF = data.procedureAssets.map((item)=>{
+      x = {
+        procedureAssets:  item.id,
+        procedure : item.procedure,
+        asset: item.asset,
+        statusId: item.statusId
+      }
+      return x
+    } 
+    )
+    let dataOFF = {
+      id: data.id,
+      description: data.description,
+      assignedUserId: data.assignedUserId,
+      totalTasks: data.totalTasks,
+      completedTasks: data.completedTasks,
+      procedureAssets: procedureAssetsOFF,
+      documents: data.documents
+    }
+    self.data = dataOFF;
+    self.documents = dataOFF.documents;
+   AsyncStorage.setItem( data.id, JSON.stringify(dataOFF));
   }
 
   _renderButton = (text, onPress) => (
@@ -185,17 +205,24 @@ export default class Missioni extends Component {
       </View>
     </View>
   );
+
    goDetail = (id) => {
     this.props.navigation.navigate('MissioniDetail', {id:id});
    }
    handleForceupdateMethod() {
+
     this.backData = [];
+
    };
+
    callbackisConnected = (item) => {
+    console.log("conect0", this.state.isConnected)
     this.setState({
       isConnected: item
       } )
+     
   } 
+
    search = (value) => {
     let filterData = [...this.data];
     this.setState({
@@ -249,25 +276,29 @@ export default class Missioni extends Component {
             <Text style={Styles.boxTableHeader}>Nome Missione</Text>
              <Text style={Styles.boxTableHeader}>Iniziata il</Text>
              <Text style={Styles.boxTableHeader}>Assegnata</Text>
-            </View>
-             <View>
+          
              <Text style={Styles.boxTableHeader}>Off-line</Text>
+           
+           
+             <Text style={Styles.boxTableHeader}>Carica</Text>
              </View>
             </View>
             { this.state.backData?.map((item) => (
               <View style={Styles.DataTableHeaderHome} key={item?.id}>
-                <TouchableOpacity style={{flexDirection:"row"}} onPress={()=> this.goDetail(item?.id)}>
+                <TouchableOpacity style={{flexDirection:"row"}} onPress={()=> (this.state.isConnected == "false")? this.MissioniOff(item?.id,item?.description )  :this.goDetail(item?.id)}>
                 <Text style={Styles.boxTableBody}>{item?.description}</Text>
                 <Text style={Styles.boxTableBody}> {Moment(item?.creationTime).format('DD/MM/YYYY')}</Text>
                 <Text style={Styles.boxTableBody}>{item?.assignedUser}</Text>
                </TouchableOpacity>
-               <TouchableOpacity style={Styles.boxTableBody} onPress={() => this.MissioniOff(item?.id,item?.description ) } >
+
+               <TouchableOpacity disabled={this.state.isConnected == "false"} style={this.state.isConnected == "false"? [ Styles.boxTableBody,{ opacity:0.5 } ]  : Styles.boxTableBody } onPress={() => this.MissioniOff(item?.id,item?.description ) } >
                                       <Image
                                             resizeMode="contain"
                                             style={[Styles.iconRow]}
                                             source={require('../../../assets/images/download.png')}
                                         />
               </TouchableOpacity>
+              <UploadMission id={item.id}  />
                </View>
             )
             )       

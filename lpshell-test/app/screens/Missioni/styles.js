@@ -88,7 +88,7 @@ const {ids, styles} = StyleSheet.create({
       alignItems: "center",
 
       '@media (min-width: 1200px)': {
-        width:270
+        width:250
       },
     },
     modalHeader:{
@@ -100,6 +100,21 @@ const {ids, styles} = StyleSheet.create({
       alignItems: "center",
 
     },
+    boxTableBodyOFF:{
+      width:200,
+      fontSize: 16, 
+      
+      paddingVertical:5,
+     
+   
+      alignItems: "center",
+      textAlign: 'center',
+      
+      '@media (min-width: 1200px)': {
+        width:250
+      },
+    },
+
     boxTableBody:{
       width:200,
       fontSize: 16, 
@@ -111,7 +126,7 @@ const {ids, styles} = StyleSheet.create({
       textAlign: 'center',
       
       '@media (min-width: 1200px)': {
-        width:270
+        width:250
       },
     },
     iconeArrow:{
@@ -179,13 +194,14 @@ const {ids, styles} = StyleSheet.create({
         },
     },
     rowD:{
-        textAlign: 'center',
+
         alignItems:"center",
-        maxWidth:"20%",
-        minWidth:"20%",
+        width:150,
         paddingTop:10,
         height:60,
+  
     },
+
     iconRow:{
         height:35
     },

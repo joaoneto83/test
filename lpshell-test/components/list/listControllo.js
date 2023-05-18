@@ -36,14 +36,14 @@ function ListControllo(props) {
         <View style={styles.listControllo}>
         <View >
          { attributes?.map((item) => (
-          <View style={styles.boxInfoControllo}>
+          <View style={styles.boxInfoControllo} key={item?.id}>
                 <Text style={styles.labelControllo}>{item.description} : </Text>
           </View >
             ))}
          </View>
          <View >
          {attributes?.map((item) => (
-          <View style={styles.boxInfoControllo}>
+          <View style={styles.boxInfoControllo} key={item.id}>
                 {item.formatId == 3 ? <ButtonRadio values={item.goodValue} id = {item.id} callbackButtonRadio = {callbackButton}/> : item.formatId == 4 ?
                 <ButtonControllo values={item.goodValue} list={item.list} id = {item.id} name={item.description} callbackButtonControllo = {callbackButton}/> : item.formatId == 2 ? <TextInput style={{backgroundColor:"#e9e9ee", minWidth:100, height:35, marginTop:5,marginLeft:2, borderRadius:5}}  onChangeText= {(text)=> props.callbackControllo(text) }/> : <TextInput style={{backgroundColor:"#e9e9ee", minWidth:100, height:35, marginTop:5,marginLeft:2, borderRadius:5}}  onChangeText= {(text)=> props.callbackControllo(text) }/>}
           </View >

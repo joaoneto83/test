@@ -47,7 +47,7 @@ export default class ButtonBasi extends Component {
           this.props.prop.navigation.navigate("mappa")
             break;
           case "Controllo":
-            if (this.props.qrCodes.length < 2){
+            if (this.props?.qrCodes?.length < 2 || this.props?.asset?.qrCodes?.length < 2){
               this.props.prop.navigation.navigate('InfoAssetControllo',{ item: "Pannello", screem: "Controllo", value:this.props.value }); 
             }else{
               this.props.prop.navigation.navigate('InfoAsset',{ item: "Pannello", screem: "Controllo" });
