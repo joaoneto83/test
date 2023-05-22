@@ -33,7 +33,6 @@ export default class Home extends Component {
 
   goMissioni = () => {
     this.props.navigation.navigate("Mission");
-
    }
 
   handleCreateAccountPress = () => {

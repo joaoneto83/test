@@ -49,20 +49,20 @@ export default class setMissioni extends Component {
             <Connected  callbackisConnected = {this.callbackisConnected}></Connected>
             <TouchableOpacity disabled={this.state.isConnected ? !this.state.isConnected : !this.state.mission  }  
             style={this.state.isConnected ?  {flexDirection:"row"} : this.state.mission ?  {flexDirection:"row"} : [{flexDirection:"row"},{ opacity:0.5 } ]  } 
-            onPress={()=> this.state.isConnected ?   this.props.goDetail(this.props.id): this.props.missioniOff(this.props.id,this.props.description,this.state.mission )}>
+            onPress={()=> this.props.missioniOff(this.props.id,this.props.description,this.state.mission)}>
 
                 <Text style={styles.boxTableBody}>{this.props.description}</Text>
                 <Text style={styles.boxTableBody}> {Moment(this.props?.creationTime).format('DD/MM/YYYY')}</Text>
                 <Text style={styles.boxTableBody}>{this.props?.assignedUser}</Text>
                </TouchableOpacity>
 
-               <TouchableOpacity disabled={!this.state.isConnected}  style={this.state.isConnected  ?  styles.boxTableBody :  [ styles.boxTableBody,{ opacity:0.5 } ]  }    onPress={() => this.props.missioniOff(this.props.id,this.props.description, this.state.mission  ) } >
+               {/* <TouchableOpacity disabled={!this.state.isConnected}  style={this.state.isConnected  ?  styles.boxTableBody :  [ styles.boxTableBody,{ opacity:0.5 } ]  }    onPress={() => this.props.missioniOff(this.props.id,this.props.description, this.state.mission  ) } >
                                       <Image
                                             resizeMode="contain"
                                             style={[styles.iconRow]}
                                             source={require('../../../assets/images/download.png')}
                                         />
-              </TouchableOpacity>
+              </TouchableOpacity> */}
         
             </View>
         )

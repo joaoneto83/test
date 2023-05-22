@@ -110,8 +110,11 @@ if (props.route.params?.offline) {
      console.log("callbackProcedura ",   this.postData.assetValue)
   }
 
-  callbackEsc = () => {
-    console.log("callbackEsc")
+  callbackEsc = async () => {
+    let id = this.props?.route?.params?.mission.id || this.props?.route?.params?.mission
+    let data =  await AsyncStorage.getItem(id).then((response) => { return JSON.parse(response) })
+  
+    this.props.navigation.navigate('MissioniDetail',{data: data, offline:true});
   }
 
   pickImage = async () => {
@@ -163,7 +166,7 @@ if (props.route.params?.offline) {
 
     this.setState({ 
       visibleModal: null,
-      visibleModalSave: 1,
+    
       Authorization: await AsyncStorage.getItem('DATA_KEY').then((response) => { return response }),
       loading:true
      })
@@ -176,13 +179,16 @@ if (props.route.params?.offline) {
 
       await api.post(diversoPost, postData).then((response) => {
         this.setState({ 
-          loading:false
+          loading:false,
+          visibleModalSave: 1,
          })
+         
       console.log("ok", response.status)
     }).catch((error)=> {
       console.log("errore", error)
         this.setState({
-          loading:false
+          loading:false,
+          visibleModalSave: 1,
         })
       });
 
@@ -190,13 +196,15 @@ if (props.route.params?.offline) {
     console.log("ok", this.state.statusId)
     await api.put(basePut+ this.props?.route?.params?.procedureAssets , postData).then((response) => {
       this.setState({ 
-        loading:false
+        loading:false,
+        visibleModalSave: 1,
        })
     console.log("ok", response.status)
   }).catch((error)=> {
     console.log("errore", error)
       this.setState({
-        loading:false
+        loading:false,
+        visibleModalSave: 1,
       })
     });
     
@@ -225,7 +233,7 @@ if (props.route.params?.offline) {
       isConnected :await AsyncStorage.getItem('isConnected').then((response) => { return response })
     }) 
 
-    console.log("set",this.state.isConnected)
+    console.log("set2",this.state.isConnected)
 
   };
 
@@ -290,8 +298,8 @@ if (props.route.params?.offline) {
       {this._renderButton('Close', () => this.setState({ visibleModalSave: null }))}
       </View>
       <View style={{flexDirection:"row", justifyContent:"center"}}>
-        { this.props.route.params?.offline ?  <Text style={styles.titleSave}>Salvato in memoria con successo!</Text>
-         :<Text style={styles.titleSave}>Salvato con successo!</Text>
+        { this.props.route.params?.offline ?  <Text style={[styles.titleSave, { color: '#000000'}]}>Salvato in memoria con successo!</Text>
+         :<Text style={[styles.titleSave,  { color: '#000000'}]}>Salvato con successo!</Text>
         }
          <TouchableOpacity style={{width:100}}>
          <ButtonOk  callbackOk ={this.callbackOk}/>

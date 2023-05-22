@@ -27,6 +27,7 @@ const self = this
 export default class Missioni extends Component {
     constructor(props){
         super(props)
+       
         this.state = {
             backData: [...this.data],
             Authorization: "",
@@ -36,15 +37,18 @@ export default class Missioni extends Component {
             isConnected: null,
             offLineId:"",
             offLineName:"",
-            memoriaMissionSalve:null
+            memoriaMissionSalve:null,
+            new:null
         }
         this.missioniCache()
+  
         
     }
      data = [];
      documents=[];
-     
-   
+  
+
+
   missioniCache = async () => {
     this.setState({
       isConnected :await AsyncStorage.getItem('isConnected').then((response) => { return response }),
@@ -111,6 +115,7 @@ export default class Missioni extends Component {
   }
  
   }
+
   MissioniOff = async (id, name, mission) => {
 
     this.setState (
@@ -128,8 +133,8 @@ if (this.state.isConnected == "true"){
    
    // AsyncStorage.setItem('Offline_Data', JSON.stringify(response.data.documents));
 
-   this.setState( { visibleModal: 1,offLineId: id, offLineName:name, loading:false} );
-
+   this.setState( { offLineId: id, offLineName:name, loading:false} );
+   this.callbackSave()
   } ).catch((erro)=>{
     console.log("erro", erro)
   })
@@ -137,7 +142,6 @@ if (this.state.isConnected == "true"){
   this.callbackOff(mission)
   if (await AsyncStorage.getItem(id)){
     self.data =  AsyncStorage.setItem( id, JSON.stringify(response.data));
-    alert("self.data"+ "" + self.data)
   }
 }
   }
@@ -196,8 +200,7 @@ if (this.state.isConnected == "true"){
       <View style={{alignItems:"center"}} >
       {this._renderButton('Close', () => this.setState({ visibleModal: null }))}
       <TouchableOpacity style={{flexDirection:"row", alignItems:"center"}} onPress={() => this.MissioniOff(this.state.offLineId)} >
-        <Text style={Styles.modalHeader}>scaricato con successo la missione: {this.state.offLineName}, modalità off-line. </Text>
-      
+        <Text style={Styles.modalHeader}>scaricato con successo la missione: {this.state.offLineName}</Text>
         <ButtonSave  callbackSave= {this.callbackSave}></ButtonSave>
       </TouchableOpacity>
       </View>
@@ -207,15 +210,14 @@ if (this.state.isConnected == "true"){
     <View style={{ justifyContent:"center", backgroundColor:"white", padding:10}}>
       <View style={{alignItems:"center"}} >
       {this._renderButton('Close', () => this.setState({ visibleModalAdvanced: null }))}
-      
       <Search fields={[{field:"Nome Missione", value:"description"}, {field:"Iniziata", value:"creationTime"}]} data={[...this.data]}   advancedSearch = {this.advancedSearch} /> 
-
       </View>
     </View>
   );
 
    goDetail = (id) => {
     this.props.navigation.navigate('MissioniDetail', {id:id});
+
    }
    handleForceupdateMethod() {
 
@@ -269,7 +271,13 @@ if (this.state.isConnected == "true"){
                     {this._renderModalContentAdvanced()}
             </Modal>
             <Connected  callbackisConnected = {this.callbackisConnected}></Connected>
-              <Head prop = {this.props} routes = "Mission" title ="Missioni"  search ="true" adancedSearch= { this.getAdancedSearch}  screem= {this.props.route.params?.screem} getSearch = {this.search}  />
+              <Head prop = {this.props}
+                missioniCache = {this.missioniCache}
+               routes = "Mission" 
+              title ="Missioni" 
+               search ="true" adancedSearch= { this.getAdancedSearch}  
+               screem= {this.props.route.params?.screem}
+                getSearch = {this.search}  />
              { this.state.loading ? <LoadingInline/> : undefined  } 
              {   this.documents ?  
              <View>     
@@ -285,7 +293,7 @@ if (this.state.isConnected == "true"){
              <Text style={Styles.boxTableHeader}>Iniziata il</Text>
              <Text style={Styles.boxTableHeader}>Assegnata</Text>
           
-             <Text style={Styles.boxTableHeader}>Off-line</Text>
+             {/* <Text style={Styles.boxTableHeader}>Off-line</Text> */}
            
            
              <Text style={Styles.boxTableHeader}>Carica</Text>
@@ -293,19 +301,7 @@ if (this.state.isConnected == "true"){
             </View>
             { this.state.backData?.map((item) => (
               <View style={Styles.DataTableHeaderHome} key={item?.id}>
-                {/* <TouchableOpacity style={{flexDirection:"row"}} onPress={()=> (this.state.isConnected == "false")? this.MissioniOff(item?.id,item?.description )  :this.goDetail(item?.id)}>
-                <Text style={Styles.boxTableBody}>{item?.description}</Text>
-                <Text style={Styles.boxTableBody}> {Moment(item?.creationTime).format('DD/MM/YYYY')}</Text>
-                <Text style={Styles.boxTableBody}>{item?.assignedUser}</Text>
-               </TouchableOpacity>
-
-               <TouchableOpacity disabled={this.state.isConnected == "false"}  style={this.state.isConnected == "false" ? [ Styles.boxTableBody,{ opacity:0.5 } ]  : Styles.boxTableBody }    onPress={() => this.MissioniOff(item?.id,item?.description ) } >
-                                      <Image
-                                            resizeMode="contain"
-                                            style={[Styles.iconRow]}
-                                            source={require('../../../assets/images/download.png')}
-                                        />
-              </TouchableOpacity> */}
+      
               <SetMissioni id={item?.id} description={item?.description} missioniOff={this.MissioniOff}  goDetail= {this.goDetail} />
               <UploadMission id={item.id}  />
                </View>

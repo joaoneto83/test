@@ -61,7 +61,21 @@ export default class Head extends Component {
 
   screem = () => {
     console.log("screen",this.props)
-    this.props.prop.navigation.navigate(this.props.routes);
+    if (this.props.routes == "Mission"){
+      this.props.prop.navigation.navigate("Mission", id = "tst");
+      
+
+     if (this.props?.missioniCache){
+      this.props?.missioniCache()
+     }
+       
+   
+     
+    }else {
+      this.props.prop.navigation.navigate(this.props.routes);
+    }
+   
+
   }
 
   render() {
@@ -129,14 +143,14 @@ export default class Head extends Component {
             </View> : undefined}
       
         </View>
-        { this.props.offline ?
+        {/* { this.props.offline ?
         <View style={{flexDirection:"row"}}>
                    <Text style={[styles.offlineTitle, {color:"red", marginLeft:20}]}>off-line</Text>
                    <View style={{width:15, height:15, borderRadius:20, backgroundColor:"red"}} ></View>
           </View>
    
             :undefined
-            }
+            } */}
       </View>
     );
   }

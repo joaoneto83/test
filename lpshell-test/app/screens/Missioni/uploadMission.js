@@ -28,6 +28,8 @@ export default class UploadMission extends Component {
       this.lisUpload()
     }
 
+    listSave=[];
+
     _renderButton = (text, onPress) => (
         <TouchableOpacity  style={{width:"100%", alignItems:"flex-end"}} onPress={onPress}>
           <Image
@@ -41,8 +43,19 @@ export default class UploadMission extends Component {
         <View style={{ justifyContent:"center", backgroundColor:"white", padding:10}}>
           <View style={{alignItems:"center"}} >
           {this._renderButton('Close', () => this.setState({ visibleModal: null }))}
-          <TouchableOpacity style={{flexDirection:"row", alignItems:"center"}} onPress={() => this.MissioniOff(this.state.offLineId)} >
-          <Text style={styles.titleSave}>Salvato con successo!</Text>
+          <TouchableOpacity style={{flexDirection:"column", alignItems:"center"}} onPress={() => this.MissioniOff(this.state.offLineId)} >
+            { this.listSave.map( (item)=> (
+                <View>
+                    { item.value == "save" ? 
+                      <Text style={[styles.titleSave, {color: '#000000'}]} key={item.id}>Salvato con successo!</Text> :
+                      <Text style={[styles.titleSave, {color: '#000000'}]}>Errore nel salvataggio </Text>
+                    }
+                </View>
+                
+            )
+            ) 
+            }
+       
           </TouchableOpacity>
           </View>
         </View>
@@ -52,13 +65,11 @@ export default class UploadMission extends Component {
 
     lisUpload = async () => {
 
-        
        this.setState({
         mission : await AsyncStorage.getItem( "controllo" + this.props.id).then((response) => { return JSON.parse(response) })
        }) 
         console.log("mission 1", this.state.mission)
         if(this.state.mission == this.props.id){
-
            let dataOff= await AsyncStorage.getItem( this.props.id).then((response) => { return JSON.parse(response) })
             this.setState({
                        procedureAssets: dataOff.procedureAssets
@@ -87,7 +98,6 @@ export default class UploadMission extends Component {
     
     }
 
-
       verificationUpload = async (id,status) => {
    
         if ( await AsyncStorage.getItem(id.toString()) )
@@ -100,11 +110,12 @@ export default class UploadMission extends Component {
                
                 )
         }
-        console.log("list", this.state.list)
-      
+        console.log("list", id,this.state.list)
+       
       }
 
       saveListMission = async ()=>{
+         console.log("     this.state.list",      this.state.list)
         this.state.list.map((item)=>{
             this.save(item.id, item.status, item.data)
         })
@@ -112,33 +123,44 @@ export default class UploadMission extends Component {
 
 
       save = async (id, status,data) => {
-        this.setState({ visibleModal : 1})
+        this.setState({ visibleModal : 1,
+            loading:true})
 
          if (status == 1 || status == 2){
        
         await api.post(diversoPost, data).then((response) => {
+            this.listSave.push({id: id ,value:"save"})
             this.setState({ 
-              loading:false
+              loading:false,
+         
              })
-          console.log("ok1", response.status)
+          console.log("ok1", response.data)
+        
+          
 
         }).catch((error)=> {
           console.log("errore", error)
+          this.listSave.push({id: id ,value:"erro"})
             this.setState({
-              loading:false
+              loading:false,
             })
+            console.log("ok21", status, error)
           });
-       console.log("ok2", status, data)
+     
          
           }else{
 
        await api.put(basePut + id , data).then((response) => {
+        this.listSave.push({id: id ,value:"save"})
             this.setState({ 
                loading:false
             })
-          console.log("ok3", response.status)
+        
+          console.log("ok1", response.data)
+     
         }).catch((error)=> {
           console.log("errore", error)
+          this.listSave.push({id: id ,value:"erro"})
             this.setState({
             loading:false
             })
@@ -166,7 +188,7 @@ export default class UploadMission extends Component {
             </Modal>
             <Connected  callbackisConnected = {this.callbackisConnected}></Connected>
         { this.state.mission ?
-    <TouchableOpacity style={ this.state.isConnected  ?  [styles.boxTableBody, {marginTop:6}] : [ styles.boxTableBody,{ opacity:0.3 } ] }  onPress={() =>  this.state.isConnected  ? this.saveListMission(): undefined } >
+    <TouchableOpacity style={ this.state.isConnected  ?  [styles.boxTableBody] : [ styles.boxTableBody,{ opacity:0.3 } ] }  onPress={() =>  this.state.isConnected  ? this.saveListMission(): undefined } >
     <Image
         resizeMode="contain"
         style={styles.iconRow}

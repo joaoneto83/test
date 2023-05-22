@@ -2,7 +2,9 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import {View,ImageBackground, StatusBar, TouchableOpacity, Image, Text } from 'react-native';
 import { Ionicons }from "@expo/vector-icons";
-import AsyncStorage from '@react-native-community/async-storage'
+import AsyncStorage from '@react-native-community/async-storage';
+import LoadingInline from "../../../components/loading/loadingInline";
+
 
 import Connected from '../../../assets/connected'; 
 

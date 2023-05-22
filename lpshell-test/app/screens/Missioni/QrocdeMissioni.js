@@ -19,13 +19,14 @@ export default class QrcideMissioni extends Component {
         callbackText:"",
         visibleModal:null
       }
+
   }
   // static shouldComponentUpdate(props, state) {
   //   console.log("r",props,state)
   // }
   static getDerivedStateFromProps(props, state) {
     if (props !== state) {
-      console.log("missionr",props.route);
+      console.log("missionr",props.route.params?.listQrCodeRadix);
       return {
         value: props.value,
       }
@@ -86,9 +87,21 @@ export default class QrcideMissioni extends Component {
     scan = () => {
     this.setState({loading:true})
    setTimeout(()=> {
-    this.props.navigation.navigate('Scanner',{routes:"Mission",  mission:this.props.route.params?.mission, data:this.props.route.params?.data , title:"Missioni", offline:this.props.route.params?.offline ,assetId: this.props.route.params?.assetId, procedureAssets: this.props?.route?.params?.procedureAssets, data:this.props.route.params?.data, procedureId:this.props.route.params?.procedureId, documents: this.props.route.params?.documents, screem :"Dettagli"});
+    this.props.navigation.navigate('Scanner',
+    { 
+     routes:"Mission",  
+     mission: this.props.route.params?.mission,  
+     title:"Missioni", 
+     documents: this.props.route.params?.documents, 
+     screem :"Dettagli",
+     assetCodeId: this.props.route.params?.assetCodeId, 
+     qrcodeValue: this.props.route.params?.qrcodeValue, 
+     qrCodeRadix: this.props.route.params?.qrCodeRadix,
+     listQrCodeRadix: this.props.route.params?.listQrCodeRadix
+    }
+     );
    })     
-    };
+  };
   render () {
     return (
       <View style={styles.containerMission}>
@@ -97,8 +110,8 @@ export default class QrcideMissioni extends Component {
               animationOut={'slideOutRight'}>
                     {this._renderModalContent()}
             </Modal>
-        <Head prop = {this.props} routes="Mission"  title ="Missioni" id ={this.props?.route?.params?.mission.id || this.props?.route?.params?.mission} offline={this.props.route.params?.offline} screem ="Dettagli" subTitle ="Controllo" search ="false" modalQRcode={this.modalQRcode}/>
-        { this.state.loading ? <LoadingInline/> : undefined } 
+        <Head prop = {this.props} routes="Mission"  title ="Missioni" id ={this.props?.route?.params?.mission.id || this.props?.route?.params?.mission}  screem ="Dettagli" subTitle ="Controllo" search ="false" modalQRcode={this.modalQRcode}/>
+       
         <QrcodeScreen data = {this.props} scan={this.scan}/>
       </View>
     );
