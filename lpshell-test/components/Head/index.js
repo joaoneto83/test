@@ -56,13 +56,13 @@ export default class Head extends Component {
     console.log("ok11",this.props.id)
     let dataMission = await AsyncStorage.getItem(this.props.id.toString()).then((response) => { return JSON.parse(response) })
     console.log("ok12",this.props.id)
-    this.props.prop.navigation.navigate("MissioniDetail", {data: dataMission, offline:true})
+    this.props.prop.navigation.navigate("refresh", {data: dataMission, offline:true})
   };
 
   screem = () => {
     console.log("screen",this.props)
     if (this.props.routes == "Mission"){
-      this.props.prop.navigation.navigate("Mission", id = "tst");
+      this.props.prop.navigation.navigate("Refresh");
       
 
      if (this.props?.missioniCache){

@@ -4,10 +4,10 @@ const {ids, styles} = StyleSheet.create({
     container: {
       flex: 0,
       flexDirection: 'row',
-      paddingTop:"3%",
+      paddingTop:"1%",
       paddingLeft:"3%",
       paddingRight:"3%",
-      paddingBottom:"1%",
+    
       alignItems:"center",
       justifyContent:"space-evenly"
    
@@ -17,14 +17,13 @@ const {ids, styles} = StyleSheet.create({
         flexDirection: "row",
       }, 
       iconeLP: {
-     
-        height: 70,
+        height: 60,
         '@media (min-width: 1200px)': {
         height: 100,
       },
       },
       icone: {
-        width: 50, 
+        width: 40, 
         height: 35,
       },
       iconeSearch: {
@@ -34,7 +33,7 @@ const {ids, styles} = StyleSheet.create({
   
       iconeMissioni:{
         width: 35, 
-        height: 50,
+        height: 35,
       },
       buttonHead:{
         padding:20,
@@ -51,19 +50,19 @@ const {ids, styles} = StyleSheet.create({
         fontSize:23,
       },
       title: {
-        fontSize: 30,
+        fontSize: 25,
         marginBottom: 10,
         marginTop: 20,
         color: '#787777'
       },
       offlineTitle: {
-        fontSize: 18,
+        fontSize: 16,
         marginBottom: 10,
         marginTop: 20,
         color: '#787777'
       },
       subTitle: {
-        fontSize: 25,
+        fontSize: 22,
         marginBottom: 10,
         marginTop: 25,
         marginLeft:30,
@@ -85,7 +84,7 @@ const {ids, styles} = StyleSheet.create({
         borderRadius: 5,
         borderColor: "#787777",
         borderBottomWidth:1,
-        height:30,
+        height:25,
         maxWidth:"50%",
         minWidth:"50%"
       },

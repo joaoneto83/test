@@ -133,8 +133,10 @@ export default class UploadMission extends Component {
             this.setState({ 
               loading:false,
              })
-          console.log("ok1", response.data)
+          console.log("ok1", response.status)
           AsyncStorage.removeItem(id)
+          AsyncStorage.removeItem("Attribute"+id)
+          console.log("async", AsyncStorage.removeItem("Attribute"+id))
           if (this.listSave.length && this.state.list.length){
             AsyncStorage.removeItem("controllo" + this.props.id)
             this.setState({ 
@@ -149,6 +151,8 @@ export default class UploadMission extends Component {
             })
             console.log("ok2", status, error)
             AsyncStorage.removeItem(id)
+            AsyncStorage.removeItem("Attribute"+id)
+            console.log("async", AsyncStorage.removeItem("Attribute"+id))
             if (this.listSave.length && this.state.list.length){
               AsyncStorage.removeItem("controllo" + this.props.id)
               this.setState({ 
@@ -166,7 +170,9 @@ export default class UploadMission extends Component {
                loading:false
             })
          AsyncStorage.removeItem(id)
-          console.log("ok11", response.data)
+         AsyncStorage.removeItem("Attribute"+id)
+         console.log("async", AsyncStorage.removeItem("Attribute"+id))
+          console.log("ok11", response.status)
           if (this.listSave.length && this.state.list.length){
             AsyncStorage.removeItem("controllo" + this.props.id)
             this.setState({ 
@@ -182,8 +188,11 @@ export default class UploadMission extends Component {
             loading:false
             })
             AsyncStorage.removeItem(id)
+            AsyncStorage.removeItem("Attribute"+id)
+            console.log("async", AsyncStorage.removeItem("Attribute"+id))
             if (this.listSave.length && this.state.list.length){
               AsyncStorage.removeItem("controllo" + this.props.id)
+              
               this.setState({ 
                   mission:null
                  })

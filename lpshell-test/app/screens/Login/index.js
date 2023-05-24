@@ -156,7 +156,7 @@ export default class SignIn extends Component {
      
             <Connected  modal = "true"></Connected>
         <StatusBar hidden />
-        <Logo source={require('../../../assets/images/logica_logo.png')} resizeMode="contain" style={{marginTop: -30}} />
+        <Logo source={require('../../../assets/images/logica_logo.png')} resizeMode="contain" style={{marginTop: -30, width:200}} />
         <Input
           placeholder="Utente"
           value={this.state.email}

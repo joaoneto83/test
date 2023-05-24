@@ -384,8 +384,8 @@ if (props.route.params?.offline) {
   callbackOk = async ()=>{
     let id = this.props?.route?.params?.mission.id || this.props?.route?.params?.mission
     let data =  await AsyncStorage.getItem(id).then((response) => { return JSON.parse(response) })
-  
-    this.props.navigation.navigate('MissioniDetail',{data: data, offline:true});
+ this.setState({ visibleModalSave: null })
+    this.props.navigation.navigate('RefreshMissioniDetail',{data: data, offline:true});
   }
 
   _renderModalContentGallery = () => (

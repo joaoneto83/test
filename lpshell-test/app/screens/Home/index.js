@@ -21,7 +21,7 @@ export default class Home extends Component {
       visibleModal: this.visibleModal,
       isConnected : this.connected,
     }
-
+   
    }
    callbackisConnected = (item) =>{
 

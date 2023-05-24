@@ -6,6 +6,7 @@ const {ids, styles} = StyleSheet.create({
         flex: 0,
         flexDirection:"row",
         paddingHorizontal:10,
+      
       },
       containerMission: {
         flex: 1,
@@ -41,6 +42,7 @@ const {ids, styles} = StyleSheet.create({
         flex:0,
         flexDirection: "row", 
         alignItems:"center",
+    
     },
     DataTableBody:{
       flex:0,
@@ -158,19 +160,21 @@ const {ids, styles} = StyleSheet.create({
     },
     labelHeaderD:{
         textAlign: 'center',
-        width:150,
-    
+        width:160,
         fontSize: 20, 
         color:"#787777",
-        height:50,
-        paddingHorizontal:5
+        height:45,
+        paddingHorizontal:5,
+        '@media (min-width: 1200px)': {
+          fontSize: 12
+      },
     },
     labelHeaderI:{
         textAlign: 'center',
-        maxWidth:"20%",
-        minWidth:"20%",
-        fontSize: 20, 
-        height:50,
+        maxWidth:"23%",
+        minWidth:"23%",
+        fontSize:20, 
+        height:40,
         color:"#E4A83B"
     },
 
@@ -249,7 +253,7 @@ const {ids, styles} = StyleSheet.create({
         padding:10
       },
     Title: {
-        fontSize: 25, 
+        fontSize: 22, 
         color: '#9F9F9F',
         padding:10,
         '@media (min-width: 1200px)': {

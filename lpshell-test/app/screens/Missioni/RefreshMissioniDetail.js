@@ -17,7 +17,7 @@ import { api } from '../../../services/api_base';
 const baseUrlMissio = "Api/Mission/Mobile/"
 
 
-export default class MissioniDetail extends Component {
+export default class RefreshMissioniDetail extends Component {
     constructor(props) {
         console.log("detalhe", props.route.params)
         super(props);
@@ -267,10 +267,10 @@ export default class MissioniDetail extends Component {
                         </View>
 
                         <View style={styles.DataTableHeader}>
-                            <Text style={[styles.labelHeaderD, { color: "#000", fontSize: 18 }]}>Procedura</Text>
-                            <Text style={[styles.labelHeaderD, { fontSize: 18}]}>Asset</Text>
-                            <Text style={[styles.labelHeaderI, { fontSize: 18 }]}>Controllo</Text>
-                            <Text style={[styles.labelHeaderI, { fontSize: 18 }]}>Mappa</Text>
+                            <Text style={[styles.labelHeaderD, { color: "#000", fontSize: 23 }]}>Procedura</Text>
+                            <Text style={[styles.labelHeaderD, { fontSize: 23 }]}>Asset</Text>
+                            <Text style={[styles.labelHeaderI, { fontSize: 23 }]}>Controllo</Text>
+                            <Text style={[styles.labelHeaderI, { fontSize: 23 }]}>Mappa</Text>
                             {/* <Text style={[styles.labelHeaderI, { fontSize: 23 }]}>Carica</Text> */}
                         </View>
                         <View style={{ flex: 1 }}>

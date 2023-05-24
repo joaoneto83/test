@@ -8,6 +8,8 @@ import infoAssetScreen from "./app/screens/infoAsset";
 import InfoAssetDetail from "./app/screens/infoAsset/InfoAssetDetail";
 import InfoAssetControllo from "./app/screens/infoAsset/InfoAssetControllo";
 import missioniScreen from "./app/screens/Missioni";
+import refreshScreen from "./app/screens/Missioni/refresh";
+import refreshMissioniDetailScreen from "./app/screens/Missioni/RefreshMissioniDetail";
 import missioniDetailScreen from "./app/screens/Missioni/MissioniDetail";
 import qrcideMissioniScreen from "./app/screens/Missioni/QrocdeMissioni";
 import MissioniControlloScreen from "./app/screens/Missioni/MissioniControllo";
@@ -31,6 +33,8 @@ const App = () => {
         <Stack.Screen options={ {title:'',headerTransparent:true, headerShown:false}}  name="InfoAssetControllo" component={InfoAssetControllo} />
         <Stack.Screen options={ {title:'',headerTransparent:true, headerShown:false}}  name="InfoDocument" component={InfoDocumentScreen} />
         <Stack.Screen options={ {title:'',headerTransparent:true, headerShown:false}}  name="Mission" component={missioniScreen} />
+        <Stack.Screen options={ {title:'',headerTransparent:true, headerShown:false}}  name="Refresh" component={refreshScreen} />
+        <Stack.Screen options={ {title:'',headerTransparent:true, headerShown:false}}  name="RefreshMissioniDetail" component={refreshMissioniDetailScreen} />
         <Stack.Screen options={ {title:'',headerTransparent:true, headerShown:false}}  name="MissioniDetail" component={missioniDetailScreen} />
         <Stack.Screen options={ {title:'',headerTransparent:true, headerShown:false}}  name="MissioniControllo" component={MissioniControlloScreen} />
         <Stack.Screen options={ {title:'',headerTransparent:true, headerShown:false}}  name="MissioniDocument" component={MissioniDocumentScreen} />
