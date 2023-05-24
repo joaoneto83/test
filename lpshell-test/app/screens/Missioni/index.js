@@ -15,6 +15,7 @@ import DownloadPdf from "../../../assets/download-off-line/downloadPdf"
 import Search from "../../../components/search/searchs"
 import UploadMission from "./uploadMission";
 import SetMissioni from "./setMissioni";
+import SetMissioniSave from "./setMissioniSave";
 
 import {api} from '../../../services/api_base';
 
@@ -38,7 +39,8 @@ export default class Missioni extends Component {
             offLineId:"",
             offLineName:"",
             memoriaMissionSalve:null,
-            new:null
+            new:null,
+            saveMissioni:true
         }
         this.missioniCache()
   
@@ -46,7 +48,19 @@ export default class Missioni extends Component {
     }
      data = [];
      documents=[];
+     saveMissioni=[];
+    //  componentDidMount() {
+    //   const { navigation } = this.props;
+    //   this.focusListener = navigation.addListener('didFocus', () => {
+    //    conosele.log("primeiro")
+    //   });
+    // }
   
+    // componentWillUnmount() {
+    //   // Remove o listener ao desmontar
+    //   this.focusListener.remove();
+    //   conosele.log("ultimo")
+    // }
 
 
   missioniCache = async () => {
@@ -74,6 +88,8 @@ export default class Missioni extends Component {
       }
 
     }
+
+
     
     this.getData();
   }
@@ -100,9 +116,11 @@ export default class Missioni extends Component {
        AsyncStorage.setItem('missioni', JSON.stringify(this.data));
        console.log("data",this.data)
        this.setState({
-          backData: [...this.data],
-          loading:false
-      })
+        backData: [...this.data],
+        loading:false
+    })
+  
+
 
     }).catch((erro)=>{
       console.log("erro", erro)
@@ -113,8 +131,26 @@ export default class Missioni extends Component {
       loading:false
   })
   }
+
+  this.state.backData.map(async(item)=>{
+    console.log("e", item?.id)
+    if (await AsyncStorage.getItem( "controllo" + item?.id)){
+      console.log("oque", item?.id)
+      this.setState({
+        saveMissioni : false
+      })
+    }
+
+  })
  
   }
+
+  callbackSaveMissioni = () => {
+    this.setState({
+      saveMissioni : true
+    })
+  }
+
 
   MissioniOff = async (id, name, mission) => {
 
@@ -288,6 +324,7 @@ if (this.state.isConnected == "true"){
               : undefined
               }
             <View style={Styles.DataTableHeaderHome}>
+       
             <View style={{flexDirection:"row"}}>
             <Text style={Styles.boxTableHeader}>Nome Missione</Text>
              <Text style={Styles.boxTableHeader}>Iniziata il</Text>
@@ -301,9 +338,11 @@ if (this.state.isConnected == "true"){
             </View>
             { this.state.backData?.map((item) => (
               <View style={Styles.DataTableHeaderHome} key={item?.id}>
-      
-              <SetMissioni id={item?.id} description={item?.description} missioniOff={this.MissioniOff}  goDetail= {this.goDetail} />
-              <UploadMission id={item.id}  />
+             { this.state.saveMissioni ?  <SetMissioni saveMissioni={this.state.saveMissioni} id={item?.id} description={item?.description} missioniOff={this.MissioniOff}  goDetail= {this.goDetail} />:
+               <SetMissioniSave saveMissioni={false} id={item?.id} description={item?.description} missioniOff={this.MissioniOff}  goDetail= {this.goDetail} />
+             }
+             
+              <UploadMission id={item.id} callbackSaveMissioni = {this.callbackSaveMissioni} />
                </View>
             )
             )       

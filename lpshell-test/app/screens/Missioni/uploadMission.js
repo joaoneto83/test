@@ -132,19 +132,29 @@ export default class UploadMission extends Component {
             this.listSave.push({id: id ,value:"save"})
             this.setState({ 
               loading:false,
-         
              })
           console.log("ok1", response.data)
-        
-          
+          AsyncStorage.removeItem(id)
+          if (this.listSave.length && this.state.list.length){
+            AsyncStorage.removeItem("controllo" + this.props.id)
+            this.setState({ 
+                mission:null
+               })
+          }
 
         }).catch((error)=> {
-          console.log("errore", error)
           this.listSave.push({id: id ,value:"erro"})
             this.setState({
               loading:false,
             })
-            console.log("ok21", status, error)
+            console.log("ok2", status, error)
+            AsyncStorage.removeItem(id)
+            if (this.listSave.length && this.state.list.length){
+              AsyncStorage.removeItem("controllo" + this.props.id)
+              this.setState({ 
+                  mission:null
+                 })
+            }
           });
      
          
@@ -155,17 +165,37 @@ export default class UploadMission extends Component {
             this.setState({ 
                loading:false
             })
-        
-          console.log("ok1", response.data)
+         AsyncStorage.removeItem(id)
+          console.log("ok11", response.data)
+          if (this.listSave.length && this.state.list.length){
+            AsyncStorage.removeItem("controllo" + this.props.id)
+            this.setState({ 
+                mission:null
+               })
+          }
      
         }).catch((error)=> {
-          console.log("errore", error)
+    
+          console.log("ok21", status, error)
           this.listSave.push({id: id ,value:"erro"})
             this.setState({
             loading:false
             })
+            AsyncStorage.removeItem(id)
+            if (this.listSave.length && this.state.list.length){
+              AsyncStorage.removeItem("controllo" + this.props.id)
+              this.setState({ 
+                  mission:null
+                 })
+            }
          });
-              
+         AsyncStorage.removeItem(id)
+         if (this.listSave.length && this.state.list.length){
+           AsyncStorage.removeItem("controllo" + this.props.id)
+           this.setState({ 
+               mission:null
+              })
+         }  
     
              }
       }
@@ -188,7 +218,7 @@ export default class UploadMission extends Component {
             </Modal>
             <Connected  callbackisConnected = {this.callbackisConnected}></Connected>
         { this.state.mission ?
-    <TouchableOpacity style={ this.state.isConnected  ?  [styles.boxTableBody] : [ styles.boxTableBody,{ opacity:0.3 } ] }  onPress={() =>  this.state.isConnected  ? this.saveListMission(): undefined } >
+    <TouchableOpacity style={ this.state.isConnected  ?  [styles.boxTableBody, { borderBottomWidth:0}] : [ styles.boxTableBody,{ opacity:0.3,borderBottomWidth:0 } ] }  onPress={() =>  this.state.isConnected  ? (this.saveListMission(), this.props.callbackSaveMissioni()): undefined } >
     <Image
         resizeMode="contain"
         style={styles.iconRow}

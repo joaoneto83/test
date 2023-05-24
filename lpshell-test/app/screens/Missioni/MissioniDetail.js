@@ -8,6 +8,7 @@ import Styles from "./styles";
 import DownloadPdf from "../../../assets/download-off-line/downloadPdf"
 import Modal from 'react-native-modal';
 import ButtonSave from '../../../components/buttons/ButtonSave';
+import AsyncStorage from '@react-native-community/async-storage';
 import UploadMission from "./uploadMission";
 
 import { api } from '../../../services/api_base';
@@ -27,11 +28,16 @@ export default class MissioniDetail extends Component {
             data:[],
             loading: true,
             visibleModal: null,
-            item: ""
+            item: "",
+            completedTasks:[]
         }
+   
+      
         if (props.route.params?.offline) {
             console.log("c",props?.route?.params?.data?.id)
-            this.getDataOff();
+           
+             this.getDataOff();
+             this.memoryProcedureAssets()
         } else {
             this.getData();
         }
@@ -45,13 +51,33 @@ export default class MissioniDetail extends Component {
     filterData = [];
     procedureAssetsOffline = [];
     offline = false
+    procedureAssetsMemory= []
+
+    memoryProcedureAssets = () =>{
+        this.props?.route?.params?.data?.procedureAssets?.map( async (item) => {
+
+            if ( await AsyncStorage.getItem("Attribute"+item.procedureAssets.toString())){
+                this.procedureAssetsMemory.push( { procedureAssets: item.procedureAssets, value:true}) 
+                this.setState({
+                    completedTasks: this.procedureAssetsMemory
+                })
+            }
+       
+       
+
+        }
+             )
+       
+    }
+ 
     getDataOff = () => {
-        
+       
         this.offline = true;
         this.documents = this.props?.route?.params?.data?.documents;
         this.assest = this.props?.route?.params?.data?.procedureAssets;
        
-        this.procedureAssetsOffline = this.props?.route?.params?.data?.procedureAssets?.map(x => {
+        this.procedureAssetsOffline = this.props?.route?.params?.data?.procedureAssets?.map( x  => {
+  
             let i = {
                 procedure: x.procedure.name,
                 procedureData:  x.procedure,
@@ -66,18 +92,26 @@ export default class MissioniDetail extends Component {
                 procedureId: x.procedure.id,
                 loading: true,
             }
+      
             return i
-        }
-
+        } 
+       
+        
         )
+
         this.state = {
             backData: this.props?.route?.params?.data,
             Authorization: "",
             procedureAssets: [...this.procedureAssetsOffline],
             loading: false
         }
-        console.log("off", this.documents)
+    
+        console.log("off", this.props?.route?.params?.data)
     }
+
+
+ 
+
 
     getData = async () => {
    
@@ -96,20 +130,26 @@ export default class MissioniDetail extends Component {
         )
     }
 
-    getIconControllo = (item) => {
-        
-        switch (item) {
-            case 1:
-                this.iconControllo = require('../../../assets/images/settingsPending.png')
-                break;
-            case 2:
-                console.log("colore", item)
-                this.iconControllo = require('../../../assets/images/settingsErro.png')
-                break;
-
-            default:
-                this.iconControllo = require('../../../assets/images/settings.png')
+    getIconControllo = (item, controllo) => {
+        if( this.procedureAssetsMemory.find(x => x.procedureAssets == controllo)){
+            console.log("c",controllo)
+            return   this.iconControllo = require('../../../assets/images/controlloMemory.png')
         }
+        else {
+            switch (item) {
+                case 1:
+                    this.iconControllo = require('../../../assets/images/settingsPending.png')
+                    break;
+                case 2:
+                    console.log("colore", item)
+                    this.iconControllo = require('../../../assets/images/settingsErro.png')
+                    break;
+    
+                default:
+                    this.iconControllo = require('../../../assets/images/settings.png')
+            }
+        }
+     
         return this.iconControllo
     }
     _renderButton = (text, onPress) => (
@@ -191,7 +231,7 @@ export default class MissioniDetail extends Component {
                             </View>
                             <View >
                                 <Text style={styles.label}>{this.state.backData.totalTasks}</Text>
-                                <Text style={styles.label}>{this.state.backData.completedTasks}</Text>
+                                <Text style={styles.label}>{this.state.backData.completedTasks >= (this.state.completedTasks?.length || 0 ) ? this.state.backData.completedTasks : this.state.backData.completedTasks + this.state.completedTasks?.length }</Text>
                                 <Text style={styles.label}>{this.state.backData.totalTasks - this.state.backData.completedTasks}</Text>
                             </View>
                   
@@ -231,7 +271,7 @@ export default class MissioniDetail extends Component {
                             <Text style={[styles.labelHeaderD, { fontSize: 23 }]}>Asset</Text>
                             <Text style={[styles.labelHeaderI, { fontSize: 23 }]}>Controllo</Text>
                             <Text style={[styles.labelHeaderI, { fontSize: 23 }]}>Mappa</Text>
-                            <Text style={[styles.labelHeaderI, { fontSize: 23 }]}>Carica</Text>
+                            {/* <Text style={[styles.labelHeaderI, { fontSize: 23 }]}>Carica</Text> */}
                         </View>
                         <View style={{ flex: 1 }}>
                             <ScrollView >
@@ -244,7 +284,7 @@ export default class MissioniDetail extends Component {
                                             <Image
                                                 resizeMode="contain"
                                                 style={[Styles.iconRow]}
-                                                source={this.getIconControllo(item?.statusId)}
+                                                source={this.getIconControllo(item?.statusId, item.id)}
                                             />
                                         </TouchableOpacity>
                                         <TouchableOpacity style={styles.rowD}>
@@ -256,13 +296,13 @@ export default class MissioniDetail extends Component {
                                         </TouchableOpacity>
 
                                         {/* <UploadMission id={item.id} status={item?.statusId} /> */}
-                                      <TouchableOpacity style={styles.rowD} opa>
+                                      {/* <TouchableOpacity style={styles.rowD} opa>
                                             <Image
                                                 resizeMode="contain"
                                                 style={Styles.iconRow}
                                                 source={require('../../../assets/images/upload.png')}
                                             />
-                                        </TouchableOpacity> 
+                                        </TouchableOpacity>  */}
                                     </View>
                                 )
                                 )

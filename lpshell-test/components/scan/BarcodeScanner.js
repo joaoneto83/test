@@ -35,8 +35,10 @@ import styles from "./styles";
       const { status } = await BarCodeScanner.requestPermissionsAsync();
       setHasPermission(status === 'granted');
     };
+    if (props?.route?.params?.title == "Missioni"){
+      offline()
+    }
 
-  offline()
     getBarCodeScannerPermissions();
   }, []);
   
@@ -52,6 +54,16 @@ import styles from "./styles";
     listQrCodeRadix.toString().split(",").filter( x => x != QrCodeRadix ) ? listQrCodeRadix.push(QrCodeRadix):undefined
     
     listQrCodeRadix.toString().split(",")?.length ==  arrayItem?.length ? getrelease(true) : getrelease(false);
+   
+    let listBase = arrayItem.map((x)=>{
+    
+      return  x.qrCodeRadix
+       
+    }
+    ) 
+    console.log("listBase",listBase.sort(),listQrCodeRadix.toString().split(",").sort(),  checkArrays( listQrCodeRadix.toString().split(",").sort(),listBase.sort()))
+   
+
   }
 
    checkArrays = (a1, a2) => {
@@ -62,31 +74,36 @@ import styles from "./styles";
 
 
   const handleBarCodeScanned = ({ type, data }) => {
-    console.log("unss", props?.route?.params)
+    console.log("unss", props?.route?.params,data)
     const arrayData = data.replace(/%/g, '').split("*")
 
+     if (props?.route?.params?.title == "Info Asset"){
+      
+      setOkQR(true) 
+      console.log("Info Asset2",okQR)
+     }
 
-   
+   if (dataOff?.procedureAssets){
     dataOff.procedureAssets.map((item)=> {  
-      if (arrayData[1] == "LP" && arrayData[2] == item.asset.id){
+      if (arrayData[1] == "LP" && arrayData[2] == item?.asset?.id){
         setOkQR(true) 
         setcontrollo(item)
-        getAsset(item.asset.id)
-        setqrcodeValue(item.asset.qrCodes?.length)
+        getAsset(item?.asset?.id)
+        setqrcodeValue(item?.asset?.qrCodes?.length)
         setQrCodeRadix(arrayData[0].toUpperCase(),item.asset.qrCodes)
         getqrCodeRadix(arrayData[0].toUpperCase())
         
    
         }else if (arrayData[0] == "IDRA" && arrayData[1] == item.asset.keyNum ){
-          console.log("IDRA",item.asset.qrCodes?.length)
+          console.log("IDRA",item?.asset?.qrCodes?.length)
           setcontrollo(item)
           getqrCodeRadix(arrayData[0].toUpperCase())
           setOkQR(true) 
-          setqrcodeValue(item.asset.qrCodes?.length)
+          setqrcodeValue(item?.asset?.qrCodes?.length)
           setQrCodeRadix(arrayData[0].toUpperCase(),item.asset.qrCodes)
        }
          else if (arrayData[0] != "IDRA"  && arrayData[1] == item.asset.register){
-          console.log("!IDRA",item.asset.qrCodes?.length)
+          console.log("!IDRA",item?.asset?.qrCodes?.length)
           getqrCodeRadix(arrayData[0].toUpperCase())
           setcontrollo(item)
           setOkQR(true) 
@@ -95,7 +112,7 @@ import styles from "./styles";
         }
 
     })
-   
+  }
     if (!okQR){
       setTime(time++)
       if (time > 5){
@@ -106,7 +123,7 @@ import styles from "./styles";
      }
       return undefined
     }
-    if (qrCodeRadix == props.route.params?.qrCodeRadix && assetCodeId == props.route.params?.assetCodeId){
+    if (qrCodeRadix == props.route.params?.qrCodeRadix){
       setTime(time++)
       if (time > 5){
         setTime(0)
@@ -132,14 +149,17 @@ import styles from "./styles";
     
 
     if (data){
+      console.log("0")
       setScanned(true);
-
+    
       switch (props?.route?.params?.title) {
+  
         case "Info Asset":
-          if (props?.route?.params?.screem ){
-     
+          if (props?.route?.params.screem ){
+            console.log("1")
             props.navigation.navigate('InfoAssetControllo', { value: data, screem: props?.route?.params?.screem } )
           } else {
+            console.log("2")
             props.navigation.navigate('InfoAssetDetail', { value: data } )
           }
           break;
@@ -174,7 +194,11 @@ import styles from "./styles";
 
   return (
     <View style={styles.container}>
-       <Head prop = {props} routes ={props?.route?.params?.routes} id ={props?.route?.params?.mission.id || props?.route?.params?.mission} title ={props?.route?.params?.title} offline= {props?.route?.params?.offline} screem= {props?.route?.params?.screem} />
+      {props?.route?.params?.title == "Info Asset" ?
+   <Head prop = {props} routes ={props?.route?.params?.routes} title ={props?.route?.params?.title} screem= {props?.route?.params?.screem} />:
+   <Head prop = {props} routes ={props?.route?.params?.routes} id ={props?.route?.params?.mission?.id || props?.route?.params?.mission} title ={props?.route?.params?.title} offline= {props?.route?.params?.offline} screem= {props?.route?.params?.screem} />
+      }
+    
          <View style={styles.containerScan}>
          <BarCodeScanner 
         onBarCodeScanned={scanned ? undefined : handleBarCodeScanned}

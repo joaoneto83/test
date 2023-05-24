@@ -47,13 +47,15 @@ export default class MissioniControllo extends Component {
       visibleModalGallery:null,
       isConnected: null,
       loading:true,
-      statusId:null
+      statusId:null,
+
     }
    
 
 if (props.route.params?.offline) {
    console.log("entrou",this.props.route.params)
    this.getDataOff();
+   
    } else {
 
       this.getData();
@@ -72,6 +74,43 @@ if (props.route.params?.offline) {
     procedureAttributeId:"",
     value:""
   }
+  getDataOff  = async () => {
+
+
+ 
+    console.log("off controllo3",this.props.route.params.data?.procedure?.attributes)
+    this.state.asset =this.props.route.params?.data.asset.description;
+    this.state.data =  this.props.route.params?.data.asset;
+    this.state.documents = this.props.route.params?.documnets;
+    this.state.loading = false;
+    this.state.expand = false;
+
+   // await AsyncStorage.removeItem("Attribute"+this.props?.route?.params?.procedureAssets.toString())
+  
+     if (await AsyncStorage.getItem("Attribute"+this.props?.route?.params?.procedureAssets.toString())) 
+     {
+     this.setState({
+     dataControlloArray :{
+      name: this.props.route.params?.data.procedure.name,
+      attributes: await AsyncStorage.getItem("Attribute"+ this.props?.route?.params?.procedureAssets).then((response) => { return JSON.parse(response) })
+      }
+    }
+       
+     ) 
+   // this.state.dataControlloArray.attributes = await AsyncStorage.getItem("procedureAttribute"+ this.props?.route?.params?.procedureAssets).then((response) => { return JSON.parse(response) })
+   
+      console.log( "procedureAssets6",this.state.dataControlloArray.attributes, "Attribute"+this.props?.route?.params?.procedureAssets.toString())
+     } else {
+      this.state.dataControlloArray = this.props.route.params?.data.procedureData || this.props.route.params?.data.procedure ;
+     }
+
+    this.setState({
+      isConnected :await AsyncStorage.getItem('isConnected').then((response) => { return response })
+    }) 
+
+    console.log("set2",this.state.isConnected)
+
+  };
 
   callbackProcedura = (item) => {
     this.setState({
@@ -80,10 +119,54 @@ if (props.route.params?.offline) {
     this.postData.procedureId = item.id
 
   } 
-  callbackControllo = (item) => {
-    console.log("calloff1", item, this.state?.dataControlloArray?.attributes )
+  callbackControllo = async (item) => {
+    if(!this.state.dataControlloArray?.attributes){
+
+      return undefined
+    }
+
+    let procedureAttribute =  this.state.dataControlloArray?.attributes?.map( (data)=> 
+    { 
+   
+      if (item.id == data.procedureAttribute.id) {
+        
+        x = {
+          procedureAttribute:{
+            minValue: data.procedureAttribute.minValue,
+            maxValue: data.procedureAttribute.maxValue,
+            goodValue: item?.value?.toString(),
+            formatId: data.procedureAttribute.formatId,
+            list: data.procedureAttribute.list,
+            id: item.id,
+            description: data.procedureAttribute.description
+          }
+         
+          } 
+      
+          return  x
+    
+      }else {
+
+        x = {
+          procedureAttribute:{
+          minValue:  data.procedureAttribute.minValue ,
+          maxValue: data.procedureAttribute.maxValue,
+          goodValue:  data.procedureAttribute.goodValue,
+          formatId: data.procedureAttribute.formatId ,
+          list:  data.procedureAttribute.list,
+          id:  data.procedureAttribute.id,
+          description: data.procedureAttribute.description
+          }
+        }
+          return x
+      }
+     })
+   
+     this.state.dataControlloArray.attributes = procedureAttribute
+
+
     this.postData.assetValue = {
-    assetValue: this.state?.dataControlloArray?.attributes?.map( (data)=> 
+    assetValue:  procedureAttribute.map( (data)=> 
     { 
      
       if (item.id == (data.id || data.procedureAttribute.id)) {
@@ -107,7 +190,8 @@ if (props.route.params?.offline) {
      }),
      notes:"",
     }
-     console.log("callbackProcedura ",   this.postData.assetValue)
+    
+   // console.log( "new", this.postData.assetValue)
   }
 
   callbackEsc = async () => {
@@ -161,6 +245,7 @@ if (props.route.params?.offline) {
         loading:false
        })
        AsyncStorage.setItem( "controllo"+ postData.missionId, JSON.stringify(postData.missionId));
+      AsyncStorage.setItem( "Attribute"+ this.props?.route?.params?.procedureAssets.toString(), JSON.stringify(this.state.dataControlloArray.attributes));
      return AsyncStorage.setItem( this.props?.route?.params?.procedureAssets.toString(), JSON.stringify( postData));
     }
 
@@ -219,23 +304,7 @@ if (props.route.params?.offline) {
 
   }
 
-  getDataOff  = async () => {
- 
-    console.log("off controllo3",this.props.route.params.data?.procedure?.attributes)
-    this.state.asset =this.props.route.params?.data.asset.description;
-    this.state.data =  this.props.route.params?.data.asset;
-    this.state.documents = this.props.route.params?.documnets;
-    this.state.dataControlloArray = this.props.route.params?.data.procedureData || this.props.route.params?.data.procedure ;
-    this.state.loading = false;
-    this.state.expand = false;
 
-    this.setState({
-      isConnected :await AsyncStorage.getItem('isConnected').then((response) => { return response })
-    }) 
-
-    console.log("set2",this.state.isConnected)
-
-  };
 
   getData = async () => {
 

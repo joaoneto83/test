@@ -23,7 +23,7 @@ const test = false;
 const App = () => {
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="Login">
+      <Stack.Navigator detachInactiveScreens={false} initialRouteName="Login">
         <Stack.Screen options={ {title:'',headerTransparent:true, headerShown:false}} name="Login" component={LoginScreen} />
         <Stack.Screen options={ {title:'',headerTransparent:true, headerShown:false}}  name="Home" component={ProfileScreen} />
         <Stack.Screen options={ {title:'',headerTransparent:true, headerShown:false}}  name="InfoAsset" component={infoAssetScreen} />

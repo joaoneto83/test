@@ -15,7 +15,7 @@ const baseUrlMissio = "Api/Mission/Mobile/"
 const basePut = "/Api/ProcedureAsset/"
 const diversoPost = "/Api/ProcedureAsset/"
 
-export default class setMissioni extends Component {
+export default class setMissioniSave extends Component {
     constructor(props){
         super(props)
         this.state = {
@@ -27,7 +27,7 @@ export default class setMissioni extends Component {
             mission:null,
             saveMission: props?.saveMissioni
         }
-        console.log("saveMission",this.state.saveMission,props.saveMissioni )
+        console.log("saveMissionSave",this.state.saveMission,props.saveMissioni )
         this.missionSave()
       
     }

@@ -14,7 +14,7 @@ function ButtonControllo(props) {
       return (
         <View style={styles.containerControllo} >
          {  props?.list?.map((item) => (
-             <TouchableOpacity  onPress={() => getControllo(item.value)}  >
+             <TouchableOpacity  onPress={() => getControllo(item.value)}  key={item.value}>
          {item.value == controllo ? <Text style={styles.textTrue}> {item.value}</Text> : <Text style={styles.textFalse}> {item.value}</Text>}
            </TouchableOpacity>
             ) )
