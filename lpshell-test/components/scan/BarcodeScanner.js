@@ -47,6 +47,8 @@ import styles from "./styles";
 
   }
   
+
+
   const setQrCodeRadix = (QrCodeRadix, arrayItem )=> {
 
     props.route.params?.listQrCodeRadix ? listQrCodeRadix.push(props.route.params?.listQrCodeRadix) : undefined
@@ -73,9 +75,13 @@ import styles from "./styles";
  
 
 
+
   const handleBarCodeScanned = ({ type, data }) => {
+
     console.log("unss", props?.route?.params,data)
+
     const arrayData = data.replace(/%/g, '').split("*")
+
 
      if (props?.route?.params?.title == "Info Asset"){
       
@@ -84,6 +90,7 @@ import styles from "./styles";
      }
 
    if (dataOff?.procedureAssets){
+    console.log("3")
     dataOff.procedureAssets.map((item)=> {  
       if (arrayData[1] == "LP" && arrayData[2] == item?.asset?.id){
         setOkQR(true) 
@@ -118,28 +125,29 @@ import styles from "./styles";
       if (time > 5){
         setTime(0)
       setTimeout(()=>{
-        alert("errore QRcode")
+        alert("Codice QR errato")
       }, 0)
      }
       return undefined
     }
-    if (qrCodeRadix == props.route.params?.qrCodeRadix){
+    
+    if (props?.route?.params?.title == "Missioni" && qrCodeRadix == props.route.params?.qrCodeRadix){
       setTime(time++)
       if (time > 5){
         setTime(0)
       setTimeout(()=>{
-        alert("stesso Qrcode")
+        alert("Questo codice QR è già stato letto")
       }, 0)
      }
       return undefined
     }
      
-    if (props.route.params?.assetCodeId != null && assetCodeId != props.route.params?.assetCodeId ){
+    if (props?.route?.params?.title == "Missioni" && props.route.params?.assetCodeId != null && assetCodeId != props.route.params?.assetCodeId ){
       setTime(time++)
       if (time > 5){
         setTime(0)
       setTimeout(()=>{
-        alert("Il codice QRcode non appartiene a" + " "+ qrCodeRadix )
+        alert("Il codice QRcode letto non è compatibile con il QR scansionato in precedenza")
       }, 0)
      }
       return undefined

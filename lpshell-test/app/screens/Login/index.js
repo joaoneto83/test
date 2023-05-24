@@ -4,7 +4,7 @@ import {View,ImageBackground, StatusBar, TouchableOpacity, Image, Text } from 'r
 import { Ionicons }from "@expo/vector-icons";
 import AsyncStorage from '@react-native-community/async-storage';
 import LoadingInline from "../../../components/loading/loadingInline";
-
+import Modal from 'react-native-modal';
 
 import Connected from '../../../assets/connected'; 
 
@@ -51,8 +51,6 @@ export default class SignIn extends Component {
 
 
 
-
-
   static navigationOptions = {
     header: null,
   };
@@ -64,8 +62,6 @@ export default class SignIn extends Component {
       dispatch: PropTypes.func,
     }).isRequired,
   };
-
- 
 
 
   //  createPost() {
@@ -122,7 +118,7 @@ export default class SignIn extends Component {
     })
 
       await apiStart
-      .post( baseURLPost, loginData ,)
+      .post( baseURLPost || test, loginData ,)
       .then((response) => {
        AsyncStorage.setItem('DATA_KEY', JSON.stringify(response.data.access_token));
        this.state = {
@@ -147,11 +143,18 @@ export default class SignIn extends Component {
     }
   };
 
+
+
+
+
+
+
   render() {
     return (
 
     <ImageBackground source={require('../../../assets/images/fundo.png')} style={{flex: 1, padding: 0}}> 
       <Container>
+
         <View style={{backgroundColor: 'rgba( 0, 0, 0, .6)', padding: 10 ,paddingHorizontal: 30, borderRadius: 10,  margin: 'auto'}}>
      
             <Connected  modal = "true"></Connected>

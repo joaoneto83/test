@@ -253,16 +253,20 @@ export default class RefreshMissioniDetail extends Component {
                     <View style={styles.boxRigth}>
                         <View style={{ flexDirection: "row", alignItems: "center", marginBottom: 25 }}>
                             <View style={{ flexDirection: "row", alignItems: "center" }}>
-                                <View style={{ width: 70, height: 3, backgroundColor: "#787777", marginHorizontal: 10 }}></View>
+                                <View style={{ width: 70, height: 3, backgroundColor: "#787777", marginHorizontal: 7 }}></View>
                                 <Text style={{ color: "#787777", fontSize: 15 }}>Da completare</Text>
                             </View>
                             <View style={{ flexDirection: "row", alignItems: "center" }}>
-                                <View style={{ width: 70, height: 3, backgroundColor: "#86F330", marginHorizontal: 10 }}></View>
+                                <View style={{ width: 70, height: 3, backgroundColor: "#86F330", marginHorizontal: 7 }}></View>
                                 <Text style={{ color: "#787777", fontSize: 15 }}>Completato</Text>
                             </View>
                             <View style={{ flexDirection: "row", alignItems: "center" }}>
-                                <View style={{ width: 70, height: 3, backgroundColor: "#F35330", marginHorizontal: 10 }}></View>
+                                <View style={{ width: 70, height: 3, backgroundColor: "#F35330", marginHorizontal: 7 }}></View>
                                 <Text style={{ color: "#787777", fontSize: 15 }}>Errore</Text>
+                            </View>
+                            <View style={{ flexDirection: "row", alignItems: "center" }}>
+                                <View style={{ width: 70, height: 3, backgroundColor: "#E4A83B", marginHorizontal: 7 }}></View>
+                                <Text style={{ color: "#787777", fontSize: 15 }}>Da inviare</Text>
                             </View>
                         </View>
 

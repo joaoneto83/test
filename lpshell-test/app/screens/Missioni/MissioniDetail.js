@@ -264,6 +264,10 @@ export default class MissioniDetail extends Component {
                                 <View style={{ width: 70, height: 3, backgroundColor: "#F35330", marginHorizontal: 10 }}></View>
                                 <Text style={{ color: "#787777", fontSize: 15 }}>Errore</Text>
                             </View>
+                            <View style={{ flexDirection: "row", alignItems: "center" }}>
+                                <View style={{ width: 70, height: 3, backgroundColor: "#E4A83B", marginHorizontal: 10 }}></View>
+                                <Text style={{ color: "#787777", fontSize: 15 }}>Da inviare</Text>
+                            </View>
                         </View>
 
                         <View style={styles.DataTableHeader}>

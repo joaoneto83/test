@@ -4,7 +4,7 @@ const {ids, styles} = StyleSheet.create({
     container: {
       flex: 0,
       flexDirection: 'row',
-      paddingTop:"1%",
+      paddingTop:10,
       paddingLeft:"3%",
       paddingRight:"3%",
     
@@ -19,7 +19,7 @@ const {ids, styles} = StyleSheet.create({
       iconeLP: {
         height: 60,
         '@media (min-width: 1200px)': {
-        height: 100,
+        height: 80,
       },
       },
       icone: {
