@@ -1,10 +1,11 @@
 import axios from 'axios';
 import AsyncStorage from '@react-native-community/async-storage';
+import { BASE_URL, BASE_START } from '@env';
 
-const baseURL = "http://192.168.248.20:8090/"
-const start = "http://192.168.248.20:6090/"
+const baseURL = BASE_START
+const start =  BASE_URL
 let  baseURLGet = ""
-
+console.log("variavel", BASE_URL, BASE_START)
 export  function getAuthorization(){
 return  AsyncStorage.getItem('DATA_KEY').then((response) => { return response ? response.replace(/"/g, ''): undefined })
 }
