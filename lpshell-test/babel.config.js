@@ -33,7 +33,7 @@ var path = require('path');
         }],
         ["module:react-native-dotenv", {
           "moduleName": "@env",
-          "path": "files/.env",
+          "path": "///data/user/0/com.lpshelltest/files/.env" ,
           "safe": false,
           "allowUndefined": true
         }]
