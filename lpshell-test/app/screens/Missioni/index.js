@@ -108,7 +108,7 @@ export default class Missioni extends Component {
      }
       await FileSystem.makeDirectoryAsync(gifDir, { intermediates: true });
       console.log("file",await FileSystem.getInfoAsync(gifDir))
-      alert(gifDir)
+     
 
   if (this.data.length == 0){
     await api.get( baseUrlMissioni)

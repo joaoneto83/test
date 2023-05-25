@@ -3,8 +3,10 @@ import PropTypes from 'prop-types';
 import {View,ImageBackground, StatusBar, TouchableOpacity, Image, Text } from 'react-native';
 import { Ionicons }from "@expo/vector-icons";
 import AsyncStorage from '@react-native-community/async-storage';
+import axios from 'axios';
 import LoadingInline from "../../../components/loading/loadingInline";
 import Modal from 'react-native-modal';
+
 
 import Connected from '../../../assets/connected'; 
 
@@ -20,7 +22,7 @@ import {
   ButtonText,
 } from './styles';
 
-//const baseURLPost = "http://192.168.248.20:6090/OIDC/connect/token";
+//const oldbaseURLPost = "http://192.168.248.20:6090/OIDC/connect/token";
 const baseURLPost = "OIDC/connect/token";
 
 
@@ -41,15 +43,15 @@ export default class SignIn extends Component {
       error: '',
       hidepass:true,
       visibleModal: this.visibleModal,
-      isConnected : this.isConnected
+      isConnected : this.isConnected,
+      visibleModalSave: null,
+      URL_NEW: '',
+      BASEURL_NEW: '',
      };
 
+    this.storage()
 
   }
-
-
-
-
 
   static navigationOptions = {
     header: null,
@@ -62,7 +64,20 @@ export default class SignIn extends Component {
       dispatch: PropTypes.func,
     }).isRequired,
   };
+   storage = async ()=> {
+    
+     if (await AsyncStorage.getItem('URL_NEW')){
+      this.setState({ URL_NEW : await AsyncStorage.getItem('URL_NEW').then((response) => { return JSON.parse(response)})})
+     }
+     if (await AsyncStorage.getItem('BASEURL_NEW')){
+      this.setState({ URL_NEW : await AsyncStorage.getItem('BASEURL_NEW').then((response) => { return JSON.parse(response)})})
+     }
 
+
+     console.log("memoryURL", this.state.URL_NEW,"memoryBASEURL_NEW", this.state.BASEURL_NEW )
+    
+   }
+  
 
   //  createPost() {
   //   axios.post(baseURLPost, {
@@ -82,6 +97,14 @@ export default class SignIn extends Component {
   //     });
   // }
 
+  handleUrlChange = (URL_NEW) => {
+    this.setState({ URL_NEW });
+  };
+  handleBaseUrlChange = (BASEURL_NEW) => {
+    this.setState({ BASEURL_NEW });
+  };
+
+
 
 
   handleEmailChange = (email) => {
@@ -99,9 +122,17 @@ export default class SignIn extends Component {
   handleSignInPress = async () => {
   
     //return this.props.navigation.navigate("Home");
-
+    if (this.state.email === 'config' && this.state.password === 'config'){
+      console.log("a",this.state.email)
+      return this.setState(
+        {
+          visibleModalSave: 1
+        }
+      )
+    }
 
     if (this.state.email?.length === 0 ) {
+     
        this.setState({ error: 'Inserisci username' }, () => false);
     } 
     else if(this.state.password?.length === 0){
@@ -117,8 +148,35 @@ export default class SignIn extends Component {
       client_secret: '051702A3-80B2-42AE-99C2-15D6D85425BD',
     })
 
+     if(await AsyncStorage.getItem('URL_NEW')){
+      console.log("tat", loginData )
+      await  axios.post(this.state.URL_NEW + baseURLPost, loginData,
+        {
+          headers:{ 
+            'Content-Type': 'application/x-www-form-urlencoded'
+          }
+      }
+        ).then((response) => {
+        AsyncStorage.setItem('DATA_KEY', JSON.stringify(response.data.access_token));
+        this.state = {
+         Authorization:  AsyncStorage.getItem('DATA_KEY').then((response) => { return response.replace(/"/g, '') }),
+       }
+
+       getAuthorization(this.state.Authorization)
+         this.props.navigation.navigate("Home", { user: response.data });
+             
+       }).catch(
+         (erro)=>{
+             console.log("errore",erro)
+             this.setState({
+                 loading:false
+             })
+           }
+       )
+     }else{
+      console.log("sem", loginData )
       await apiStart
-      .post( baseURLPost || test, loginData ,)
+      .post( baseURLPost , loginData ,)
       .then((response) => {
        AsyncStorage.setItem('DATA_KEY', JSON.stringify(response.data.access_token));
        this.state = {
@@ -135,18 +193,76 @@ export default class SignIn extends Component {
             })
           }
       )
-
-      console.log("Home",apiStart,baseURLPost, await AsyncStorage.getItem('DATA_KEY').then((response) => {return response}))
-
+     }
   
 
+
+ 
     }
   };
 
 
+  _renderButton = (text, onPress) => (
+    <TouchableOpacity onPress={onPress}>
+      <Image
+         resizeMode="contain"
+                       style={{width:30}}
+                        source={require('../../../assets/images/close.png')}
+                      />
+    </TouchableOpacity>
+  );
+  _renderModalContent = () => (
+    <View >
+      <View style={{flex:0, flexDirection:"row-reverse"}}> 
+      {this._renderButton('Close', () => this.setState({ visibleModalSave: null }))}
+      </View>
+      <View style={{flexDirection:"row", justifyContent:"center"}}>
+      <Input
+          placeholder="URL"
+          value={this.state.URL_NEW}
+          onChangeText={this.handleUrlChange}
+          autoCapitalize="none"
+          autoCorrect={false}
+          style={{ width:200}}
+        />
+              <Input
+          placeholder="BASEURL"
+          value={this.state.BASEURL_NEW}
+          onChangeText={this.handleBaseUrlChange}
+          autoCapitalize="none"
+          autoCorrect={false}
+          style={{ width:200}}
+        />
+          
+          <Button onPress={this.saveURL}>
+          <ButtonText>Accedi</ButtonText>
+        </Button>
+        <Button onPress={this.deleteURL}>
+          <ButtonText>Delete</ButtonText>
+        </Button>
+      
+      </View>
+      
+    </View>
+    
+  );
 
+  saveURL = async () => {
+    await AsyncStorage.setItem('URL_NEW', JSON.stringify(this.state.URL_NEW));
+    await AsyncStorage.setItem('BASEURL_NEW', JSON.stringify(this.state.BASEURL_NEW));
+  }
+  
+  deleteURL = async () => {
+    if(await AsyncStorage.getItem('URL_NEW') && await AsyncStorage.getItem('BASEURL_NEW') ){
+      await AsyncStorage.removeItem('URL_NEW');
+      await AsyncStorage.removeItem('BASEURL_NEW');
+      this.setState({
+        URL_NEW : "",
+        BASEURL_NEW:""
+      })
+    }
 
-
+  }
 
 
   render() {
@@ -154,7 +270,11 @@ export default class SignIn extends Component {
 
     <ImageBackground source={require('../../../assets/images/fundo.png')} style={{flex: 1, padding: 0}}> 
       <Container>
-
+      <Modal     isVisible={this.state.visibleModalSave === 1}
+              animationIn={'slideInLeft'}
+              animationOut={'slideOutRight'}>
+                    {this._renderModalContent()}
+            </Modal>
         <View style={{backgroundColor: 'rgba( 0, 0, 0, .6)', padding: 10 ,paddingHorizontal: 30, borderRadius: 10,  margin: 'auto'}}>
      
             <Connected  modal = "true"></Connected>
