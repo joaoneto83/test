@@ -33,9 +33,7 @@ var path = require('path');
         }],
         ["module:react-native-dotenv", {
           "moduleName": "@env",
-          "path": ".env",
-          "blacklist": null,
-          "whitelist": null,
+          "path": "files/.env",
           "safe": false,
           "allowUndefined": true
         }]
