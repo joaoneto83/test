@@ -6,13 +6,14 @@ import Modal from 'react-native-modal';
 import * as FileSystem from 'expo-file-system';
 import ButtonSave from "../../../components/buttons/ButtonSave";
 import styles from "./styles";
-import { api,apiStart,Authorization } from '../../../services/api_base';
+import axios from 'axios';
+import {api, HeadersQR, HeadersBase ,URL, getURLBASE} from '../../../services/api_base';
 import Connected from '../../../assets/connected'; 
 
 const baseUrlMissio = "Api/Mission/Mobile/"
 
-const basePut = "/Api/ProcedureAsset/"
-const diversoPost = "/Api/ProcedureAsset/"
+const basePut = "Api/Assets/ProcedureAsset/"
+const diversoPost = "Api/Assets/ProcedureAsset/"
 
 export default class UploadMission extends Component {
     constructor(props){
@@ -128,7 +129,7 @@ export default class UploadMission extends Component {
 
          if (status == 1 || status == 2){
        
-        await api.post(diversoPost, data).then((response) => {
+        await axios.post(await getURLBASE() + diversoPost , data, await HeadersBase()).then((response) => {
             this.listSave.push({id: id ,value:"save"})
             this.setState({ 
               loading:false,
@@ -136,7 +137,7 @@ export default class UploadMission extends Component {
           console.log("ok1", response.status)
           AsyncStorage.removeItem(id)
           AsyncStorage.removeItem("Attribute"+id)
-          console.log("async", AsyncStorage.removeItem("Attribute"+id))
+          console.log("async","Attribute"+id)
           if (this.listSave.length && this.state.list.length){
             AsyncStorage.removeItem("controllo" + this.props.id)
             this.setState({ 
@@ -164,14 +165,14 @@ export default class UploadMission extends Component {
          
           }else{
 
-       await api.put(basePut + id , data).then((response) => {
+       await axios.put(await getURLBASE() +  basePut + id , data, await HeadersBase() ).then((response) => {
         this.listSave.push({id: id ,value:"save"})
             this.setState({ 
                loading:false
             })
          AsyncStorage.removeItem(id)
          AsyncStorage.removeItem("Attribute"+id)
-         console.log("async", AsyncStorage.removeItem("Attribute"+id))
+         console.log("async","Attribute"+id)
           console.log("ok11", response.status)
           if (this.listSave.length && this.state.list.length){
             AsyncStorage.removeItem("controllo" + this.props.id)

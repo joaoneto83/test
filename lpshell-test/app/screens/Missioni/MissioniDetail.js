@@ -11,10 +11,11 @@ import ButtonSave from '../../../components/buttons/ButtonSave';
 import AsyncStorage from '@react-native-community/async-storage';
 import UploadMission from "./uploadMission";
 
-import { api } from '../../../services/api_base';
+import {apiStart,Authorization, HeadersQR, HeadersBase ,getURLBASE} from '../../../services/api_base';
 
 
-const baseUrlMissio = "/api/assets/Mission/Mobile/"
+
+const baseUrlMissio = "api/assets/Mission/Mobile/"
 
 
 export default class MissioniDetail extends Component {
@@ -115,7 +116,7 @@ export default class MissioniDetail extends Component {
 
     getData = async () => {
    
-        await api.get(baseUrlMissio + this.props.route?.params?.id).then((response) => {
+        await axios.get(await getURLBASE()+baseUrlMissio + this.props.route?.params?.id, await HeadersBase()).then((response) => {
             console.log("response", response.data)
             this.setState({
                 backData: response.data,

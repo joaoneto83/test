@@ -9,8 +9,9 @@ import LoadingInline from "../../../components/loading/loadingInline";
 import Head from "../../../components/Head";
 
 import styles from "./styles";
+import { HeadersQR, HeadersBase ,getURLBASE} from '../../../services/api_base';
 
-baseURLGet = "http://192.168.248.20:8090/Api/AttachedFiles/AssetDocuments/Mobile/"
+baseURLGet = "api/assets/AttachedFiles/AssetDocuments/Mobile/"
 
 export default class InfoDocument extends Component {
 
@@ -32,12 +33,7 @@ export default class InfoDocument extends Component {
       loading:true
      })
      console.log("ok1",this.state)
-    await axios.get(baseURLGet + this.props.route.params, {
-        headers: {
-          'Content-Type': 'application/json;charset=UTF-8',
-          'Authorization': `Bearer ${this.state.Authorization.replace(/"/g, '')}`,
-        }
-      }).then( (response)=>{
+    await axios.get(await getURLBASE()+baseURLGet + this.props.route.params, await HeadersBase()).then( (response)=>{
         console.log("response",response)
         this.setState({
             data: response.data,

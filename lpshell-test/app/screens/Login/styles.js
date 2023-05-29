@@ -39,7 +39,6 @@ const ErrorMessage = styled.Text`
 const Button = styled.TouchableHighlight`
   padding: 5px;
   borderRadius: 5px;
-  backgroundColor: #E4A83B;
   alignSelf: stretch;
   margin: 15px;
   marginHorizontal: 20px;

@@ -8,8 +8,9 @@ import AsyncStorage from '@react-native-community/async-storage'
 import styles from "./styles";
 
 import LoadingInline from "../../../components/loading/loadingInline";
+import { HeadersQR, HeadersBase ,getURLBASE} from '../../../services/api_base';
 
-const baseURLGet = " http://192.168.248.20:6090/api/assets/asset/QR/";
+const baseURLGet = "api/assets/asset/QR/";
 
 
 export default class InfoAssetDetail extends Component {
@@ -91,11 +92,7 @@ export default class InfoAssetDetail extends Component {
           qrCode: this.props.route.params.value
        } 
       console.log("t", this.state, this.props.route.params.value)
-      await axios.get(baseURLGet + this.state.qrCode.replace(/%/g,''), {
-        headers: {
-          "Content-Type": "application/x-www-form-urlencoded",
-            'Authorization': `Bearer ${this.state.Authorization.replace(/"/g,'')}`,
-        } }
+      await axios.get(await getURLBASE()+baseURLGet + this.state.qrCode.replace(/%/g,''), await HeadersBase()
         )
       .then((response) => {
         console.log("qrCode",response.data)

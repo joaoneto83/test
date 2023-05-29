@@ -16,16 +16,17 @@ import Search from "../../../components/search/searchs"
 import UploadMission from "./uploadMission";
 import SetMissioni from "./setMissioni";
 import SetMissioniSave from "./setMissioniSave";
+import axios from 'axios';
 
-import {api} from '../../../services/api_base';
+import { HeadersBase , getURLBASE} from '../../../services/api_base';
 
-const baseUrlMissioni = "/Api/Assets/Mission/MyMissions"
-const missioniOff = "/Api/Assets/Mission/AllMissionDetails/"
+const baseUrlMissioni = "Api/Assets/Mission/MyMissions"
+const missioniOff = "Api/Assets/Mission/AllMissionDetails/"
 const gifDir = FileSystem.cacheDirectory + 'giphy/';
 
 const self = this
 
-export default class Missioni extends Component {
+export default class Refresh extends Component {
     constructor(props){
         super(props)
        
@@ -40,10 +41,12 @@ export default class Missioni extends Component {
             offLineName:"",
             memoriaMissionSalve:null,
             new:null,
-            saveMissioni:true
+            saveMissioni:true,
+            
         }
         this.missioniCache()
-  
+
+
         
     }
      data = [];
@@ -68,8 +71,7 @@ export default class Missioni extends Component {
       isConnected :await AsyncStorage.getItem('isConnected').then((response) => { return response }),
       loading:true
     } )
-   
-   
+
 
     if (this.state.isConnected == "false"){
       if (await AsyncStorage.getItem('missioni')){
@@ -108,9 +110,11 @@ export default class Missioni extends Component {
      }
       await FileSystem.makeDirectoryAsync(gifDir, { intermediates: true });
       console.log("file",await FileSystem.getInfoAsync(gifDir))
+     
 
   if (this.data.length == 0){
-    await api.get( baseUrlMissioni)
+
+    await axios.get( await getURLBASE()+baseUrlMissioni, await HeadersBase())
     .then((response) => {
        this.data = response.data;
        AsyncStorage.setItem('missioni', JSON.stringify(this.data));
@@ -118,11 +122,8 @@ export default class Missioni extends Component {
        this.setState({
         backData: [...this.data],
         loading:false
-    })
-  
-
-
-    }).catch((erro)=>{
+    })}
+  ).catch((erro)=>{
       console.log("erro", erro)
     })
 
@@ -162,7 +163,8 @@ export default class Missioni extends Component {
     ) 
     console.log("off", id, name, this.state.loading, this.state.Authorization)
 if (this.state.isConnected == "true"){
-  await api.get( missioniOff + id)
+  console.log("axios", await getURLBASE() + missioniOff + id )
+  await axios.get( await getURLBASE() + missioniOff + id, await HeadersBase())
   .then((response) => {
     this.DataOff(response.data)
     
@@ -309,10 +311,10 @@ if (this.state.isConnected == "true"){
             <Connected  callbackisConnected = {this.callbackisConnected}></Connected>
               <Head prop = {this.props}
                 missioniCache = {this.missioniCache}
-               routes = "Mission" 
-              title ="Missioni" 
-               search ="true" adancedSearch= { this.getAdancedSearch}  
-               screem= {this.props.route.params?.screem}
+                routes = "Mission" 
+                title ="Missioni" 
+                search ="true" adancedSearch= { this.getAdancedSearch}  
+                screem= {this.props.route.params?.screem}
                 getSearch = {this.search}  />
              { this.state.loading ? <LoadingInline/> : undefined  } 
              {   this.documents ?  

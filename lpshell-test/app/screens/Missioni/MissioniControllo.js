@@ -17,13 +17,12 @@ import Photo from '../../../components/camera';
 import LoadingInline from "../../../components/loading/loadingInline";
 import ButtonDocument from '../../../components/buttons/buttonDocument';
 
-import { api,apiStart,Authorization } from '../../../services/api_base';
+import {api,apiStart,Authorization, HeadersQR, HeadersBase ,getURLBASE} from '../../../services/api_base';
 
-
-const baseURLGet = "/api/assets/asset/QR/";
-const baseUrlGetControllo = "/api/assets/Procedure/Mobile/"
-const basePut = "/api/assets/ProcedureAsset/"
-const diversoPost = "/api/assets/ProcedureAsset/"
+const baseURLGet = "api/assets/asset/QR/";
+const baseUrlGetControllo = "api/assets/Procedure/Mobile/"
+const basePut = "api/assets/ProcedureAsset/"
+const diversoPost = "api/assets/ProcedureAsset/"
 
 
 export default class MissioniControllo extends Component { 
@@ -262,7 +261,7 @@ if (props.route.params?.offline) {
 
 
 
-      await api.post(diversoPost, postData).then((response) => {
+      await axios.post(await getURLBASE()+diversoPost, postData, await HeadersBase()).then((response) => {
         this.setState({ 
           loading:false,
           visibleModalSave: 1,
@@ -279,7 +278,7 @@ if (props.route.params?.offline) {
 
     }else{
     console.log("ok", this.state.statusId)
-    await api.put(basePut+ this.props?.route?.params?.procedureAssets , postData).then((response) => {
+    await axios.put(await getURLBASE()+basePut+ this.props?.route?.params?.procedureAssets , postData, await HeadersBase()).then((response) => {
       this.setState({ 
         loading:false,
         visibleModalSave: 1,
@@ -322,7 +321,7 @@ if (props.route.params?.offline) {
         qrCode: this.props.route.params.value,
         statusId:this.props?.route?.params?.data?.statusId
       }
-      await apiStart.get(baseURLGet + this.state.qrCode.replace(/%/g, ''))
+      await axios.get(await getURLBASE()+baseURLGet + this.state.qrCode.replace(/%/g, ''), await HeadersQR())
         .then((response) => {
           this.getControllo(response.data?.id);
           this.setState({
@@ -341,7 +340,7 @@ if (props.route.params?.offline) {
   getControllo = async (item) => {
     console.log("item online", item)
    
-  await api.get(baseUrlGetControllo +  this.props?.route?.params?.procedureId
+  await axios.get(await getURLBASE()+baseUrlGetControllo +  this.props?.route?.params?.procedureId, await HeadersBase()
   )
     .then((response) => {
     

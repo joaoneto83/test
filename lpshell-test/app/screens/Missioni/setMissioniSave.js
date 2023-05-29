@@ -6,7 +6,7 @@ import Modal from 'react-native-modal';
 import * as FileSystem from 'expo-file-system';
 import ButtonSave from "../../../components/buttons/ButtonSave";
 import styles from "./styles";
-import { api,apiStart,Authorization } from '../../../services/api_base';
+import { api,apiStart,Authorization,getURLBASE } from '../../../services/api_base';
 import Connected from '../../../assets/connected'; 
 import Moment from 'moment';
 

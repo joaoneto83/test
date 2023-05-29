@@ -5,7 +5,7 @@ import Modal from 'react-native-modal';
 import Head from '../../../components/Head'
 import QrcodeScreen from '../../../components/scan/qrcodeScreen';
 import LoadingInline from "../../../components/loading/loadingInline";
-import   ButtonSave from "../../../components/buttons/ButtonSave";
+import ButtonSave from "../../../components/buttons/ButtonSave";
 import ButtonRadioQRcode from "../../../components/buttons/ButtonRadioQRcode";
 import styles from "./styles";
 

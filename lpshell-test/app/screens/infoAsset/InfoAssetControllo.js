@@ -14,13 +14,13 @@ import ListControllo from '../../../components/list/listControllo';
 import Gallery from '../../../components/gallery';
 import CameraS from '../../../components/camera/CameraS';
 import LoadingInline from "../../../components/loading/loadingInline";
+import { HeadersQR, HeadersBase ,getURLBASE} from '../../../services/api_base';
 
 
 
-
-const baseURLGet = "http://192.168.248.20:6090/api/assets/asset/QR/";
-const baseUrlGetControllo = "http://192.168.248.20:8090/Api/Asset/AvailableProcedures/"
-const basePost = "http://192.168.248.20:8090/Api/ProcedureAsset"
+const baseURLGet = "api/assets/asset/QR/";
+const baseUrlGetControllo = "api/assets/Asset/AvailableProcedures/"
+const basePost = "api/assets/ProcedureAsset"
 
 
 export default class InfoAssetControllo extends Component { 
@@ -108,12 +108,7 @@ export default class InfoAssetControllo extends Component {
     })
     
     console.log("callbackSalvett", this.postData)
-     await axios.post(basePost ,this.postData, {
-      headers: {
-        'Content-Type': 'application/json;charset=UTF-8',
-        'Authorization': `Bearer ${this.state.Authorization.replace(/"/g, '')}`,
-      }
-    }).then((response) => {
+     await axios.post(await getURLBASE()+basePost ,this.postData, await HeadersBase()).then((response) => {
       this.setState({
         loading:false
       })
@@ -155,12 +150,7 @@ export default class InfoAssetControllo extends Component {
         Authorization: await AsyncStorage.getItem('DATA_KEY').then((response) => { return response }),
         qrCode: this.props.route.params.value,
       }
-      await axios.get(baseURLGet + this.state.qrCode.replace(/%/g, ''), {
-        headers: {
-          'Content-Type': 'application/json;charset=UTF-8',
-          'Authorization': `Bearer ${this.state.Authorization.replace(/"/g, '')}`,
-        }
-      }
+      await axios.get(await getURLBASE()+baseURLGet + this.state.qrCode.replace(/%/g, ''), await HeadersQR()
       )
         .then((response) => {
           console.log("aa", response.data?.id)
@@ -186,12 +176,7 @@ export default class InfoAssetControllo extends Component {
     console.log("item", item)
    
 
-  await axios.get(baseUrlGetControllo + item, {
-    headers: {
-      'Content-Type': 'application/json;charset=UTF-8',
-      'Authorization': `Bearer ${this.state.Authorization.replace(/"/g, '')}`,
-    }
-  }
+  await axios.get(await getURLBASE()+baseUrlGetControllo + item, await HeadersBase()
   )
     .then((response) => {
     

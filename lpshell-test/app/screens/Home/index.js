@@ -6,7 +6,6 @@ import Connected from '../../../assets/connected';
 
 export default class Home extends Component {
 
-
   visibleModal = 0;
   isConnected = false;
   affet = 0
@@ -39,7 +38,6 @@ export default class Home extends Component {
     this.props.navigation.navigate("InfoAsset");
   };
 
-
   render() {
   return (
 
@@ -63,7 +61,6 @@ export default class Home extends Component {
             source={require('../../../assets/images/InforAssetButton.png')}
           />
        </TouchableOpacity>
-
        <TouchableOpacity style={styles.button}  activeOpacity={0.5} onPress = { ()=> this.goMissioni()}>
           <Image
              resizeMode="contain"

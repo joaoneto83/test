@@ -22,7 +22,7 @@ import {
   ButtonText,
 } from './styles';
 
-//const oldbaseURLPost = "http://192.168.248.20:6090/OIDC/connect/token";
+
 const baseURLPost = "OIDC/connect/token";
 
 
@@ -30,7 +30,6 @@ export default class SignIn extends Component {
   // email: 'admin@logicapro',
   // password: 'L0g1caPr0!',
 
-    // id :fc3babc0-7ea1-42f6-872b-c634adb76b91
     visibleModal = 0;
     isConnected = null;
     affet = 0
@@ -46,7 +45,6 @@ export default class SignIn extends Component {
       isConnected : this.isConnected,
       visibleModalSave: null,
       URL_NEW: '',
-      BASEURL_NEW: '',
      };
 
     this.storage()
@@ -64,16 +62,11 @@ export default class SignIn extends Component {
     }).isRequired,
   };
    storage = async ()=> {
-    
      if (await AsyncStorage.getItem('URL_NEW')){
       this.setState({ URL_NEW : await AsyncStorage.getItem('URL_NEW').then((response) => { return JSON.parse(response)})})
-     }
-     if (await AsyncStorage.getItem('BASEURL_NEW')){
-      this.setState({ URL_NEW : await AsyncStorage.getItem('BASEURL_NEW').then((response) => { return JSON.parse(response)})})
-     }
 
-
-     console.log("memoryURL", this.state.URL_NEW,"memoryBASEURL_NEW", this.state.BASEURL_NEW )
+     }
+     console.log("memoryURL", this.state.URL_NEW)
     
    }
   
@@ -96,11 +89,9 @@ export default class SignIn extends Component {
   //     });
   // }
 
+
   handleUrlChange = (URL_NEW) => {
     this.setState({ URL_NEW });
-  };
-  handleBaseUrlChange = (BASEURL_NEW) => {
-    this.setState({ BASEURL_NEW });
   };
 
 
@@ -147,50 +138,74 @@ export default class SignIn extends Component {
       client_secret: '051702A3-80B2-42AE-99C2-15D6D85425BD',
     })
 
-
-      console.log("sem", loginData )
-      await apiStart
-      .post( baseURLPost , loginData ,)
-      .then((response) => {
-       AsyncStorage.setItem('DATA_KEY', JSON.stringify(response.data.access_token));
-       this.state = {
-        Authorization:  AsyncStorage.getItem('DATA_KEY').then((response) => { return response.replace(/"/g, '') }),
-      }
-      getAuthorization(this.state.Authorization)
-        this.props.navigation.navigate("Home", { user: response.data });
-            
-      }).catch(
-        (erro)=>{
-            console.log("errore",erro)
-            this.setState({
-                loading:false
-            })
+     if(await AsyncStorage.getItem('URL_NEW')){
+      console.log("tat", loginData )
+      await  axios.post(this.state.URL_NEW + baseURLPost, loginData,
+        {
+          headers:{ 
+            'Content-Type': 'application/x-www-form-urlencoded'
           }
-      )
-     
-  
+      }
+        ).then((response) => {
+        AsyncStorage.setItem('DATA_KEY', JSON.stringify(response.data.access_token));
+        this.state = {
+         Authorization:  AsyncStorage.getItem('DATA_KEY').then((response) => { return response.replace(/"/g, '') }),
+       }
 
-
- 
+       getAuthorization(this.state.Authorization)
+         this.props.navigation.navigate("Home", { user: response.data });
+             
+       }).catch(
+         (erro)=>{
+             console.log("errore",erro)
+             this.setState({
+                 loading:false
+             })
+           }
+       )
+       
+     }
+    //  else{
+    //   console.log("sem", loginData )
+    //   await apiStart
+    //   .post( baseURLPost , loginData ,)
+    //   .then((response) => {
+    //    AsyncStorage.setItem('DATA_KEY', JSON.stringify(response.data.access_token));
+    //    this.state = {
+    //     Authorization:  AsyncStorage.getItem('DATA_KEY').then((response) => { return response.replace(/"/g, '') }),
+    //   }
+    //   getAuthorization(this.state.Authorization)
+    //     this.props.navigation.navigate("Home", { user: response.data });
+            
+    //   }).catch(
+    //     (erro)=>{
+    //         console.log("errore",erro)
+    //         this.setState({
+    //             loading:false
+    //         })
+    //       }
+    //   )
+    //  }
     }
   };
-
-
   _renderButton = (text, onPress) => (
     <TouchableOpacity onPress={onPress}>
       <Image
-         resizeMode="contain"
+                       resizeMode="contain"
                        style={{width:30}}
-                        source={require('../../../assets/images/close.png')}
+                       source={require('../../../assets/images/close.png')}
                       />
     </TouchableOpacity>
   );
   _renderModalContent = () => (
     <View >
-      <View style={{flex:0, flexDirection:"row-reverse"}}> 
+      <View style={{flex:0, flexDirection:"row-reverse", alignItems:"center", justifyContent:"space-around", paddingVertical:20}}> 
       {this._renderButton('Close', () => this.setState({ visibleModalSave: null }))}
+      <Text style={{color:"#fff", fontSize:26}}>Configurazione</Text>
       </View>
-      <View style={{flexDirection:"row", justifyContent:"center"}}>
+
+
+      <View style={{flexDirection:"row", justifyContent:"center",  alignContent:"center"}}>
       <Input
           placeholder="URL"
           value={this.state.URL_NEW}
@@ -199,20 +214,11 @@ export default class SignIn extends Component {
           autoCorrect={false}
           style={{ width:200}}
         />
-              <Input
-          placeholder="BASEURL"
-          value={this.state.BASEURL_NEW}
-          onChangeText={this.handleBaseUrlChange}
-          autoCapitalize="none"
-          autoCorrect={false}
-          style={{ width:200}}
-        />
-          
           <Button onPress={this.saveURL}>
-          <ButtonText>Accedi</ButtonText>
+          <ButtonText style={{ backgroundColor: "#E4A83B",borderRadius: 5, padding:5}}>Accedi</ButtonText>
         </Button>
         <Button onPress={this.deleteURL}>
-          <ButtonText>Delete</ButtonText>
+          <ButtonText  style={{ backgroundColor: "#F35330",borderRadius: 5, padding:5}}>Delete</ButtonText>
         </Button>
       
       </View>
@@ -223,16 +229,13 @@ export default class SignIn extends Component {
 
   saveURL = async () => {
     await AsyncStorage.setItem('URL_NEW', JSON.stringify(this.state.URL_NEW));
-    await AsyncStorage.setItem('BASEURL_NEW', JSON.stringify(this.state.BASEURL_NEW));
   }
   
   deleteURL = async () => {
-    if(await AsyncStorage.getItem('URL_NEW') && await AsyncStorage.getItem('BASEURL_NEW') ){
+    if(await AsyncStorage.getItem('URL_NEW') ){
       await AsyncStorage.removeItem('URL_NEW');
-      await AsyncStorage.removeItem('BASEURL_NEW');
       this.setState({
-        URL_NEW : "",
-        BASEURL_NEW:""
+        URL_NEW : ""
       })
     }
 
@@ -284,7 +287,7 @@ export default class SignIn extends Component {
   
         {this.state.error.length !== 0 && <ErrorMessage style={{ width:200, paddingLeft:10 }}>{this.state.error}</ErrorMessage>} 
         <Button onPress={this.handleSignInPress}>
-          <ButtonText>Accedi</ButtonText>
+          <ButtonText style={{ backgroundColor: "#E4A83B",  borderRadius: 5, paddingVertical:5}}>Accedi</ButtonText>
         </Button>
         </View>
       </Container>
