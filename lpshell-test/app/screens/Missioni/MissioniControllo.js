@@ -21,9 +21,9 @@ import { api,apiStart,Authorization } from '../../../services/api_base';
 
 
 const baseURLGet = "/api/assets/asset/QR/";
-const baseUrlGetControllo = "/Api/Procedure/Mobile/"
-const basePut = "/Api/ProcedureAsset/"
-const diversoPost = "/Api/ProcedureAsset/"
+const baseUrlGetControllo = "/api/assets/Procedure/Mobile/"
+const basePut = "/api/assets/ProcedureAsset/"
+const diversoPost = "/api/assets/ProcedureAsset/"
 
 
 export default class MissioniControllo extends Component { 

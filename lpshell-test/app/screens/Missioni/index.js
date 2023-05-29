@@ -19,8 +19,8 @@ import SetMissioniSave from "./setMissioniSave";
 
 import {api} from '../../../services/api_base';
 
-const baseUrlMissioni = "Api/Mission/MyMissions"
-const missioniOff = "Api/Mission/AllMissionDetails/"
+const baseUrlMissioni = "/Api/Assets/Mission/MyMissions"
+const missioniOff = "/Api/Assets/Mission/AllMissionDetails/"
 const gifDir = FileSystem.cacheDirectory + 'giphy/';
 
 const self = this
@@ -310,10 +310,10 @@ if (this.state.isConnected == "true"){
             <Connected  callbackisConnected = {this.callbackisConnected}></Connected>
               <Head prop = {this.props}
                 missioniCache = {this.missioniCache}
-               routes = "Mission" 
-              title ="Missioni" 
-               search ="true" adancedSearch= { this.getAdancedSearch}  
-               screem= {this.props.route.params?.screem}
+                routes = "Mission" 
+                title ="Missioni" 
+                search ="true" adancedSearch= { this.getAdancedSearch}  
+                screem= {this.props.route.params?.screem}
                 getSearch = {this.search}  />
              { this.state.loading ? <LoadingInline/> : undefined  } 
              {   this.documents ?  

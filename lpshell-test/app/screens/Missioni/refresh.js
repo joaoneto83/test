@@ -19,8 +19,8 @@ import SetMissioniSave from "./setMissioniSave";
 
 import {api} from '../../../services/api_base';
 
-const baseUrlMissioni = "Api/Mission/MyMissions"
-const missioniOff = "Api/Mission/AllMissionDetails/"
+const baseUrlMissioni = "/Api/Assets/Mission/MyMissions"
+const missioniOff = "/Api/Assets/Mission/AllMissionDetails/"
 const gifDir = FileSystem.cacheDirectory + 'giphy/';
 
 const self = this

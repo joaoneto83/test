@@ -2,19 +2,27 @@ import axios from 'axios';
 import AsyncStorage from '@react-native-community/async-storage';
 import { BASE_URL, BASE_START } from '@env';
 
-const baseURL = BASE_START
+const baseURL = BASE_START 
 const start =  BASE_URL
 let  baseURLGet = ""
+
 console.log("variavel", BASE_URL, BASE_START)
+
 export  function getAuthorization(){
 return  AsyncStorage.getItem('DATA_KEY').then((response) => { return response ? response.replace(/"/g, ''): undefined })
 }
+export async function getURLBASE(){
+  return  await  AsyncStorage.getItem('URL_NEW').then((response) => { return JSON.parse(response)})
+  }
+
+
 export  function Authorization(item){
   baseURLGet = item
+  
 }
 
-export const apiStart = axios.create({
-  baseURL: start
+export  const apiStart = axios.create({
+  baseURL:  getURLBASE()
 });
 
 apiStart.interceptors.request.use(async config => {

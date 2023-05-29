@@ -14,7 +14,7 @@ import UploadMission from "./uploadMission";
 import { api } from '../../../services/api_base';
 
 
-const baseUrlMissio = "Api/Mission/Mobile/"
+const baseUrlMissio = "/api/assets/Mission/Mobile/"
 
 
 export default class MissioniDetail extends Component {

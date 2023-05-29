@@ -50,7 +50,6 @@ export default class SignIn extends Component {
      };
 
     this.storage()
-
   }
 
   static navigationOptions = {
@@ -148,32 +147,7 @@ export default class SignIn extends Component {
       client_secret: '051702A3-80B2-42AE-99C2-15D6D85425BD',
     })
 
-     if(await AsyncStorage.getItem('URL_NEW')){
-      console.log("tat", loginData )
-      await  axios.post(this.state.URL_NEW + baseURLPost, loginData,
-        {
-          headers:{ 
-            'Content-Type': 'application/x-www-form-urlencoded'
-          }
-      }
-        ).then((response) => {
-        AsyncStorage.setItem('DATA_KEY', JSON.stringify(response.data.access_token));
-        this.state = {
-         Authorization:  AsyncStorage.getItem('DATA_KEY').then((response) => { return response.replace(/"/g, '') }),
-       }
 
-       getAuthorization(this.state.Authorization)
-         this.props.navigation.navigate("Home", { user: response.data });
-             
-       }).catch(
-         (erro)=>{
-             console.log("errore",erro)
-             this.setState({
-                 loading:false
-             })
-           }
-       )
-     }else{
       console.log("sem", loginData )
       await apiStart
       .post( baseURLPost , loginData ,)
@@ -193,7 +167,7 @@ export default class SignIn extends Component {
             })
           }
       )
-     }
+     
   
 
 
